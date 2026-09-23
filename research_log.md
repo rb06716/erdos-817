@@ -310,3 +310,8 @@ Compute used: C 4.0 CPU-h; Rust ~2.5x; auxiliary runs (band check, beam, k>=4, n
   (10,009,274,004 nodes, 1434 s). Consistent with our result; the third-party code is too slow for N ~ 470.
   (results/thirdparty_check/firesh_g3c_n7_N200.txt)
 - g_4(7) search (3 processes): N = 176..185 exhausted, no admissible 7-set (k = 4).
+
+## 2026-09-23 ~05:00 — k = 4, n = 7 cross-check
+gk_search (full enumeration) and gk_verify give identical canonical counts for k = 4, n = 7, N = 100..125 (26 values)
+(results/gk/g4_n7_crosscheck/). The third-party n = 6 re-run was stopped (it would only re-confirm the audit
+repository's own published g_3(6) = 168).

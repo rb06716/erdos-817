@@ -9,11 +9,13 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 %C A399720 a(7) = 474, attained only by {302, 409, 447, 459, 465, 466, 474}. This refutes the possibility
             a(7) = 466 mentioned above and shows that the construction {1} U 3A (giving 504) is not optimal
             for n = 7. Two independent exhaustive searches (C and Rust, different search orders) agree on
-            the number of admissible k-subsets of [1..N] containing N for every N <= 478.
+            the number of admissible k-subsets of [1..N] containing N for every N <= 478
+            (e.g. 6608257434 admissible 6-subsets of [1..473] containing 473, none extendable).
 %C A399720 a(8) <= 1368, a(9) <= 3974, a(10) <= 11578, a(11) <= 34088, a(12) <= 100422, via
             A_n = {u_n - u_i : 0 <= i < n} with u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088,
             100422 (u_1..u_3 = 8, 9, 15; for k >= 3 each u_{k+1} is the least integer > u_k such that
             {u_{k+1} - u_i : 0 <= i <= k} qualifies).
+%C A399720 For n = 6 there are exactly two extremal sets: {107,145,159,162,164,168} and {107,145,159,162,166,168}.
 %e A399720 a(7) = 474: the 2187 sums 302*c_1 + 409*c_2 + 447*c_3 + 459*c_4 + 465*c_5 + 466*c_6 + 474*c_7
             with c_i in {0,1,2} are pairwise distinct, and no 7-element subset of [1..473] has this property.
 %H A399720 <link to the published research package>

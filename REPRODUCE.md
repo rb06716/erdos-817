@@ -78,6 +78,12 @@ diff <(grep SOLUTION my_c_band.log | sort) <(grep SOLUTION my_rust_band.log | so
 `scripts/verify_pipeline.sh 4` runs stages A–D above in sequence (C and Rust, both ranges), and
 `scripts/finalize.sh` rebuilds `results/n7_counts.csv`, repeats all comparisons and writes `results/SHA256SUMS`.
 
+### Novelty check against the OEIS export (optional; ~1.6 GB download)
+
+```sh
+python3 scripts/oeis_novelty_check.py      # sparse-clones github.com/oeis/oeisdata, searches all value strings
+```
+
 ## 4. Portable / slower alternatives
 
 * `bin/g3search 7 N N` (no PEXT, default room pruning) visits a subset of the NOROOM tree; it must report
