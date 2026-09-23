@@ -85,5 +85,7 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 > Math. Soc. 40 (2003)) state that {109,147,161,166,168,169} is the unique minimal 6-set of this kind. In
 > fact g_3(6) = 168, as above.
 >
-> Disclosure: the search, the programs and this text were produced with an AI agent (Claude). I have
-> re-run <which checks> myself and checked <which statements>.
+> Disclosure: the search, the programs and this text were produced with an AI agent (Claude). I re-ran the
+> verification myself on Google Colab (`verify/verify_result.py critical`): the certificate check and the
+> exhaustive search for every N = 419…478, reproducing all published count vectors and the unique set at
+> N = 474. <Add the full N = 1…478 run here if completed.>

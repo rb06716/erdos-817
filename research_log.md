@@ -450,3 +450,10 @@ The repository owner ran colab_verify_standalone.ipynb in Google Colab (GenuineI
 checksums ok; `verify_result.py quick` 7/7 PASS (N = 474 in 6 min, N = 473 in 7 min; count vectors identical to
 results/n7_counts.csv). Output saved in results/external_verification/colab_quick_2026-09-23.txt. The critical run
 (N = 419..478) is in progress on the owner's runtime (published C run: 2.8 core-hours; estimate 40-70 min there).
+
+## 2026-09-23 ~17:30 — human-run verification of the critical range (Colab): PASS
+The repository owner's Colab run of `verify_result.py critical` (8 vCPUs, 67 min): all 60 values N = 419..478 give
+count vectors identical to results/n7_counts.csv, and the solution lists for N = 474..478 are the same (unique set at
+474). 7/7 checks passed. Output saved in results/external_verification/colab_critical_2026-09-23.txt. DISCOVERY
+(verification table), LIMITATIONS item 3 and the forum draft's disclosure line updated. The owner is now running
+`full` (N = 1..478) and the Rust check.

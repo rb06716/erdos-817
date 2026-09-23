@@ -27,7 +27,9 @@
    re-implementation must reproduce them exactly.
 
 3. **Hardware / transient errors.** Mitigated by two independent full runs on different code paths. Both
-   would have to fail in the same way for the same `N`.
+   would have to fail in the same way for the same `N`. In addition, the repository owner re-ran the critical
+   range N = 419…478 on a different machine (Google Colab, 2026-09-23; `results/external_verification/`), and
+   all 60 count vectors were identical to the published ones.
 
 4. **Literature bound `g₃(7) ≥ 419`** (Korsky, arXiv:2606.24139). The first pass used it to skip `N ≤ 418`.
    That range was then searched exhaustively by both implementations (identical count vectors for all

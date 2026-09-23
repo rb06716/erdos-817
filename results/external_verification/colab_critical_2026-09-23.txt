@@ -1,0 +1,80 @@
+# Independent run of `verify_result.py critical` (every N = 419..478)
+# who:   the repository owner (a human), not the AI agent that wrote the package
+# where: Google Colab (GPU/high-RAM runtime, used on CPU only: GenuineIntel family 6, BMI2, 8 vCPUs), 2026-09-23
+# how:   verify/colab_verify_standalone.ipynb, whose embedded files come from commit 8853e482918c; their SHA-256
+#        were checked on unpacking; logs were written to Google Drive
+# The output below was pasted into the session by the owner, verbatim. Detail fields are cut at 120 characters by
+# the script itself.
+
+Mounted at /content/drive
+built bin/g3fast2 bin/g3fast2_noroom with CFLAGS="-O3 -march=native" (cpu: GenuineIntel family 6, bmi2=True)
+PASS certificate n=7 {302,409,447,459,465,466,474}  -- PASS n=7 max=474 A=[302, 409, 447, 459, 465, 466, 474] | ternary sums distinct: True (2187 sums) | H(A) 3-AP-free: True 
+PASS certificate n=8 {894,1196,1303,1341,1353,1359,1360,1368}  -- PASS n=8 max=1368 A=[894, 1196, 1303, 1341, 1353, 1359, 1360, 1368] | ternary sums distinct: True (6561 sums) | H(A) 3-A
+PASS Lemma 1 equivalence test  -- equivalence test mismatches: 0
+PASS g_3(5) = 60 reproduced  -- 2 sets at N=60
+PASS g_3(6) = 168 reproduced  -- 2 sets at N=168
+exhaustive search, n = 7, 60 values of N with 8 parallel jobs -> /content/drive/MyDrive/g3_7_verify_run/critical
+  N=472 ok  (1/60, 12 min elapsed)
+  N=476 ok  (2/60, 13 min elapsed)
+  N=478 ok  (3/60, 13 min elapsed)
+  N=474 ok  (4/60, 13 min elapsed)
+  N=473 ok  (5/60, 14 min elapsed)
+  N=475 ok  (6/60, 14 min elapsed)
+  N=471 ok  (7/60, 14 min elapsed)
+  N=477 ok  (8/60, 16 min elapsed)
+  N=470 ok  (9/60, 23 min elapsed)
+  N=466 ok  (10/60, 25 min elapsed)
+  N=464 ok  (11/60, 25 min elapsed)
+  N=468 ok  (12/60, 25 min elapsed)
+  N=469 ok  (13/60, 26 min elapsed)
+  N=467 ok  (14/60, 26 min elapsed)
+  N=465 ok  (15/60, 27 min elapsed)
+  N=463 ok  (16/60, 28 min elapsed)
+  N=462 ok  (17/60, 34 min elapsed)
+  N=460 ok  (18/60, 34 min elapsed)
+  N=458 ok  (19/60, 34 min elapsed)
+  N=461 ok  (20/60, 36 min elapsed)
+  N=457 ok  (21/60, 36 min elapsed)
+  N=456 ok  (22/60, 37 min elapsed)
+  N=459 ok  (23/60, 37 min elapsed)
+  N=455 ok  (24/60, 37 min elapsed)
+  N=454 ok  (25/60, 42 min elapsed)
+  N=452 ok  (26/60, 43 min elapsed)
+  N=450 ok  (27/60, 44 min elapsed)
+  N=448 ok  (28/60, 44 min elapsed)
+  N=453 ok  (29/60, 44 min elapsed)
+  N=451 ok  (30/60, 45 min elapsed)
+  N=449 ok  (31/60, 45 min elapsed)
+  N=447 ok  (32/60, 46 min elapsed)
+  N=446 ok  (33/60, 50 min elapsed)
+  N=445 ok  (34/60, 51 min elapsed)
+  N=442 ok  (35/60, 51 min elapsed)
+  N=440 ok  (36/60, 52 min elapsed)
+  N=443 ok  (37/60, 52 min elapsed)
+  N=444 ok  (38/60, 52 min elapsed)
+  N=441 ok  (39/60, 53 min elapsed)
+  N=439 ok  (40/60, 54 min elapsed)
+  N=438 ok  (41/60, 56 min elapsed)
+  N=436 ok  (42/60, 57 min elapsed)
+  N=437 ok  (43/60, 58 min elapsed)
+  N=434 ok  (44/60, 58 min elapsed)
+  N=433 ok  (45/60, 59 min elapsed)
+  N=432 ok  (46/60, 59 min elapsed)
+  N=435 ok  (47/60, 59 min elapsed)
+  N=431 ok  (48/60, 60 min elapsed)
+  N=430 ok  (49/60, 61 min elapsed)
+  N=428 ok  (50/60, 63 min elapsed)
+  N=427 ok  (51/60, 64 min elapsed)
+  N=429 ok  (52/60, 64 min elapsed)
+  N=424 ok  (53/60, 64 min elapsed)
+  N=426 ok  (54/60, 64 min elapsed)
+  N=425 ok  (55/60, 64 min elapsed)
+  N=423 ok  (56/60, 65 min elapsed)
+  N=422 ok  (57/60, 65 min elapsed)
+  N=421 ok  (58/60, 66 min elapsed)
+  N=420 ok  (59/60, 66 min elapsed)
+  N=419 ok  (60/60, 67 min elapsed)
+PASS n=7 canonical counts equal the published table for N in [419, 478]  -- 60 values
+PASS N=474: exactly one admissible 7-set, {302,409,447,459,465,466,474}
+
+7 of 7 checks passed.
