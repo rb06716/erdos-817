@@ -27,37 +27,42 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
   `g_k(n)`, which "cannot be resolved with a finite computation". An exact small value is data for it, not a
   (partial) solution.
 
-## 1. OEIS A399720: proposed extension
+## 1. OEIS A399720: facts for an extension (write the text yourself)
 
-```
-%S A399720 1,3,8,22,60,168,474
-%C A399720 a(7) = 474, attained only by {302, 409, 447, 459, 465, 466, 474}. This refutes the possibility
-            a(7) = 466 mentioned above. (That {1} U 3A, giving 504, is not optimal for n = 7 already follows
-            from the qualifying set {308, 417, 455, 469, 474, 476, 477} of Bae (2002).)
-            Two independent exhaustive searches (C and Rust, different search orders) agree on
-            the number of admissible k-subsets of [1..N] containing N for every N <= 478
-            (e.g. 6608257434 admissible 6-subsets of [1..473] containing 473, none extendable).
-            The upper bound a(7) <= 474, with the same set, was first posted by carlomitchener on the
-            Erdős Problems forum (thread #817, Sep 23 2026).
-%C A399720 a(8) <= 1368, a(9) <= 3974, a(10) <= 11578, a(11) <= 34088, a(12) <= 100422, via
-            A_n = {u_n - u_i : 0 <= i < n} with u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088,
-            100422 (u_1..u_3 = 8, 9, 15; for k >= 3 each u_{k+1} is the least integer > u_k such that
-            {u_{k+1} - u_i : 0 <= i <= k} qualifies).
-%C A399720 For n = 6 there are exactly two extremal sets: {107,145,159,162,164,168} and {107,145,159,162,166,168}.
-%C A399720 The qualifying sets are the 2-fold subset-sum-distinct sets of Bae (2002) and Bae and Choi (2003).
-            Both state that {109,147,161,166,168,169} is the unique such 6-set of minimal height, but
-            a(6) = 168; their set is the unique qualifying 6-set with maximum exactly 169.
-%e A399720 a(7) = 474: the 2187 sums 302*c_1 + 409*c_2 + 447*c_3 + 459*c_4 + 465*c_5 + 466*c_6 + 474*c_7
-            with c_i in {0,1,2} are pairwise distinct, and no 7-element subset of [1..473] has this property.
-%H A399720 Jaegug Bae, <a href="https://www.ijpam.eu/contents/2002-1-3/8/8.pdf">On generalized subset-sum-distinct
-            sequences</a>, Int. J. Pure Appl. Math. 1 (2002), 335-343.
-%H A399720 Jaegug Bae and Sungjin Choi, <a href="https://doi.org/10.4134/JKMS.2003.40.5.757">A generalization of
-            a subset-sum-distinct sequence</a>, J. Korean Math. Soc. 40 (2003), 757-768.
-%H A399720 [your name, as OEIS requires], <a href="https://github.com/rb06716/erdos-817">Computations for
-            g_3(7) = 474 (Erdős Problem #817)</a>, GitHub repository, 2026.
-```
+**OEIS policy** ([Use of AI for OEIS Submissions is Forbidden](https://oeis.org/wiki/Use_of_AI_for_OEIS_Submissions_is_Forbidden),
+approved 29 Aug 2026): every submission needs a human author who has verified the terms, comments and links. Using
+AI to generate the full text of comments, pasting AI-generated text into the editorial discussion ("pink boxes"),
+and crediting AI as an author are all forbidden. The items below are therefore **facts to write from, not text to
+paste**; write the comments in your own words and answer editors' questions yourself.
+
+* **Data:** the terms become `1, 3, 8, 22, 60, 168, 474`. Add an extension line in the OEIS style, e.g.
+  `a(7) from _Ryan Brown_, Sep 23 2026` (with the date you submit).
+* **About a(7):**
+  * a(7) = 474, and {302, 409, 447, 459, 465, 466, 474} is the only 7-set attaining it: its 2187 sums with
+    coefficients 0, 1, 2 are pairwise distinct;
+  * no 7-subset of [1..473] qualifies. This was shown by exhaustive search with two independently written programs
+    (C and Rust, opposite search orders), which agree on the number of qualifying k-subsets of [1..N] containing N
+    for every N <= 478 (e.g. 6608257434 qualifying 6-subsets of [1..473] contain 473; none extends to a 7-set);
+  * this settles the entry's remark that a(7) = 466 was not excluded;
+  * credit: the upper bound a(7) <= 474, with the same set, was first posted by carlomitchener (Erdős Problems
+    forum, thread #817, Sep 23 2026); the qualifying set {308, 417, 455, 469, 474, 476, 477} in Bae (2002) already
+    implies a(7) <= 477 < 504.
+* **About n = 6:** there are exactly two extremal sets, {107,145,159,162,164,168} and {107,145,159,162,166,168}.
+  Bae (2002) and Bae and Choi (2003) state that {109,147,161,166,168,169} is the unique qualifying 6-set of minimal
+  height; in fact it is the unique qualifying 6-set with maximum exactly 169.
+* **Optional (upper bounds):** a(8) <= 1368, a(9) <= 3974, a(10) <= 11578, a(11) <= 34088, a(12) <= 100422, via
+  A_n = {u_n - u_i : 0 <= i < n} with u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422.
+* **Links (%H lines; bibliographic data, fine to use as given):**
+  ```
+  Jaegug Bae, <a href="https://www.ijpam.eu/contents/2002-1-3/8/8.pdf">On generalized subset-sum-distinct sequences</a>, Int. J. Pure Appl. Math. 1 (2002), 335-343.
+  Jaegug Bae and Sungjin Choi, <a href="https://doi.org/10.4134/JKMS.2003.40.5.757">A generalization of a subset-sum-distinct sequence</a>, J. Korean Math. Soc. 40 (2003), 757-768.
+  Ryan Brown, <a href="https://doi.org/ZENODO-DOI">Computations for g_3(7) = 474 (Erdős Problem #817)</a>, Zenodo, 2026.
+  ```
+  Replace `ZENODO-DOI` with the DOI of the v1.0.0 release (or link https://github.com/rb06716/erdos-817).
 
 ## 2. Possible new OEIS entries
+
+Facts only, as in §1: a new entry needs your own name line, definition and comments.
 
 * **g_4(n)**: `1, 3, 5, 14, 40, 79, 225`.
   * Definition: least N such that some n-subset of [1..N] has subset sums with no nonconstant 4-term AP
@@ -79,13 +84,17 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 
 ## 3. Note for the Erdős Problems forum (thread #817, as a discussion comment)
 
+The forum allows AI help with the wording if it is disclosed (the last paragraph does this), but asks that the
+poster understands and has verified every claim. Edit it into your own words where you prefer, and replace
+`ZENODO-DOI` with the DOI of the v1.0.0 release.
+
 > Following carlomitchener's upper bound g_3(7) <= 474: an exhaustive search shows that this is sharp, so
 > g_3(7) = 474, and {302, 409, 447, 459, 465, 466, 474} is the unique extremal set. In particular
 > g_3(7) != 466, so the coincidence with A318821/A318863 noted above ends at n = 7.
 >
 > Every N <= 473 was searched by two independent programs, which agree on the number of admissible
 > k-subsets of [1..N] containing N for every N <= 478. This does not rely on Korsky's bound. Code, logs and
-> count tables: https://github.com/rb06716/erdos-817
+> count tables: https://github.com/rb06716/erdos-817 (archived as https://doi.org/ZENODO-DOI)
 >
 > Two side remarks. First, extending m-czech's remark (b) above: the extremal sets for n = 4…7 all have the
 > form {u_n − u_i}, where each u_{k+1} is an admissible "hole" for {u_1..u_k}. Continuing the n = 7 chain
