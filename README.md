@@ -144,4 +144,4 @@ This work builds on:
 * T. Bloom: the Erdős Problems site.
 
 The search design, programs, computations and write-up were produced by an AI agent (Claude, Anthropic), working
-with the repository owner. The owner re-ran the verification independently.
+with the repository owner, Ryan Brown, who re-ran the verification independently.

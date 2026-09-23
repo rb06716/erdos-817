@@ -525,3 +525,13 @@ a deep pass so that the repository is current, accurate and organised like compa
   * REPRODUCE Rust/C time ratio 2-2.5x (as in DISCOVERY); METHODS: the coarse n = 8 scan found 1420, 1400, 1380 and
     none at 1360-1320; README credit line; forum draft wording ("admissible", "g_3(7) <= 477 < 504 already
     follows"); line wraps; this entry's end time.
+
+## 2026-09-23 ~20:12 — release preparation
+The owner made the repository public and renamed the default branch to `main`.
+- Author: Ryan Brown (LICENSE, CITATION.cff, README). Zenodo builds its record from CITATION.cff when there is no
+  .zenodo.json; cffconvert 2.0.0 validates the file and renders creator "Brown, Ryan", MIT, version 1.0.0.
+- OEIS policy "Use of AI for OEIS Submissions is Forbidden" (approved 29 Aug 2026): the submitter must be a human
+  author who verified everything; AI-generated full comment text, AI text in the editorial discussion, and AI
+  authorship are forbidden. docs/SUBMISSION_DRAFTS.md §1-2 therefore became fact sheets for the owner to write
+  from, not paste-ready text. The forum allows AI-assisted wording with disclosure, provided the poster
+  understands and has verified the claims.
