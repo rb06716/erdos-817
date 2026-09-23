@@ -1,5 +1,5 @@
 /*
- * g3fast2.c -- optimized (PEXT candidate scans) exhaustive search for g_3(n) (Erdos Problem #817, OEIS A399720).
+ * g3profile.c -- profile-window variant of g3fast2.c, for UPPER-BOUND constructions only exhaustive search for g_3(n) (Erdos Problem #817, OEIS A399720).
  *
  * Same mathematics and same search tree as g3search.c (see the comments there):
  *   A admissible  <=>  no nonzero c in {-2..2}^n with sum c_i a_i = 0
@@ -40,6 +40,7 @@ static int elem[MAXN + 1];
 static long long nodes[MAXN + 2];
 static long long nsol;
 static int stop_first;
+static int WLO[MAXN + 1], WHI[MAXN + 1];   /* window for the L-th chosen element (L = 1..n-1) */
 
 #define WIDX(p) ((((p) + R) >> 6) + PADW)
 #define BIDX(p) (((p) + R) & 63)
@@ -133,14 +134,18 @@ static int dfs(int L, int last, long long sum) {
 #else
         int ylen = N - 2 - last;
 #endif
+        int ystart = last + 1;
+        if (ystart < WLO[n - 2]) ystart = WLO[n - 2];
+        if (ystart + ylen - 1 > WHI[n - 2]) ylen = WHI[n - 2] - ystart + 1;
+        if (ylen > N - 2 - ystart + 1) ylen = N - 2 - ystart + 1;
         if (ylen < 1) return 0;
         u64 yc[24];
-        int ycnt = candidates(D, last + 1, ylen, yc);
+        int ycnt = candidates(D, ystart, ylen, yc);
         int ynw = (ylen + 63) >> 6;
         for (int yi = 0; yi < ynw && ycnt >= 1; yi++) while (yc[yi]) {
             int yt = __builtin_ctzll(yc[yi]);
             yc[yi] &= yc[yi] - 1;
-            int y = last + 1 + 64 * yi + yt;
+            int y = ystart + 64 * yi + yt;
             nodes[L + 1]++;
             int len = N - 1 - y;                     /* x in [y+1, N-1] */
             u64 acc[24], tmp[24];
@@ -158,6 +163,7 @@ static int dfs(int L, int last, long long sum) {
                     int t = __builtin_ctzll(fr);
                     fr &= fr - 1;
                     int x = y + 1 + 64 * i + t;
+                    if (x < WLO[n - 1] || x > WHI[n - 1]) continue;
                     if (getbit(D, 2 * x) || getbit(D, 2 * x - y) || getbit(D, 2 * x + y) ||
                         getbit(D, 2 * x - 2 * y) || getbit(D, 2 * x + 2 * y)) continue;
                     nodes[L + 2]++;
@@ -178,14 +184,17 @@ static int dfs(int L, int last, long long sum) {
 #else
     int xlen = N - remaining - last;
 #endif
+    int xstart = last + 1;
+    if (xstart < WLO[L]) { xlen -= WLO[L] - xstart; xstart = WLO[L]; }
+    if (xstart + xlen - 1 > WHI[L]) xlen = WHI[L] - xstart + 1;
     if (xlen < 1) return 0;
     u64 xc[24];
-    int xcnt = candidates(D, last + 1, xlen, xc);
+    int xcnt = candidates(D, xstart, xlen, xc);
     int xnw = (xlen + 63) >> 6;
     for (int xi = 0; xi < xnw; xi++) while (xc[xi]) {
         int xt = __builtin_ctzll(xc[xi]);
         xc[xi] &= xc[xi] - 1;
-        int x = last + 1 + 64 * xi + xt;
+        int x = xstart + 64 * xi + xt;
 #ifdef CUTOFF
         xcnt--;                                   /* candidates strictly above x */
         if (xcnt < remaining - 1) return 0;
@@ -217,8 +226,11 @@ int main(int argc, char **argv) {
     int step = argc > 5 ? atoi(argv[5]) : 1, offset = argc > 6 ? atoi(argv[6]) : 0;
     /* optional: restrict all elements other than N to be >= minelem (band-restricted search, used only
        for upper-bound constructions; the exhaustive runs use the default minelem = 1) */
-    int minelem = argc > 7 ? atoi(argv[7]) : 1;
-    if (minelem < 1) minelem = 1;
+    int minelem = 1;
+    /* windows: argv[7..] = "lo:hi" in per-mille of N for chosen elements 1..n-1 (increasing order) */
+    int wpm_lo[MAXN + 1], wpm_hi[MAXN + 1];
+    for (int L = 1; L <= n - 1; L++) { wpm_lo[L] = 0; wpm_hi[L] = 1000; }
+    for (int L = 1; L <= n - 1 && 6 + L < argc; L++) sscanf(argv[6 + L], "%d:%d", &wpm_lo[L], &wpm_hi[L]);
     if (n < 4 || n > MAXN) { fprintf(stderr, "n in [4,%d]\n", MAXN); return 2; }
     R = 2 * n * Nhi + 128;
     PADW = (2 * Nhi) / 64 + 4;
@@ -226,6 +238,10 @@ int main(int argc, char **argv) {
     for (int l = 0; l <= MAXN; l++) Dbuf[l] = (u64 *)aligned_alloc(64, sizeof(u64) * ((TOTW + 7) / 8 * 8));
     for (N = Nlo + offset; N <= Nhi; N += step) {
         clock_t t0 = clock();
+        for (int L = 1; L <= n - 1; L++) {
+            WLO[L] = (int)((long long)N * wpm_lo[L] / 1000); if (WLO[L] < 1) WLO[L] = 1;
+            WHI[L] = (int)(((long long)N * wpm_hi[L] + 999) / 1000); if (WHI[L] > N - 1) WHI[L] = N - 1;
+        }
         memset(nodes, 0, sizeof(nodes));
         nsol = 0;
         for (int l = 0; l <= MAXN; l++) { memset(Dbuf[l], 0, sizeof(u64) * TOTW); wlo[l] = PADW; whi[l] = TOTW - PADW - 1; }

@@ -53,32 +53,45 @@ impl Search {
         let dst: &mut [u64] = &mut dst_part[0];
         // zero whatever the previous node at this level left outside the new window
         let (dlo, dhi) = self.dirty[lvl + 1];
-        for i in dlo..=dhi {
-            if i < lo_w || i > hi_w {
-                dst[i] = 0;
-            }
+        for i in dlo..std::cmp::min(lo_w, dhi + 1) {
+            dst[i] = 0;
+        }
+        for i in std::cmp::max(hi_w + 1, dlo)..=dhi {
+            dst[i] = 0;
         }
         self.dirty[lvl + 1] = (lo_w, hi_w);
-        // arrays are padded with >= 2N/64 + 2 zero words on each side, so no bounds checks are needed
-        let s1 = a as usize;
-        let s2 = 2 * a as usize;
-        let (w1, b1) = (s1 >> 6, (s1 & 63) as u32);
-        let (w2, b2) = (s2 >> 6, (s2 & 63) as u32);
-        for i in lo_w..=hi_w {
-            let mut v = src[i];
-            if b1 == 0 {
-                v |= src[i - w1] | src[i + w1];
+        // arrays are padded with >= 2N/64 + 2 zero words on each side, so all slices below are in range.
+        // dst[lo..=hi] = src | src<<a | src>>a | src<<2a | src>>2a, done as five branch-free slice passes.
+        dst[lo_w..=hi_w].copy_from_slice(&src[lo_w..=hi_w]);
+        for m in 1..=2usize {
+            let sh = m * a as usize;
+            let (ws, bs) = (sh >> 6, (sh & 63) as u32);
+            let len = hi_w - lo_w + 1;
+            let d = &mut dst[lo_w..=hi_w];
+            // toward higher positions: result bit p = src bit p - sh
+            let up0 = &src[lo_w - ws..lo_w - ws + len];
+            if bs == 0 {
+                for (dv, &s0) in d.iter_mut().zip(up0.iter()) {
+                    *dv |= s0;
+                }
             } else {
-                v |= (src[i - w1] << b1) | (src[i - w1 - 1] >> (64 - b1));
-                v |= (src[i + w1] >> b1) | (src[i + w1 + 1] << (64 - b1));
+                let up1 = &src[lo_w - ws - 1..lo_w - ws - 1 + len];
+                for ((dv, &s0), &s1) in d.iter_mut().zip(up0.iter()).zip(up1.iter()) {
+                    *dv |= (s0 << bs) | (s1 >> (64 - bs));
+                }
             }
-            if b2 == 0 {
-                v |= src[i - w2] | src[i + w2];
+            // toward lower positions: result bit p = src bit p + sh
+            let dn0 = &src[lo_w + ws..lo_w + ws + len];
+            if bs == 0 {
+                for (dv, &s0) in d.iter_mut().zip(dn0.iter()) {
+                    *dv |= s0;
+                }
             } else {
-                v |= (src[i - w2] << b2) | (src[i - w2 - 1] >> (64 - b2));
-                v |= (src[i + w2] >> b2) | (src[i + w2 + 1] << (64 - b2));
+                let dn1 = &src[lo_w + ws + 1..lo_w + ws + 1 + len];
+                for ((dv, &s0), &s1) in d.iter_mut().zip(dn0.iter()).zip(dn1.iter()) {
+                    *dv |= (s0 >> bs) | (s1 << (64 - bs));
+                }
             }
-            dst[i] = v;
         }
         // clear bits outside [lo_bit, hi_bit] in the two boundary words
         let lo_mask_bits = lo_bit & 63;

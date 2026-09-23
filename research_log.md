@@ -76,3 +76,48 @@ nodes) so that every N can be cross-checked number-for-number against the Rust v
 ## Side exploration: g_4(n)
 Definition-level brute force (Python) and gk_search.c: g_4(1..5) = 1, 3, 5, 14, 40, witnesses {1}, {1,3},
 {1,4,5}, {1,9,13,14}, {1,13,35,39,40}. No OEIS entry for g_4. To be extended after the main computation.
+
+## 2026-09-23 00:20 — Upper bound g_3(7) <= 474 (new; previous best 504)
+
+- Observation (n = 4, 5, 6 extremal sets): elements as fractions of the maximum follow a common profile,
+  min ~0.636, next ~0.864, next ~0.95, rest clustered near 1 (e.g. 107/168, 145/168, 159/168; 38/60, 52/60, 57/60;
+  14/22, 19/22, 21/22).
+- Added optional `minelem` argument to g3fast2.c (band-restricted search; NOT used for lower bounds).
+- Band probe (`results/n7_probe/band_probe.sh`): for N = 431, 432, ... search 7-sets with max N and all other
+  elements >= floor(0.55 N), stop at first hit. First hit: N = 474,
+  A = {302, 409, 447, 459, 465, 466, 474}  (ratios 0.637, 0.863, 0.943, 0.968, 0.981, 0.983, 1).
+  `verify/check_set.py` PASS: all 2187 ternary sums distinct; H(A) (128 subset sums) has no 3-AP.
+  Hence g_3(7) <= 474. (The halved variant {151, 409, ...} fails: contains a 3-AP.)
+- The exhaustive scan must therefore clear N = 419..473 (and N <= 418 for independence from Korsky's bound).
+- Rust verifier optimised (branch-free slice passes, target-cpu=native, cheaper stale-word clearing):
+  N=250 n=7 now 4.5 s (was 21 s); still identical canonical counts on all regression ranges.
+- g_4(6) = 79 (witness {2,29,45,74,77,79}; N = 41..78 exhausted by gk_search.c). g_4(7) search running at nice 19.
+
+## 2026-09-23 00:45 — Mutation test of the cross-check (sensitivity of the verification)
+
+Five deliberate bugs injected into copies of g3fast2.c (-DNOROOM), compared against the Rust verifier:
+| mutation | n=6, N<=175: N values with mismatching counts | n=7, N<=130 |
+| --- | --- | --- |
+| M1 skip the `2x notin D` test in candidate scans | 172/175 | 127/130 |
+| M2 drop the j=2 window in the last level | 31/175 | 0/130 |
+| M3 materialise level n-2 only up to 3N (needs 4N) | 12/175 | 0/130 |
+| M4 drop the +-2a shifts in the D update | detected (runs killed early: far larger trees) | detected |
+| M5 skip the `2x+2y` look-up in the last level | 12/175 | 0/130 |
+Lesson: bugs confined to the last level only show up where admissible n-sets exist. For n=7 all V_7(N)=0 below
+the answer, so the final verification must ALSO compare complete solution lists at N >= 474 (where n=7 solutions
+exist), exercising the last level of both programs. Added to the plan.
+
+Secondary: g_5(1..6) = 1, 2, 4, 6, 14, 22 (gk_search.c and Python brute force agree; witnesses {1}, {1,2}, {1,3,4},
+{1,4,5,6}, {2,9,11,12,14}, {1,4,5,17,21,22}).
+
+## 2026-09-23 01:05 — Profile-window search; n = 8 upper bound; N = 466 excluded
+
+- `src/g3profile.c`: copy of g3fast2.c with per-element windows (per mille of N), for constructions only.
+  Sanity: recovers {302,409,447,459,465,466,474} at N=474 in 0.1 s and both n=6 extremal sets instantly.
+- n=8, windows 600:700 830:900 920:970 940:1000 x4 (results/n8_upper/profile8_coarse.log), first hit per M:
+  M=1420 {892,1213,1313,1351,1363,1369,1378,1420}; M=1400 {888,1212,1327,1341,1351,1356,1369,1400};
+  M=1380 {878,1192,1299,1335,1349,1353,1356,1380}; M=1360: none inside the windows.
+  check_set.py PASS for the 1380 and 1400 sets (6561 ternary sums distinct; 256 subset sums 3-AP-free).
+  => g_3(8) <= 1380 (previous best: 3 * g_3(7) <= 3 * 474 = 1422).
+- Exhaustive n=7 scan: N=466 has NO admissible 7-set (V_7(466)=0), so a(7) != 466; the coincidence with the
+  rooted-tree sequences A318821/A318863 noted in A399720 breaks at n = 7.
