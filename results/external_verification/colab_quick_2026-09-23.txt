@@ -1,0 +1,22 @@
+# Independent run of `verify_result.py quick`
+# who:   the repository owner (a human), not the AI agent that wrote the package
+# where: Google Colab CPU runtime (GenuineIntel family 6, BMI2, 8 vCPUs), on 2026-09-23
+# how:   verify/colab_verify_standalone.ipynb, whose embedded files come from commit 8853e482918c; their SHA-256
+#        were checked on unpacking
+# The output below was pasted into the session by the owner, verbatim. Detail fields are cut at 120 characters by
+# the script itself.
+
+built bin/g3fast2 bin/g3fast2_noroom with CFLAGS="-O3 -march=native" (cpu: GenuineIntel family 6, bmi2=True)
+PASS certificate n=7 {302,409,447,459,465,466,474}  -- PASS n=7 max=474 A=[302, 409, 447, 459, 465, 466, 474] | ternary sums distinct: True (2187 sums) | H(A) 3-AP-free: True 
+PASS certificate n=8 {894,1196,1303,1341,1353,1359,1360,1368}  -- PASS n=8 max=1368 A=[894, 1196, 1303, 1341, 1353, 1359, 1360, 1368] | ternary sums distinct: True (6561 sums) | H(A) 3-A
+PASS Lemma 1 equivalence test  -- equivalence test mismatches: 0
+PASS g_3(5) = 60 reproduced  -- 2 sets at N=60
+PASS g_3(6) = 168 reproduced  -- 2 sets at N=168
+exhaustive search, n = 7, 2 values of N with 8 parallel jobs -> /content/verify_run/quick
+  N=474 ok  (1/2, 6 min elapsed)
+  N=473 ok  (2/2, 7 min elapsed)
+PASS n=7 canonical counts equal the published table for N in [473, 474]  -- 2 values
+PASS N=474: exactly one admissible 7-set, {302,409,447,459,465,466,474}
+
+7 of 7 checks passed.
+Note: quick mode checks the certificate and the two decisive values of N. The full claim needs every N <= 473: run "critical" (N = 419..473, with Korsky's bound) or "full" (all N).

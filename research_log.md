@@ -444,3 +444,9 @@ browser in the container, no shared display) and not advisable (creating credent
 Instead: verify/colab_verify_standalone.ipynb (built by scripts/make_standalone_notebook.py from git HEAD) embeds
 gzip+base64 copies of the 14 needed files with SHA-256 checks, so no GitHub access or token is needed. Tested by
 unpacking into an empty directory: all checksums ok, quick verification 7/7 PASS in 5.3 min.
+
+## 2026-09-23 ~16:00 — first human-run verification (Google Colab)
+The repository owner ran colab_verify_standalone.ipynb in Google Colab (GenuineIntel, BMI2, 8 vCPUs): cell 1
+checksums ok; `verify_result.py quick` 7/7 PASS (N = 474 in 6 min, N = 473 in 7 min; count vectors identical to
+results/n7_counts.csv). Output saved in results/external_verification/colab_quick_2026-09-23.txt. The critical run
+(N = 419..478) is in progress on the owner's runtime (published C run: 2.8 core-hours; estimate 40-70 min there).

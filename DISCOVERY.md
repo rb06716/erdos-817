@@ -190,6 +190,7 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 | Band check, n = 7, N = 474…520: 12,010 solutions, identical in C and Rust | last search level correct where solutions exist |
 | Reference program `g3search.c` (no windowing/PEXT) at N = 473, 474: output identical to `g3fast2` (same mode), incl. the unique set | windowing and PEXT logic of the main program |
 | Third-party `g3.c` (firesh audit repository, different author): no admissible 7-subset of [1..200] | agreement with an externally written program where it is fast enough |
+| Run by the repository owner (a human) on different hardware: `verify_result.py quick` in Google Colab (Intel, 8 vCPUs), 2026-09-23: 7/7 PASS (`results/external_verification/`) | reproducibility on another machine, run by a human: certificates, Lemma 1 test, g₃(5), g₃(6), and the exact count vectors at N = 473, 474 (same code, so this guards against environment and hardware errors, not against a shared logic error) |
 | Independent external find: carlomitchener (forum thread #817, 23 Sep 2026) posted the same set as `g₃(7) ≤ 474`, checked from the definition | external confirmation of the certificate; consistent with uniqueness (any admissible 7-set with maximum 474 must be this one) |
 | **C = Rust, n = 7, N = 419…478** (full count vectors and solution lists) | **main claim, two independent programs** |
 | **C = Rust, n = 7, N = 1…418** | removes dependence on Korsky's bound |
