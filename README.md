@@ -3,6 +3,7 @@
 [![checks](https://github.com/rb06716/erdos-817/actions/workflows/checks.yml/badge.svg)](https://github.com/rb06716/erdos-817/actions/workflows/checks.yml)
 [![verify](https://github.com/rb06716/erdos-817/actions/workflows/verify.yml/badge.svg)](https://github.com/rb06716/erdos-817/actions/workflows/verify.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22925445.svg)](https://doi.org/10.5281/zenodo.22925445)
 
 For a finite set `A` of positive integers, let `H(A) = {Σ_{a∈S} a : S ⊆ A}` be its set of subset sums. The
 **Erdős–Sárközy function** `g_k(n)` is the least `N` such that some `n`-element set `A ⊆ {1,…,N}` has `H(A)`
@@ -123,9 +124,14 @@ the problem (see "How it can be falsified" in [docs/DISCOVERY.md](docs/DISCOVERY
 
 ## Citing
 
-If you use the results, programs or data, please cite this repository; see [CITATION.cff](CITATION.cff) or
-GitHub's "Cite this repository" button. Please also cite the original sources: P. Erdős (1991), P. Erdős and
-A. Sárközy, *Discrete Math.* 102 (1992), S. Korsky, arXiv:2606.24139 (2026), and OEIS A399720.
+If you use the results, programs or data, please cite the archived version (Zenodo):
+
+> Ryan Brown, *Erdős Problem #817: the exact value g₃(7) = 474 and related computations*, v1.0.0, Zenodo, 2026,
+> https://doi.org/10.5281/zenodo.22925445
+
+See also [CITATION.cff](CITATION.cff) or GitHub's "Cite this repository" button. Please also cite the original
+sources: P. Erdős (1991), P. Erdős and A. Sárközy, *Discrete Math.* 102 (1992), S. Korsky, arXiv:2606.24139
+(2026), and OEIS A399720.
 
 ## License
 

@@ -5,7 +5,8 @@ Notable changes to the results, programs and documentation. The detailed history
 
 ## v1.0.0 — 2026-09-23
 
-First public version.
+First public version. Archived on Zenodo: https://doi.org/10.5281/zenodo.22925446 (all versions:
+https://doi.org/10.5281/zenodo.22925445).
 
 **Results**
 * `g₃(7) = 474`, with `{302, 409, 447, 459, 465, 466, 474}` the unique extremal set. The upper bound is a

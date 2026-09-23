@@ -535,3 +535,9 @@ The owner made the repository public and renamed the default branch to `main`.
   authorship are forbidden. docs/SUBMISSION_DRAFTS.md §1-2 therefore became fact sheets for the owner to write
   from, not paste-ready text. The forum allows AI-assisted wording with disclosure, provided the poster
   understands and has verified the claims.
+
+## 2026-09-23 ~21:00 — archived on Zenodo
+The owner merged the release preparation (PR #1) and published release v1.0.0 on GitHub (20:20 UTC); Zenodo archived
+it after a delay on their side. Version DOI 10.5281/zenodo.22925446; concept DOI (all versions) 10.5281/zenodo.22925445. Added to README
+(badge, suggested citation), CITATION.cff (doi, identifiers), CHANGELOG and the drafts. Pushed directly to main at
+the owner's request.

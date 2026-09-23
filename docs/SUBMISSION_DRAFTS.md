@@ -56,9 +56,8 @@ paste**; write the comments in your own words and answer editors' questions your
   ```
   Jaegug Bae, <a href="https://www.ijpam.eu/contents/2002-1-3/8/8.pdf">On generalized subset-sum-distinct sequences</a>, Int. J. Pure Appl. Math. 1 (2002), 335-343.
   Jaegug Bae and Sungjin Choi, <a href="https://doi.org/10.4134/JKMS.2003.40.5.757">A generalization of a subset-sum-distinct sequence</a>, J. Korean Math. Soc. 40 (2003), 757-768.
-  Ryan Brown, <a href="https://doi.org/ZENODO-DOI">Computations for g_3(7) = 474 (Erdős Problem #817)</a>, Zenodo, 2026.
+  Ryan Brown, <a href="https://doi.org/10.5281/zenodo.22925445">Computations for g_3(7) = 474 (Erdős Problem #817)</a>, Zenodo, 2026.
   ```
-  Replace `ZENODO-DOI` with the DOI of the v1.0.0 release (or link https://github.com/rb06716/erdos-817).
 
 ## 2. Possible new OEIS entries
 
@@ -85,8 +84,7 @@ Facts only, as in §1: a new entry needs your own name line, definition and comm
 ## 3. Note for the Erdős Problems forum (thread #817, as a discussion comment)
 
 The forum allows AI help with the wording if it is disclosed (the last paragraph does this), but asks that the
-poster understands and has verified every claim. Edit it into your own words where you prefer, and replace
-`ZENODO-DOI` with the DOI of the v1.0.0 release.
+poster understands and has verified every claim. Edit it into your own words where you prefer.
 
 > Following carlomitchener's upper bound g_3(7) <= 474: an exhaustive search shows that this is sharp, so
 > g_3(7) = 474, and {302, 409, 447, 459, 465, 466, 474} is the unique extremal set. In particular
@@ -94,7 +92,7 @@ poster understands and has verified every claim. Edit it into your own words whe
 >
 > Every N <= 473 was searched by two independent programs, which agree on the number of admissible
 > k-subsets of [1..N] containing N for every N <= 478. This does not rely on Korsky's bound. Code, logs and
-> count tables: https://github.com/rb06716/erdos-817 (archived as https://doi.org/ZENODO-DOI)
+> count tables: https://github.com/rb06716/erdos-817 (archived as https://doi.org/10.5281/zenodo.22925445)
 >
 > Two side remarks. First, extending m-czech's remark (b) above: the extremal sets for n = 4…7 all have the
 > form {u_n − u_i}, where each u_{k+1} is an admissible "hole" for {u_1..u_k}. Continuing the n = 7 chain
