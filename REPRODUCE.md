@@ -6,7 +6,8 @@ Only standard tools are needed; no network access after cloning.
 ## 0. Build (seconds)
 
 ```sh
-make all          # builds bin/g3fast2, bin/g3fast2_noroom, bin/g3search, bin/gk_search, bin/g3verify
+make all          # builds bin/g3fast2, bin/g3fast2_noroom, bin/g3search, bin/gk_search, bin/gk_verify,
+                  #        bin/g3profile, bin/g3verify
 ```
 `src/g3fast2.c` uses the BMI2 `PEXT` instruction (`-march=native`). On a CPU without BMI2 use the portable
 reference `bin/g3search` (same results, ~3x slower) — see step 4.
@@ -61,6 +62,22 @@ diff my_counts.csv results/n7_counts.csv && echo "identical canonical counts"
 sha256sum results/n7_counts.csv    # compare with results/SHA256SUMS
 ```
 
+### Last-level cross-check where solutions exist (band check, ~1 h on one core)
+
+```sh
+for N in $(seq 474 520); do
+  ./bin/g3fast2  7 $N $N 0 1 0 $(( N * 55 / 100 )) | grep -E "SOLUTION|^N=" >> my_c_band.log
+  ./bin/g3verify 7 $N $N 1 0 550                   | grep -E "SOLUTION|^N=" >> my_rust_band.log
+done
+diff <(grep SOLUTION my_c_band.log | sort) <(grep SOLUTION my_rust_band.log | sort) && echo identical   # 12,010 sets
+```
+(The published run used `bin/g3verify_band`, a build of the same Rust source; `results/n7_band_crosscheck/`.)
+
+### One-shot pipeline
+
+`scripts/verify_pipeline.sh 4` runs stages A–D above in sequence (C and Rust, both ranges), and
+`scripts/finalize.sh` rebuilds `results/n7_counts.csv`, repeats all comparisons and writes `results/SHA256SUMS`.
+
 ## 4. Portable / slower alternatives
 
 * `bin/g3search 7 N N` (no PEXT, default room pruning) visits a subset of the NOROOM tree; it must report
@@ -68,9 +85,16 @@ sha256sum results/n7_counts.csv    # compare with results/SHA256SUMS
 * `bin/gk_search 3 n Nlo Nhi` works directly from the definition (subset-sum bitset + AP test); practical for
   `n ≤ 6` or small `N`; its per-level counts equal `bin/g3fast2_noroom`'s.
 
-## 5. Secondary results (k ≥ 4)
+## 5. Secondary results
 
 ```sh
-./bin/gk_search 4 6 1 79 1     # g_4(6) = 79, first witness {2,29,45,74,77,79}
-./bin/gk_search 5 6 1 22 1     # g_5(6) = 22
+# upper bounds for n = 8..14 (hole chains); certificates
+python3 scripts/beam.py 300 12 12 40            # n = 3..12: 8 22 60 168 474 1368 3974 11578 34088 100422 (~1 min)
+python3 scripts/offset_recursion.py             # greedy chains from several seeds
+python3 verify/check_set.py 894,1196,1303,1341,1353,1359,1360,1368
+# k = 4, 5 (two independent programs must agree)
+./bin/gk_search 4 6 1 79 1                      # g_4(6) = 79, witness {2,29,45,74,77,79}
+./bin/gk_search 5 7 1 60 0 > a.log; ./bin/gk_verify 5 7 1 60 > b.log   # g_5(7) = 60, 4 extremal sets
+diff <(grep -v SOL a.log | sed 's/ time=.*//') <(grep -v SOL b.log) && echo "counts identical"
+python3 scripts/summary_table.py                # table of values, Korsky bounds, ratios
 ```

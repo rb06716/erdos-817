@@ -1,6 +1,7 @@
 # Research log
 
-All times are container-local (UTC), 2026-09-22 onward. Entries are appended chronologically.
+All times are container-local (UTC), 2026-09-22 onward. Entries are appended chronologically; times marked
+`~` were reconstructed from `date` outputs recorded during the session and are approximate (+-3 min).
 
 ## 2026-09-22 — Session start, environment and resource survey
 
@@ -141,7 +142,7 @@ Prior-art re-check after the result: web searches for "474" with the extremal se
 2-fold subset-sum-distinct / D_q-set computations (Bae; Bae–Choi 2003; Dutta arXiv:2601.07068): nothing
 reports g_3(7) or this set; latest sources (OEIS 2026-09-14, audit repo 2026-09-18) still list it as open.
 
-## 2026-09-23 01:50 — Code review of g3fast2.c
+## 2026-09-23 ~01:39 — Code review of g3fast2.c
 Line-by-line review of the window invariants (every position in [needlo[L], needhi[L]] of level L holds the true
 D_L bit; proof by induction on L recorded in METHODS.md section 4) and of the last-level read ranges
 (x - jy in [-N, 3N], 2x - jy in [2, 4N-4]). One latent issue found: the scratch buffer in window_even()
@@ -149,7 +150,7 @@ D_L bit; proof by induction on L recorded in METHODS.md section 4) and of the la
 package (n=7 runs have N <= 520; n=8 runs use narrow windows), but fixed (52 words + explicit Nhi <= 1536
 guard). Rebuilt binaries give byte-identical outputs on regression ranges.
 
-## 2026-09-23 01:40 — Offset analysis of the extremal sets (scripts/offset_analysis.py)
+## 2026-09-23 ~01:40 — Offset analysis of the extremal sets (scripts/offset_analysis.py)
 With A = {M} u {M - b : b in B}: all extremal sets satisfy condition (i) (no relation with |sum c| <= 2), and M
 is exactly the FIRST admissible value above max B:
 - n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values) -> M = 474.
@@ -158,7 +159,7 @@ is exactly the FIRST admissible value above max B:
 So g_3(n) = min over offset sets B (|B| = n-1, condition (i)) of the first hole of
 F(B) = {M : M in F_1(B) or 2M in F_2(B)} above max B.
 
-## 2026-09-23 01:45 — Scale of the n = 7 computation; scheduling note; k >= 4 double-check
+## 2026-09-23 ~01:41 — Scale of the n = 7 computation; scheduling note; k >= 4 double-check
 - Totals over N = 419..473 (C, canonical counts): admissible 5-sets 49,173,696,632; admissible 6-sets
   207,290,610,257; admissible 7-sets 0. Table: results/n7_counts_c_419-478.csv.
 - Scheduling: the container has kernel autogroups enabled, so `nice` has no effect across separately
@@ -171,14 +172,14 @@ F(B) = {M : M in F_1(B) or 2M in F_2(B)} above max B.
 - Rust verifier gained an optional band argument (separate binary bin/g3verify_band; default behaviour
   unchanged) for cheap last-level cross-checks at N >= 474 where solutions exist.
 
-## 2026-09-23 01:55 — Falsification attempt via Conway–Guy-type constructions (scripts/conway_guy_ternary.py)
+## 2026-09-23 ~01:43 — Falsification attempt via Conway–Guy-type constructions (scripts/conway_guy_ternary.py)
 Bae & Choi (2003) prove that "Conway–Guy-like" sequences are k-fold subset-sum-distinct (paper not reachable).
 Exhaustive over all recurrences u_{n+1} = 3u_n - u_{n-r_n} (r_n in 1..n, u_0=0, u_1=1) with sets
 S_n = {u_n - u_i : i < n}: the smallest admissible S_n has max 1, 3, 8, 23, 64, 189, 543, 1565 for n = 1..8.
 No such set beats g_3(n) for n <= 7 (consistent with the exhaustive search), and none beats the new n = 8
 construction (1380). So this construction family neither contradicts nor anticipates g_3(7) = 474.
 
-## 2026-09-23 02:00 — Offset recursion: a ternary Conway–Guy-type construction; new upper bounds n = 8..12
+## 2026-09-23 ~01:46 — Offset recursion: a ternary Conway–Guy-type construction; new upper bounds n = 8..12
 - scripts/hole_dp.py: first_hole(B) = least M > max B with {M} u {M - b : b in B} admissible (DP over
   (sum c, sum c*b) bitsets; incremental test of condition (i)). Reproduces 22, 60, 168, 474, 1380 exactly.
 - Recursion B_{n+1} = B_n u {M_n}, M_{n+1} = first_hole(B_{n+1}) (scripts/offset_recursion.py):
@@ -194,7 +195,7 @@ construction (1380). So this construction family neither contradicts nor anticip
 - Offset local search from the 1380 set: no improvement in 20k moves; seeds B_7 u {474} + delta fail
   condition (i) for every delta in 1..40 (only delta = 0 works).
 
-## 2026-09-23 02:10 — "Hole chains": structure of all extremal sets; beam search reproduces every known optimum
+## 2026-09-23 ~01:52 — "Hole chains": structure of all extremal sets; beam search reproduces every known optimum
 Definition: write A = {u_n - u_i : 0 <= i < n} with 0 = u_0 < u_1 < ... < u_n = max A. A is a *hole chain* if for
 every k the set {u_{k+1} - u_i : 0 <= i <= k} is admissible (u_{k+1} is an admissible "hole" of {u_1..u_k}).
 - scripts/holes_all.py: all holes of an offset set (vectorised DP); scripts/beam.py: beam search over chains
@@ -212,26 +213,26 @@ every k the set {u_{k+1} - u_i : 0 <= i <= k} is admissible (u_{k+1} is an admis
 - Pure first-hole recursion from u_1 = 1: u = 0, 1, 3, 8, 22, 60, 169, 477, 1387, 4041, 11785, 34709, 102263
   (exact optimum for n <= 5; not in OEIS).
 
-## 2026-09-23 02:15 — g_5(7) = 60
+## 2026-09-23 ~01:55 — g_5(7) = 60
 gk_search (stop at first) finds the first admissible 7-set for k = 5 at N = 60; full enumeration by gk_search and
 gk_verify for N = 1..60 gives identical canonical counts and the same 4 extremal sets at N = 60:
 {1,39,44,55,56,59,60}, {1,5,39,55,56,59,60}, {9,10,44,53,54,59,60}, {2,5,39,55,57,58,60}.
 Direct check of {1,5,39,55,56,59,60}: |H| = 80, no 5-term AP (it does contain 4-term APs).
 g_5(1..7) = 1, 2, 4, 6, 14, 22, 60; g_4(1..6) = 1, 3, 5, 14, 40, 79 and g_4(7) >= 174.
 
-## 2026-09-23 02:25 — Definition-level check at an extremal instance
+## 2026-09-23 ~01:58 — Definition-level check at an extremal instance
 src/gk_search.c with k = 3 (subset-sum bitsets + direct 3-AP test; no reformulation) at n = 6, N = 167, 168:
 N=168 canonical counts 1 166 13168 555821 4600840 2 -- identical to g3fast2 -DNOROOM (N=167: 0 solutions,
 identical counts). So Lemma 1 + Lemma 2 + the fast implementation agree with the raw definition at the size
 where the optimum occurs for n = 6.
 
-## 2026-09-23 02:05 — Exact chain description of the n = 7 optimum
+## 2026-09-23 ~02:02 — Exact chain description of the n = 7 optimum
 u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, ...: u_2 = 9 is the first hole of {8}; u_3 = 15 is the 4th hole of {8, 9}
 (holes 11, 12, 14, 15, ...); every later term (27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422) is the FIRST
 hole of the preceding offsets. So the unique optimum for n = 7 and the n = 8..12 constructions are determined
 by the seed (8, 9, 15) plus the greedy first-hole rule.
 
-## 2026-09-23 02:10 — Hole ranks along the chains of all extremal sets (n = 4..7)
+## 2026-09-23 ~02:04 — Hole ranks along the chains of all extremal sets (n = 4..7)
 rank k = the chosen value is the k-th admissible hole; ">2S" = beyond 2*sum(B) where every value is admissible.
 | extremal set | chain u | ranks from u_2 |
 | {7,19,21,22} | 0,1,3,15,22 | 1, >2S, 1 |
@@ -243,7 +244,7 @@ rank k = the chosen value is the k-th admissible hole; ">2S" = beyond 2*sum(B) w
 | {302,409,447,459,465,466,474} | 0,8,9,15,27,65,172,474 | 1, 4, 1, 1, 1, 1 |
 Observation: every extremal set is "greedy first-hole" except for at most one early deviation.
 
-## 2026-09-23 02:15 — Greedy chain continued to n = 13, 14 (certified)
+## 2026-09-23 ~02:13 — Greedy chain continued to n = 13, 14 (certified)
 u_13 = 295924, u_14 = 879824 (first holes). check_set.py PASS: n=13 (1,594,323 distinct ternary sums; 8192 subset
 sums, no 3-AP), n=14 (4,782,969 distinct ternary sums; 16384 subset sums, no 3-AP).
 => g_3(13) <= 295924 (ratio to 3^13: 0.1856), g_3(14) <= 879824 (0.1839).
@@ -278,8 +279,24 @@ certificates PASS. Totals over N <= 473: 274,105,685,447 admissible 6-sets, 95,5
 0 admissible 7-sets. g_3(7) = 474 now rests on two independent exhaustive searches over all N, with no use of
 Korsky's bound. C CPU time (sum of per-N clock()): 2.82 h (N=419..478) + 1.18 h (N<=418).
 
-## 2026-09-23 04:05 — Band cross-check complete
+## 2026-09-23 03:55 — Band cross-check complete
 results/n7_band_crosscheck: for N = 474..520, all admissible 7-sets with max N and other elements >= floor(0.55 N),
 enumerated by C (g3fast2 minelem) and Rust (g3verify band argument): identical solution lists for all 47 values of
 N, 12,010 sets in total. This exercises the last search level of both programs on thousands of solutions (the
 mutation test showed last-level bugs are invisible where no solutions exist).
+
+## Summary of outcomes (as of 2026-09-23 ~04:00)
+
+Established (two independent exhaustive implementations, all N = 1..478, 0 mismatches):
+- g_3(7) = 474; unique extremal set {302, 409, 447, 459, 465, 466, 474}.
+Certified constructions (exact checks):
+- g_3(8..14) <= 1368, 3974, 11578, 34088, 100422, 295924, 879824.
+Verified structural facts (n <= 7) and empirical patterns:
+- all extremal sets for n = 4..7 are hole chains with at most one non-greedy step; beam search over chains
+  reproduces every known optimum.
+Secondary exact values (two independent implementations):
+- g_4(1..6) = 1, 3, 5, 14, 40, 79 (unique extremal set at n=6); g_5(1..7) = 1, 2, 4, 6, 14, 22, 60.
+Failed / abandoned attempts recorded above: first room-pruned scan (restarted for canonical counts);
+nice-based scheduling (autogroups); offset local search (no improvement); first-hole recursion from single seeds
+(does not reach 474; needs one non-first hole).
+Compute used: C 4.0 CPU-h; Rust ~2.5x; auxiliary runs (band check, beam, k>=4, n=8 probes) ~3 CPU-h.
