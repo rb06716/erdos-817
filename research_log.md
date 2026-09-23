@@ -255,3 +255,18 @@ Korsky's bound. Rust verification of N = 1..418 launched (results/n7_verify_rust
 Band cross-check (results/n7_band_crosscheck): N = 474..480 so far, identical solution lists (6 solutions).
 Reproducibility: the Rust verifier rebuilt from the current source (which adds the optional band argument)
 gives byte-identical output to the production binary on n=5 (N<=90), n=6 (N<=175), n=7 (N<=140) and N=474.
+
+## 2026-09-23 03:05 — Wider beam for n = 8
+scripts/beam.py 20000 40 8 80 (results/n8_upper/beam_W20000_K40.log): n=6: 168, n=7: 474, n=8: 1368 (same set).
+The n=8 bound is stable under a 67x wider beam and seeds up to 80.
+
+## 2026-09-23 03:27 — MAIN VERIFICATION: Rust = C on N = 419..474 (and 476, 478)
+scripts/aggregate.py compare: 58 values of N compared, 0 mismatches (full canonical count vectors and solution
+lists). N = 473: (1, 472, 109976, 15952078, 1195092113, 6608257434, 0) in both programs. N = 474: V_7 = 1 in both,
+the same set {302,409,447,459,465,466,474}. => g_3(7) = 474 confirmed by two independent implementations over the
+whole range above Korsky's bound; N <= 418 covered by C (complete) and Rust (in progress).
+
+## 2026-09-23 03:31 — Rust verification of N = 419..478 COMPLETE
+compare: 60 values of N (419..478), 0 mismatches. Solution lists identical: N=474 {302,409,447,459,465,466,474};
+N=475 {307,414,452,466,469,473,475}; N=477 {308,417,455,469,474,476,477}, {309,416,454,468,471,473,477};
+N=476, 478: none.

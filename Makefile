@@ -3,7 +3,7 @@
 CC ?= gcc
 CFLAGS ?= -O3 -march=native
 
-all: bin/g3fast2 bin/g3fast2_noroom bin/g3search bin/gk_search bin/g3verify
+all: bin/g3fast2 bin/g3fast2_noroom bin/g3search bin/gk_search bin/gk_verify bin/g3profile bin/g3verify
 
 bin:
 	mkdir -p bin
@@ -18,6 +18,12 @@ bin/g3search: src/g3search.c | bin
 	$(CC) $(CFLAGS) -o $@ $<
 
 bin/gk_search: src/gk_search.c | bin
+	$(CC) $(CFLAGS) -o $@ $<
+
+bin/gk_verify: verify/gk_verify.c | bin
+	$(CC) $(CFLAGS) -o $@ $<
+
+bin/g3profile: src/g3profile.c | bin
 	$(CC) $(CFLAGS) -o $@ $<
 
 bin/g3verify: verify/g3verify_rs/src/main.rs verify/g3verify_rs/Cargo.toml | bin

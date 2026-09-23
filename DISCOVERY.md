@@ -108,4 +108,12 @@ for every N, plus agreement with definition-level brute force on smaller instanc
 
 ## VERIFICATION STATUS
 
-(final numbers filled in when the runs complete; see research_log.md)
+| range of N | C (`g3fast2 -DNOROOM`) | Rust (`g3verify`) | comparison |
+| --- | --- | --- | --- |
+| 419 … 478 | complete (`results/n7_scan/`) | complete (`results/n7_verify_rust_hi/`) | identical count vectors and solution lists (`scripts/aggregate.py compare`) |
+| 1 … 418 | complete (`results/n7_c_lo/`), no admissible 7-set | see `results/n7_verify_rust_lo/` | see research_log.md (final entry) |
+| band check 474 … 520 (elements ≥ 0.55 N) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists |
+
+Solutions found by both programs for N = 474…478: N = 474: {302,409,447,459,465,466,474}; N = 475:
+{307,414,452,466,469,473,475}; N = 476: none; N = 477: {308,417,455,469,474,476,477},
+{309,416,454,468,471,473,477}; N = 478: none.
