@@ -25,9 +25,10 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 
 * **g_4(n)**: `1, 3, 5, 14, 40, 79` (least N such that some n-subset of [1..N] has subset sums with no
   nonconstant 4-term AP; Erdős Problem #817 with k = 4). a(6) = 79 attained only by {2,29,45,74,77,79};
-  a(7) >= 174.
-* **g_5(n)**: `1, 2, 4, 6, 14, 22, 60` (k = 5). a(7) = 60 attained by exactly four sets:
-  {1,39,44,55,56,59,60}, {1,5,39,55,56,59,60}, {9,10,44,53,54,59,60}, {2,5,39,55,57,58,60}.
+  201 <= a(7) <= 230 (witness {2,29,151,196,225,228,230}).
+* **g_5(n)**: `1, 2, 4, 6, 14, 22, 60, 92` (k = 5). a(7) = 60 attained by exactly four sets:
+  {1,39,44,55,56,59,60}, {1,5,39,55,56,59,60}, {9,10,44,53,54,59,60}, {2,5,39,55,57,58,60};
+  a(8) = 92 attained only by {10,11,67,77,78,81,82,92}.
 * **Greedy "first-hole" chain from u_1 = 1**: `0, 1, 3, 8, 22, 60, 169, 477, 1387, 4041, 11785, 34709, 102263`
   (u_{k+1} = least integer > u_k such that {u_{k+1} - u_i : 0 <= i <= k} has distinct {0,1,2}-sums);
   equals A399720 for n <= 5.

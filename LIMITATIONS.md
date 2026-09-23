@@ -58,5 +58,6 @@
 
 9. **`g₄`, `g₅` values** rest on two independent C implementations (increasing vs. decreasing order;
    bitset shifted-AND vs. pairwise AP detection) that agree on all canonical counts for the reported ranges.
-   Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6). `g₄(7)` is
-   only bounded below (≥ 174) by a single implementation's partial run.
+   Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6). For `g₄(7)` only
+   bounds are claimed: `≥ 201` from a single implementation's exhaustive run over N ≤ 200 (the two programs
+   agree for k = 4, n = 7 on N = 100…125), and `≤ 230` from an explicit, directly checked witness.

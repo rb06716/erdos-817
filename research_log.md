@@ -315,3 +315,23 @@ Compute used: C 4.0 CPU-h; Rust ~2.5x; auxiliary runs (band check, beam, k>=4, n
 gk_search (full enumeration) and gk_verify give identical canonical counts for k = 4, n = 7, N = 100..125 (26 values)
 (results/gk/g4_n7_crosscheck/). The third-party n = 6 re-run was stopped (it would only re-confirm the audit
 repository's own published g_3(6) = 168).
+
+## 2026-09-23 05:07 — g_5(8) = 92 (single implementation so far; cross-check running)
+gk_search (stop at first, started at N = 61): N = 61..91 exhausted, first admissible 8-set at N = 92:
+{10,11,67,77,78,81,82,92}. (N <= 60 is covered by the full-range runs below.)
+Full enumeration at N = 92 by gk_search and gk_verify: identical counts (1 91 4093 119945 2204805 5803259 70967 1),
+i.e. the extremal set is unique. Full-range cross-check N = 1..91 launched (results/gk/g5_n8/).
+
+## 2026-09-23 ~05:15 — Observation: mod-3 effect in the number of admissible 7-sets (band data, N = 474..520)
+Band-restricted counts (other elements >= 0.55 N) show no parity effect (mean 232 for even N vs 280 for odd N) but a
+strong mod-3 effect: N = 504 (= 3*168): 423 sets vs 74 (N=502) and 204 (N=506); N = 513: 1151 vs 406 (511), 656 (515);
+N = 516: 1406; N = 519: 1968 vs 867 (517). Consistent with constructions of the type {x} u 3A (x not divisible by 3),
+which exist exactly when 3 | N. Note g_3(5), g_3(6), g_3(7) = 60, 168, 474 are all divisible by 3.
+Element residues in the 12,010 band solutions: number of odd elements 2..6 occurs 431/3557/5178/2239/605 times.
+
+## 2026-09-23 05:36 — g_5(8) = 92 confirmed; g_4(7) bounds
+- gk_search and gk_verify (full enumeration) give identical canonical counts for k=5, n=8, N = 1..91 (no
+  admissible 8-set) and at N = 92 (exactly one: {10,11,67,77,78,81,82,92}). => g_5(8) = 92.
+- g_4(7): N = 80..200 exhausted (single implementation; programs agree on N = 100..125); probes with stop-at-first
+  found witnesses at N = 240 {1,6,96,144,225,231,240} and N = 230 {2,29,151,196,225,228,230} (both checked directly:
+  98 distinct subset sums, no 4-AP). => 201 <= g_4(7) <= 230. Exhaustive search continues in the background.
