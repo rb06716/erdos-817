@@ -20,6 +20,8 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 
   Either can be run in Google Colab with `verify/colab_verify.ipynb`, no local setup needed. Say in the post
   what was run.
+  * **Status (2026-09-23):** the repository owner ran `quick` (7/7 PASS) and `critical` (all 60 values of N
+    identical, 7/7 PASS) on Google Colab; see `results/external_verification/`.
 * **Post as a comment in the discussion thread, not as a proof claim.** The problem asks for an estimate of
   `g_k(n)`, which "cannot be resolved with a finite computation". An exact small value is data for it, not a
   (partial) solution.
@@ -86,6 +88,7 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 > fact g_3(6) = 168, as above.
 >
 > Disclosure: the search, the programs and this text were produced with an AI agent (Claude). I re-ran the
-> verification myself on Google Colab (`verify/verify_result.py critical`): the certificate check and the
-> exhaustive search for every N = 419…478, reproducing all published count vectors and the unique set at
-> N = 474. <Add the full N = 1…478 run here if completed.>
+> verification myself on Google Colab (`verify/verify_result.py critical`). That covered the certificate check
+> and the exhaustive search for every N = 419…478, i.e. every N above Korsky's bound g_3(7) ≥ 419. It
+> reproduced all published count vectors and the unique set at N = 474. Below 419 the claim rests on Korsky's
+> theorem and on the package's two independent programs, which also cover N = 1…418.

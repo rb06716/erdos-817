@@ -457,3 +457,11 @@ count vectors identical to results/n7_counts.csv, and the solution lists for N =
 474). 7/7 checks passed. Output saved in results/external_verification/colab_critical_2026-09-23.txt. DISCOVERY
 (verification table), LIMITATIONS item 3 and the forum draft's disclosure line updated. The owner is now running
 `full` (N = 1..478) and the Rust check.
+
+## 2026-09-23 ~17:45 — verification by the owner complete; ready to publish
+The owner stopped after `quick` and `critical`: Colab kept disconnecting, and the optional steps (full N = 1..418,
+Rust at 473/474) only repeat checks already in the package (both programs, all N <= 478). The forum draft's
+disclosure line now states exactly what the owner ran. Pre-publication check: all 31 commits are authored as
+"Claude <noreply@anthropic.com>" and no personal data appears in tracked files, so the repository can be made public.
+Remaining steps (owner): make the repository public or archive it on Zenodo, then post the forum comment and the
+OEIS extension (SUBMISSION_DRAFTS.md).
