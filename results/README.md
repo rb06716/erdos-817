@@ -20,4 +20,7 @@ With `-DNOROOM` (C) and always (Rust), `V_k` = number of admissible k-subsets of
 | `thirdparty_check/` | third-party `g3.c` (firesh audit repository) at n = 7, N = 200 |
 | `certificates/` | sorted ternary sums / subset sums and SHA-256 of the certificate sets (n = 7, n = 8) |
 | `n8_upper/` | n = 8 construction searches (band, profile windows, beam) — upper bounds only |
-| `gk/` | k = 4, 5 computations (`gk_search`, `gk_verify`), including the partial g_4(7) search |
+| `gk/` | k = 4, 5 computations (`gk_search`, `gk_verify`) |
+| `gk/g4_n7/` | g_4(7): `gk_search` (stop at first solution), N = 174…229 (N = 80…173: `gk/g4_n7_partial_N80-173.log`) |
+| `gk/g4_n7_verify/` | g_4(7): independent `gk_verify` full enumeration, N = 1…225 (six extremal sets at N = 225); `compare.py` compares it with `gk_search` (0 mismatches on N = 80…224) |
+| `prior_art/` | output of `scripts/oeis_novelty_check.py` on the OEIS export of 2026-09-23 |

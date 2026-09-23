@@ -35,9 +35,7 @@ below.
 **Also proved in this package:**
 * **By certificates** (fully rigorous): `g₃(n) ≤ 1368, 3974, 11578, 34088, 100422, 295924, 879824` for
   `n = 8, …, 14`.
-* **Computer-assisted, two programs:** `g₄(6) = 79`, `g₅(7) = 60`, `g₅(8) = 92`.
-* **Computer-assisted, one program so far:** `g₄(7) = 225`; the second program's re-check is in progress
-  (item 3 below).
+* **Computer-assisted, two programs:** `g₄(6) = 79`, `g₄(7) = 225`, `g₅(7) = 60`, `g₅(8) = 92` (item 3 below).
 
 **Not proved (conjectures):**
 * `g₃(8) = 1368`;
@@ -71,12 +69,20 @@ below.
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
 3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist; Korsky's paper, which
    treats `k ≥ 4` asymptotically, could not be read in full, so small values there cannot be ruled out):
-   `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6; at n = 7
-   the witness `{2, 90, 135, 193, 220, 222, 225}`, with every N ≤ 224 exhausted — see the status note in
-   LIMITATIONS.md for the second-implementation check of g₄(7));
+   `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6);
    `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92` (unique extremal set `{10, 11, 67, 77, 78, 81, 82, 92}` at n = 8).
-   Two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on all canonical counts for the
-   exact values (for g₅(8): all N ≤ 92); for n ≤ 5 (k = 4) and n ≤ 6 (k = 5) also a Python brute force.
+   * **`g₄(7) = 225`** has exactly six extremal sets. All six contain `90, 135, 225` (note `90 + 135 = 225`)
+     and have 98 distinct subset sums:
+     `{2,90,135,193,220,222,225}`, `{4,90,135,206,215,219,225}`, `{7,90,135,202,213,220,225}`,
+     `{14,90,135,201,215,224,225}`, `{16,90,135,204,211,220,225}`, `{17,90,135,205,222,223,225}`.
+   * **How it was checked:** `verify/gk_verify.c` enumerated every N = 1…225. `src/gk_search.c` covers
+     N = 80…224; below 80, `g₄(6) = 79` rules out any 7-set. The two programs have identical count vectors
+     on all 145 shared values of N. Both find nothing for N ≤ 224. At N = 225 `gk_verify` lists all six
+     sets; a full `gk_search` enumeration at N = 225, to cross-check that list, is still running. Each set
+     is also checked directly against the definition. Files: `results/gk/g4_n7_verify/`.
+   * **Other exact values:** two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on
+     all canonical counts (for g₅(8): all N ≤ 92). A Python brute force also confirms n ≤ 5 (k = 4) and
+     n ≤ 6 (k = 5).
 
 ## Why it appears novel
 

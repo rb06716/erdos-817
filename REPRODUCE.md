@@ -104,5 +104,9 @@ python3 verify/check_set.py 894,1196,1303,1341,1353,1359,1360,1368
 diff <(grep -v SOL a.log | sed 's/ time=.*//') <(grep -v SOL b.log) && echo "counts identical"
 ./bin/gk_search 5 8 1 92 0 > c.log; ./bin/gk_verify 5 8 1 92 > d.log   # g_5(8) = 92 (~1 h for gk_verify)
 diff <(grep -v SOL c.log | sed 's/ time=.*//') <(grep -v SOL d.log) && echo "counts identical"
+# g_4(7) = 225 (per N: up to ~40 min for gk_search, ~25 min for gk_verify at N ≈ 225; ~19 CPU-hours for all N)
+./bin/gk_verify 4 7 224 224                     # N=224 k=4 n=7 V: 1 222 23925 1485698 31344180 18019553 0
+./bin/gk_search 4 7 225 225 0                   # all extremal sets at N = 225; compare with gk_verify 4 7 225 225
+python3 results/gk/g4_n7_verify/compare.py     # compares the published logs of both programs
 python3 scripts/summary_table.py                # table of values, Korsky bounds, ratios
 ```

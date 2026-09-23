@@ -363,3 +363,14 @@ g_4(7) re-verification: the sequential N = 1..200 loop was stopped after N = 175
 wrote its line); N = 176..200 now run through results/gk/g4_n7_verify/queue.py, which starts one gk_verify per N
 (longest first) whenever fewer than 4 are running, so cores freed by the other three loops are used.
 Interim comparison (compare.py): 103 values of N compared, 0 mismatches, no admissible 7-set for any N <= 224 so far.
+
+## 2026-09-23 11:18 — g_4(7) = 225 confirmed by the second program
+All gk_verify runs finished (legacy loops + queue.py; N = 1..225, full enumeration). compare.py
+(results/gk/g4_n7_verify/compare_output.txt): 145 values of N (80..224) compared with gk_search, 0 mismatches;
+gk_verify finds no admissible 7-set for any N <= 224 (so N <= 79 is also checked directly, not only via g_4(6) = 79).
+N = 225: V = 1 224 24535 1584876 37683222 31525830 6, i.e. exactly six extremal sets:
+{2,90,135,193,220,222,225}, {4,90,135,206,215,219,225}, {7,90,135,202,213,220,225}, {14,90,135,201,215,224,225},
+{16,90,135,204,211,220,225}, {17,90,135,205,222,223,225}. All six contain 90, 135 and 225 = 90 + 135, and each has
+98 distinct subset sums; a direct definition-level check (all subset sums, pairwise 4-AP test) passes for all six
+and for all their 6-subsets. To cross-check the list of six, gk_search is now enumerating N = 225 in full
+(no stop at first; ~40 min on one core).

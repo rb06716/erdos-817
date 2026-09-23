@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Compare gk_verify (full enumeration) with gk_search (stop-at-first) for k = 4, n = 7.
+"""Compare gk_verify (full enumeration) with gk_search for k = 4, n = 7.
 
 gk_search ran with stop-at-first, so its count vector is complete for every N without a solution (N <= 224);
-those vectors must equal gk_verify's exactly.  At N = 225 gk_verify lists every admissible 7-set."""
+those vectors must equal gk_verify's exactly.  At N = 225 both programs enumerate everything
+(gk_search_full_N225.log, run without stop-at-first): count vectors and solution lists must be identical."""
 import glob
 import os
 import re
@@ -36,3 +37,10 @@ print('not yet compared in 80..224:', missing)
 print('gk_verify: N <= 224 with an admissible 7-set:', sorted(N for N in v_sols if N <= 224))
 if 225 in v_vec:
     print('N = 225: V =', v_vec[225], '; all admissible 7-sets:', sorted(v_sols.get(225, [])))
+full = os.path.join(here, 'gk_search_full_N225.log')
+if os.path.exists(full) and 225 in v_vec:
+    f_vec, f_sols = load([full])
+    print('N = 225, gk_search full enumeration: V =', f_vec.get(225))
+    print('N = 225: count vectors identical:', f_vec.get(225) == v_vec[225],
+          '; solution lists identical:', f_sols.get(225, set()) == v_sols.get(225, set()),
+          '(%d sets)' % len(f_sols.get(225, set())))

@@ -59,7 +59,12 @@
 9. **`g₄`, `g₅` values** rest on two independent C implementations (increasing vs. decreasing order;
    bitset shifted-AND vs. pairwise AP detection) that agree on all canonical counts for the reported ranges.
    Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6).
-   `g₄(7) = 225`: the witness `{2,90,135,193,220,222,225}` is checked directly (98 distinct subset sums, no
-   4-term AP). Non-existence for N ≤ 224 comes from `gk_search` (N = 80…224, stop at first solution) plus
-   `g₄(6) = 79` for N ≤ 79. The two programs agree for k = 4, n = 7 on N = 100…125, and an independent full
-   re-run with `gk_verify` over N = 1…225 was started. **Status:** see the last entry of research_log.md.
+   `g₄(7) = 225`: each of the six extremal sets is checked directly against the definition: 98 distinct
+   subset sums, no 4-term AP. Non-existence for N ≤ 224 was established twice:
+   * by `gk_search`: N = 80…224, stopping at the first solution, with N ≤ 79 excluded by `g₄(6) = 79`;
+   * by a full `gk_verify` enumeration of N = 1…225.
+
+   The two programs give identical count vectors for all 145 shared values of N (80…224). At N = 225
+   `gk_verify` lists six sets. A full `gk_search` enumeration at N = 225, to cross-check that list, is still
+   running. As for g₃, both programs were written by the same author, and the novelty caveat for k ≥ 4 in
+   PRIOR_ART.md applies.
