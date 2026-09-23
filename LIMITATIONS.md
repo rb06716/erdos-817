@@ -58,6 +58,8 @@
 
 9. **`g₄`, `g₅` values** rest on two independent C implementations (increasing vs. decreasing order;
    bitset shifted-AND vs. pairwise AP detection) that agree on all canonical counts for the reported ranges.
-   Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6). For `g₄(7)` only
-   bounds are claimed: `≥ 201` from a single implementation's exhaustive run over N ≤ 200 (the two programs
-   agree for k = 4, n = 7 on N = 100…125), and `≤ 230` from an explicit, directly checked witness.
+   Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6).
+   `g₄(7) = 225`: the witness `{2,90,135,193,220,222,225}` is checked directly (98 distinct subset sums, no
+   4-term AP). Non-existence for N ≤ 224 comes from `gk_search` (N = 80…224, stop at first solution) plus
+   `g₄(6) = 79` for N ≤ 79. The two programs agree for k = 4, n = 7 on N = 100…125, and an independent full
+   re-run with `gk_verify` over N = 1…225 was started. **Status:** see the last entry of research_log.md.

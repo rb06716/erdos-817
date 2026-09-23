@@ -342,3 +342,13 @@ M = 1361..1367: none; M = 1368: exactly one, {894,1196,1303,1341,1353,1359,1360,
 Earlier: M = 1300, 1301 (ascending partial), 1320, 1340, 1360 (coarse, stop-at-first): none.
 Stated in DISCOVERY.md as evidence for the conjecture g_3(8) = 1368 (not a proof: other M < 1368 and sets outside
 the windows were not searched; an exhaustive n = 8 search is ~10^14 nodes per M).
+
+## 2026-09-23 08:53 — g_4(7) = 225 (primary implementation)
+gk_search (k = 4, n = 7, stop at first per N): N = 80..224 all exhausted with no admissible 7-set (N = 174..224 over
+~4.5 h with 3-4 workers: upward workers from N = 176 and a downward worker from N = 229; logs in
+results/gk/g4_n7/, coverage checker results/gk/g4_n7/status.py). Witnesses found (stop-at-first) at N = 225, 228,
+229, 230, 240; N = 225: {2,90,135,193,220,222,225} (checked directly: 98 distinct subset sums, no 4-AP; it contains
+120 3-APs, allowed for k = 4). N <= 79 excluded by g_4(6) = 79 (a good 7-set with max N contains six good 6-sets
+with max N; there is at most one such 6-set for N <= 79). => g_4(7) = 225.
+Independent re-verification with verify/gk_verify.c (full enumeration, N = 1..225) started on 4 cores
+(results/gk/g4_n7_verify/).

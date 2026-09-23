@@ -37,8 +37,9 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
 3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist; Korsky's paper, which
    treats `k ≥ 4` asymptotically, could not be read in full, so small values there cannot be ruled out):
-   `g₄(1..6) = 1, 3, 5, 14, 40, 79` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6) and
-   `201 ≤ g₄(7) ≤ 230` (witness `{2, 29, 151, 196, 225, 228, 230}`; N ≤ 200 exhausted by `gk_search`);
+   `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6; at n = 7
+   the witness `{2, 90, 135, 193, 220, 222, 225}`, with every N ≤ 224 exhausted — see the status note in
+   LIMITATIONS.md for the second-implementation check of g₄(7));
    `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92` (unique extremal set `{10, 11, 67, 77, 78, 81, 82, 92}` at n = 8).
    Two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on all canonical counts for the
    exact values (for g₅(8): all N ≤ 92); for n ≤ 5 (k = 4) and n ≤ 6 (k = 5) also a Python brute force.
