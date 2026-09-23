@@ -9,6 +9,17 @@ The least `N` for which some 7-element subset of `{1,…,N}` has subset sums con
 Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 22, 60, 168` and states
 `419 ≤ a(7) ≤ 504`.
 
+**Credit for the upper bound.** The same set was found independently by carlomitchener and posted as
+`g₃(7) ≤ 474` in the Erdős Problems forum thread #817 on 23 Sep 2026 (06:41 forum time). This package's
+search had found it at 00:20 UTC that day, but its repository was private, so **the forum post is the first
+public report of the upper bound**. As far as we can find, this package's own new contributions are:
+* the matching lower bound, i.e. no admissible 7-set with maximum ≤ 473;
+* uniqueness of the extremal set;
+* hence the exact value.
+
+This problem is not solved here. Erdős Problem #817 asks for an *estimate* of `g_k(n)`, which "cannot be
+resolved with a finite computation" (erdosproblems.com). Exact small values are data for it, not a solution.
+
 ## Statement as a theorem
 
 **Theorem 1.** `g₃(7) = 474`. Moreover `A* = {302, 409, 447, 459, 465, 466, 474}` is the only 7-element subset
@@ -43,8 +54,8 @@ below.
 
 ## Secondary results (same package, weaker status where noted)
 
-1. **New upper bounds** (explicit, certified sets; previously best: `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ` once
-   `g₃(7)` is known):
+1. **New upper bounds** (explicit, certified sets). The previous best was `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ`
+   from the upper bound `g₃(7) ≤ 474` (as also noted in carlomitchener's forum post):
 
    | n | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
    | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -67,8 +78,9 @@ below.
    (`scripts/beam.py`, seconds) reproduces **every** known exact value `8, 22, 60, 168, 474` together with
    the extremal sets, and gives the n = 8–14 bounds above. Chains are common but not universal (87–95 % of
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
-3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist; Korsky's paper, which
-   treats `k ≥ 4` asymptotically, could not be read in full, so small values there cannot be ruled out):
+3. **The 4- and 5-term analogues** from the same Erdős problem. There are no OEIS entries (full-text search of the
+   export and live OEIS searches, 2026-09-23). Korsky's paper, read in full, gives small values only for `g₃`
+   with `n ≤ 4`, and the forum thread #817 gives none for `k ≥ 4`:
    `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6);
    `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92` (unique extremal set `{10, 11, 67, 77, 78, 81, 82, 92}` at n = 8).
    * **`g₄(7) = 225`** has exactly six extremal sets. All six contain `90, 135, 225` (note `90 + 135 = 225`)
@@ -83,29 +95,55 @@ below.
    * **Other exact values:** two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on
      all canonical counts (for g₅(8): all N ≤ 92). A Python brute force also confirms n ≤ 5 (k = 4) and
      n ≤ 6 (k = 5).
+4. **A correction to an earlier claim (n = 6).** Bae and Choi (J. Korean Math. Soc. 40 (2003) 757–768, §2,
+   p. 759) study "2-fold subset-sum-distinct" sets, which are exactly the admissible sets. They state that
+   "lots of calculations" show `{109, 147, 161, 166, 168, 169}` to be the unique such 6-set of minimal
+   height, which would mean `g₃(6) = 169`. **This is incorrect.**
+   * **The true value:** `g₃(6) = 168`, attained by `{107,145,159,162,164,168}` and `{107,145,159,162,166,168}`.
+     OEIS A399720 lists the second of these.
+   * **Their set:** it is the unique admissible 6-set with maximum exactly 169. It is the greedy "first-hole"
+     chain set `{169 − u_i}` with `u = 0, 1, 3, 8, 22, 60, 169`.
+   * **Reproduce:** `./bin/g3fast2_noroom 6 168 169`; output in `results/prior_art/bae_choi_n6_check.txt`.
+   * **n = 7:** they give no value.
 
 ## Why it appears novel
 
-* OEIS A399720 (created 2026-09-09, last edited 2026-09-14; checked in the official git exports dated
-  2026-09-22 and 2026-09-23) gives only `419 ≤ a(7) ≤ 504` and remarks that `a(7) = 466` "is not excluded".
-* The verification repository `firesh/erdos817-subset-sum-progressions-audit` (2026-09-18) computed
+* **OEIS A399720** (created 2026-09-09, last edited 2026-09-14) gives only `419 ≤ a(7) ≤ 504` and remarks
+  that `a(7) = 466` "is not excluded". Checked in the git exports of 2026-09-22 and 2026-09-23 and on the live
+  site on the afternoon of 2026-09-23.
+* **Erdős Problems forum thread #817** (read directly on 2026-09-23):
+  * M. Czech (9 Sep) gives `g₃(5) = 60`, `g₃(6) = 168` and `419 ≤ g₃(7) ≤ 504`, and says `n = 7` is beyond
+    their search.
+  * carlomitchener (23 Sep) posts the upper bound `g₃(7) ≤ 474` with the same set (see "Credit" above).
+  * No post gives a lower bound above 419, the exact value, or uniqueness.
+* **The verification repository** `firesh/erdos817-subset-sum-progressions-audit` (2026-09-18) computed
   `g₃(5), g₃(6)` and reports its `n = 7` search as incomplete (only `N ≤ 313` excluded), listing `g₃(7)` as open.
-* Korsky (arXiv:2606.24139, June 2026) proves `g₃(7) ≥ b₇ = 419` and computes `g₃(n)` only for `n ≤ 4`.
-* No web source, OEIS entry (full-text search of all 399,468 entries), or GitHub repository found reports
-  474, the extremal set or the chain sequence (for `g₄`/`g₅` see the caveat above). Details: PRIOR_ART.md.
+* **Korsky** (arXiv:2606.24139, June 2026; read in full) proves `g₃(7) ≥ b₇ = 419` and computes `g₃(n)`
+  only for `n ≤ 4`.
+* **Bae–Choi (2003)** is the only earlier source found with an exact minimum for these sets. It covers only
+  n = 6, and its value there is wrong (item 4 above).
+* **Nothing else** reports the exact value, the lower bound, uniqueness or the chain sequence. Sources
+  searched: the OEIS (full-text search of all 399,527 entries, plus live searches), arXiv, the forum and the
+  web. Details: PRIOR_ART.md.
 
 ## Why it matters
 
-* It is the next exact value of a function asked about by Erdős and Sárközy, whose asymptotic question was
-  answered only this month (Costa, arXiv:2609.06303: `g₃(n)/3ⁿ → 0`). Exact small values are the only
-  ground truth for calibrating constructions and bounds.
-* It settles two questions raised in the OEIS entry: `a(7) ≠ 466` (so the coincidence of
-  `1, 3, 8, 22, 60, 168` with the rooted-tree sequences A318821/A318863, which continue with 466, ends here),
-  and `a(7) < 504 = 3·a(6)`: the recursive construction `A ↦ {1} ∪ 3A` is not optimal at n = 7.
+* **The next exact value.** It is the next exact value of a function asked about by Erdős and Sárközy.
+  * Their "in particular" question, whether `g₃(n) ≫ 3ⁿ`, was answered negatively only this month (Costa,
+    arXiv:2609.06303). Together with monotonicity this gives `g₃(n)/3ⁿ → 0`.
+  * erdosproblems.com lists Costa's result as a *partial* proof claim, because the problem asks for an
+    estimate. The true order of `g₃(n)` remains open.
+  * Exact small values are the only ground truth for calibrating constructions and bounds.
+* **The 466 question.** It settles the question left open in the OEIS entry and the forum thread:
+  `a(7) ≠ 466`. So the coincidence of `1, 3, 8, 22, 60, 168` with the rooted-tree sequences
+  A318821/A318863, which continue with 466, ends here. Only the lower bound can show this.
+* **504 is not optimal.** It also shows `a(7) < 504 = 3·a(6)`: the recursive construction `A ↦ {1} ∪ 3A` is
+  not optimal at n = 7. The forum post of the upper bound shows this too.
 * The gap to Korsky's bandwidth lower bound grows: `g₃(n) − b_n = 0, 0, 0, 1, 4, 16, 55` for `n = 1…7`.
 * The normalised values `g₃(n)·√n/3ⁿ = 0.543, 0.552, 0.565, 0.573` (n = 4…7), and the new upper bounds
   (≤ 0.590, 0.606, 0.620, 0.638, 0.655 for n = 8…12), are data for the open question of the true order of
-  `g₃(n)` between `c·3ⁿ/√n` (lower bound) and `O(3ⁿ/n^{1/3})` (best upper bound).
+  `g₃(n)` between `c·3ⁿ/√n` (lower bound, Korsky) and `O(3ⁿ/n^{1/3})` (best upper bound, posted on the forum by
+  Costa on 17 Sep 2026, adapting B. Alexeev's construction for Erdős Problem #1).
 * The chain structure gives a fast, apparently near-optimal construction for larger `n`, a ternary analogue
   of the Conway–Guy construction for distinct subset sums.
 
@@ -152,6 +190,7 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 | Band check, n = 7, N = 474…520: 12,010 solutions, identical in C and Rust | last search level correct where solutions exist |
 | Reference program `g3search.c` (no windowing/PEXT) at N = 473, 474: output identical to `g3fast2` (same mode), incl. the unique set | windowing and PEXT logic of the main program |
 | Third-party `g3.c` (firesh audit repository, different author): no admissible 7-subset of [1..200] | agreement with an externally written program where it is fast enough |
+| Independent external find: carlomitchener (forum thread #817, 23 Sep 2026) posted the same set as `g₃(7) ≤ 474`, checked from the definition | external confirmation of the certificate; consistent with uniqueness (any admissible 7-set with maximum 474 must be this one) |
 | **C = Rust, n = 7, N = 419…478** (full count vectors and solution lists) | **main claim, two independent programs** |
 | **C = Rust, n = 7, N = 1…418** | removes dependence on Korsky's bound |
 | Conway–Guy-type ternary recurrences (all `u_{n+1} = 3u_n − u_{n−r}`) | no construction of this family beats 474 (none below 543) |

@@ -1,0 +1,30 @@
+# Check of Bae & Choi, J. Korean Math. Soc. 40 (2003) 757-768, section 2 (p. 759):
+# claim: {109,147,161,166,168,169} is the unique 2-SSD 6-set of minimal height (i.e. g_3(6) would be 169).
+# 2-SSD (their Def. 2.1 / Lemma 3.2) = no non-zero relation with coefficients in {-2..2} = admissible here.
+# Generated 2026-09-23T14:08Z with the commands shown.
+
+$ python3 verify/check_set.py 109,147,161,166,168,169
+PASS n=6 max=169 A=[109, 147, 161, 166, 168, 169] | ternary sums distinct: True (729 sums) | H(A) 3-AP-free: True (|H|=64)
+$ python3 verify/check_set.py 107,145,159,162,164,168
+PASS n=6 max=168 A=[107, 145, 159, 162, 164, 168] | ternary sums distinct: True (729 sums) | H(A) 3-AP-free: True (|H|=64)
+$ python3 verify/check_set.py 107,145,159,162,166,168
+PASS n=6 max=168 A=[107, 145, 159, 162, 166, 168] | ternary sums distinct: True (729 sums) | H(A) 3-AP-free: True (|H|=64)
+$ ./bin/g3fast2_noroom 6 1 169   (all admissible 6-sets with maximum <= 169)
+N=166 n=6 solutions=0 nodes: 1 164 12833 527400 3897395 0 time=0.12
+N=167 n=6 solutions=0 nodes: 1 166 13280 576251 4896361 0 time=0.15
+SOLUTION N=168 {107,145,159,162,164,168}
+SOLUTION N=168 {107,145,159,162,166,168}
+N=168 n=6 solutions=2 nodes: 1 166 13168 555821 4600840 2 time=0.15
+SOLUTION N=169 {109,147,161,166,168,169}
+N=169 n=6 solutions=1 nodes: 1 168 13608 599276 5329668 1 time=0.20
+
+# Conclusion: g_3(6) = 168 (two extremal sets); the Bae-Choi set is the unique admissible 6-set with maximum 169.
+
+$ ./bin/g3verify 6 166 169   (independent Rust implementation)
+N=166 n=6 V: 1 164 12833 527400 3897395 0 solutions=0
+N=167 n=6 V: 1 166 13280 576251 4896361 0 solutions=0
+SOLUTION N=168 {107,145,159,162,166,168}
+SOLUTION N=168 {107,145,159,162,164,168}
+N=168 n=6 V: 1 166 13168 555821 4600840 2 solutions=2
+SOLUTION N=169 {109,147,161,166,168,169}
+N=169 n=6 V: 1 168 13608 599276 5329668 1 solutions=1

@@ -109,4 +109,7 @@ diff <(grep -v SOL c.log | sed 's/ time=.*//') <(grep -v SOL d.log) && echo "cou
 ./bin/gk_search 4 7 225 225 0                   # all extremal sets at N = 225; compare with gk_verify 4 7 225 225
 python3 results/gk/g4_n7_verify/compare.py     # compares the published logs of both programs
 python3 scripts/summary_table.py                # table of values, Korsky bounds, ratios
+# Bae–Choi (2003) claim check: all admissible 6-sets with maximum <= 169 (seconds)
+./bin/g3fast2_noroom 6 1 169 | grep SOLUTION     # two sets at 168, one ({109,...,169}) at 169
+./bin/g3verify 6 166 169 | grep SOLUTION         # same, independent program
 ```

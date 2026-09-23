@@ -38,12 +38,18 @@
    also exercised where solutions exist: n = 6 over N ≤ 175, n = 7 at N = 474…478 (complete solution lists),
    and a band-restricted run over N = 474…520 in which both programs list the same 12,010 admissible 7-sets.
 
-6. **Novelty.** arXiv, the OEIS web site, erdosproblems.com and publisher sites could not be fetched from the
-   research environment. Novelty was assessed through the OEIS git export (dated 2026-09-22; re-checked against
-   the 2026-09-23 export), the Erdős problems git database, GitHub, and web-search summaries (PRIOR_ART.md). The
-   most recent public statements found (2026-09-14 and 2026-09-18) describe `g₃(7)` as open. A computation posted
-   after the morning of 2026-09-23, or in a venue not indexed by these sources, would not have been detected.
-   Bae–Choi (2003) could not be read; the Conway–Guy-type family it studies was re-enumerated as a proxy.
+6. **Novelty.**
+   * **First pass:** made without access to arXiv, the OEIS web site, erdosproblems.com or publisher sites. It
+     therefore **missed a forum post**: on 2026-09-23 (06:41 forum time) carlomitchener posted `g₃(7) ≤ 474`
+     with the same set. This was found independently (this package's repository was private), and the forum
+     post is the first public report of the upper bound.
+   * **Second pass:** made later that day with full access. It read the forum, the live OEIS, arXiv and
+     Bae–Choi (2003) directly (PRIOR_ART.md). No source reports the exact value, a lower bound above 419,
+     or uniqueness.
+   * **Not read:** Erdős–Sárközy (1992), because the publisher blocks automated download, and Bae (2002,
+     IJPAM), which was not found online.
+   * **Still possible:** a result posted after the afternoon of 2026-09-23, or in a venue these searches
+     don't index, would not have been detected.
 
 ## Secondary results
 
@@ -66,5 +72,6 @@
 
    The two programs give identical count vectors for all 145 shared values of N (80…224). At N = 225 both ran
    without stopping at the first solution: identical count vectors and the same six sets
-   (`results/gk/g4_n7_verify/compare_output.txt`). As for g₃, both programs were written by the same author,
-   and the novelty caveat for k ≥ 4 in PRIOR_ART.md applies.
+   (`results/gk/g4_n7_verify/compare_output.txt`). As for g₃, both programs were written by the same author.
+   Novelty for `k ≥ 4`: Korsky's paper (read in full), the forum thread and the OEIS contain no small `g₄`, `g₅`
+   values. Only Bae (2002), which was not found online, remains unchecked.

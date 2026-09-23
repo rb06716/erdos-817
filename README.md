@@ -7,6 +7,13 @@ progression. Previously known: `g₃(1..6) = 1, 3, 8, 22, 60, 168` and `419 ≤ 
 
 > **g₃(7) = 474**, attained by the **unique** extremal set `A = {302, 409, 447, 459, 465, 466, 474}`.
 
+The upper bound `g₃(7) ≤ 474`, with the same set, was found independently and posted on the Erdős Problems forum
+on 23 Sep 2026 by carlomitchener. That post is the first public report of the upper bound. This package adds
+the matching lower bound (no admissible 7-set with maximum ≤ 473) and the uniqueness, which give the exact value.
+
+This does not solve Erdős Problem #817. That problem asks for an estimate of `g_k(n)`, and the site notes it
+"cannot be resolved with a finite computation"; exact values are data for it, not a solution.
+
 **Secondary results.**
 
 * New certified upper bounds for `n = 8…14` (previous best `(168/729)·3ⁿ`):
@@ -24,6 +31,9 @@ progression. Previously known: `g₃(1..6) = 1, 3, 8, 22, 60, 168` and `419 ≤ 
   `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` and `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92`.
 * The value `a(7) = 466` suggested as possible in A399720 is excluded, and `{1} ∪ 3A` (giving 504) is not
   optimal at n = 7.
+* A correction to the literature: Bae and Choi (J. Korean Math. Soc. 2003) state that `{109,147,161,166,168,169}`
+  is the unique minimal "2-fold subset-sum-distinct" 6-set. Those are the same sets as here, and in fact
+  `g₃(6) = 168`: their set is the unique one with maximum 169.
 
 **How.** An exhaustive search, organized per maximum `N`. It uses the fact that `H(A)` is 3-AP-free iff
 all `3ⁿ` sums `Σ εᵢaᵢ` (`εᵢ ∈ {0,1,2}`) are distinct (proved in METHODS.md), and a bitset of all

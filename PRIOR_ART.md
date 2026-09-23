@@ -1,83 +1,155 @@
 # Prior art and novelty assessment
 
-Search performed 2026-09-22/23. Egress restrictions: arxiv.org, oeis.org, erdosproblems.com, researchgate,
-scispace, semanticscholar, springer and sciencedirect could not be fetched directly. Sources were reached
-through (i) the official OEIS git export `github.com/oeis/oeisdata` (export timestamp 2026-09-22T03:00:19-04:00,
-all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (problem database, cloned
-2026-09-22), (iii) public GitHub repositories, and (iv) web-search result summaries.
+**Search history.**
+* **First pass (2026-09-22/23):** made under egress restrictions. arxiv.org, oeis.org, erdosproblems.com,
+  researchgate, scispace, semanticscholar, springer and sciencedirect could not be fetched directly. Sources
+  were reached through:
+  1. the official OEIS git export `github.com/oeis/oeisdata` (all 399,468 entries of the 2026-09-22 export,
+     then all 399,527 of the 2026-09-23 export, searched locally);
+  2. `github.com/teorth/erdosproblems` (the problem database);
+  3. public GitHub repositories;
+  4. web-search result summaries.
+* **Second pass (afternoon of 2026-09-23, full internet access):** these sources were read directly:
+  * the erdosproblems.com problem page, proof-claims page (with its comments), discussion thread and forum
+    rules;
+  * the live OEIS;
+  * the arXiv sources of Korsky, Costa and Dutta;
+  * a scan of Bae–Choi (2003);
+  * Finch's *Errata and Addenda*.
+
+  Still not obtained:
+  * Erdős–Sárközy (1992): the publisher blocks automated download;
+  * J. Bae, *On generalized subset-sum-distinct sequences*, Int. J. Pure Appl. Math. 1 (2002): not found online.
+
+  The second pass's findings are marked **(2nd pass)** below.
 
 ## The problem
 
 * **Erdős Problem #817** (erdosproblems.com/817). Source: P. Erdős, *Problems and results in combinatorial
   analysis and combinatorial number theory*, Graph theory, combinatorics, and applications, Vol. 1
-  (Kalamazoo 1988), Wiley 1991, 397–406. Asks to estimate `g_k(n)`, in particular whether `g_3(n) ≫ 3^n`.
-  Database status (teorth/erdosproblems, `data/problems.yaml`): **open**, last update 2025-08-31.
+  (Kalamazoo 1988), Wiley 1991, 397–406. It asks to estimate `g_k(n)`, and in particular whether
+  `g_3(n) ≫ 3^n`.
+  * **The site's status (2nd pass):** "**OPEN** — This is open, and cannot be resolved with a finite
+    computation". There is one proof claim (Costa, classified as *partial*).
+  * The git database (teorth/erdosproblems) also says open.
 * **P. Erdős, A. Sárközy**, *Arithmetic progressions in subset sums*, Discrete Math. 102 (1992) 249–264.
-  Contains the lower-bound remark behind the question (paper not reachable here; the sharpest known lower
-  bound is Korsky's `g_3(n) ≥ b_n = (√3/(2√π) + o(1))·3^n/√n`, see below).
+  * The problem page says they proved `g_3(n) ≫ 3^n/n^{O(1)}`.
+  * On the forum, Korsky locates on p. 261 the argument that the `3^n` ternary sums lie in an interval of
+    length `nN`.
+  * The paper itself was not obtained.
+  * The sharpest known lower bound is Korsky's `g_3(n) ≥ b_n = (√3/(2√π) + o(1))·3^n/√n`.
 
 ## Recent work (2026)
 
 | source | date | content relevant here |
 | --- | --- | --- |
-| S. Korsky, *Arithmetic progression-free subset-sum sets*, arXiv:2606.24139 | 2026-06-23 | Prop. 4.1 (reformulation as `{0,1,2}`-injectivity), Thm 1.1 lower bound `g_3(n) ≥ b_n` (bandwidth of the ternary grid; `b_7 = 419`), values `g_3(1..4) = 1,3,8,22`, digit constructions. |
-| S. Costa, *A negative answer to the Erdős–Sárközy question*, arXiv:2609.06303 | 2026-09-05 | `liminf g_3(n)/3^n = 0` (with a Lean certificate, Zenodo 10.5281/zenodo.22638810). |
-| erdosproblems.com forum thread #817 (as quoted by the audit repository below) | 2026-09-17 | `g_3(5) = 60`, `g_3(6) = 168`; `g_3(n) ≪ 3^n/n^{1/3}` (Korsky, adapting B. Alexeev). |
-| OEIS **A399720** (M. Czech) | created 2026-09-09, last edit 2026-09-14 | Terms `1, 3, 8, 22, 60, 168`; comment: "`419 <= a(7) <= 504` … `a(7) = 466` is not excluded"; keywords `hard,more,new`. |
+| S. Korsky, *Arithmetic progression-free subset-sum sets*, arXiv:2606.24139 (read in full, 2nd pass) | 2026-06-23 | Prop. 4.1 (reformulation as `{0,1,2}`-injectivity), Thm 1.1 lower bound `g_3(n) ≥ b_n` (bandwidth of the ternary grid; `b_7 = 419`), Remark "Small values": `g_3(1..4) = 1,3,8,22` only; `k ≥ 4`: asymptotic lower bound and digit constructions, **no small exact values**. |
+| S. Costa, *A negative answer to the Erdős–Sárközy question*, arXiv:2609.06303 (read, 2nd pass) | 2026-09-05 | Thm 1.1 / Cor. 1.2: `liminf g_3(n)/3^n = 0`; a Lean verification of the Formal Conjectures statement is in Zenodo 10.5281/zenodo.22638810. No small values. On erdosproblems.com this is a **partial** proof claim: Xiao Hu (6 Sep) notes that Erdős asked for an estimate, and the moderator reclassified it. |
+| erdosproblems.com forum thread #817, M. Czech ("m-czech") | 2026-09-09 | `g_3(5) = 60`, `g_3(6) = 168` (witnesses `{38,52,57,59,60}`, `{107,145,159,162,166,168}`), `419 ≤ g_3(7) ≤ 504`; "the value `g_3(7)` would decide whether the coincidence [with A318821/A318863, which continue with 466] persists (the search for n = 7 is beyond the simple enumeration used here)". |
+| erdosproblems.com forum thread #817, S. Costa ("enomis_costa88") | 2026-09-17 | `g_3(n) ≪ 3^n/n^{1/3}`, more precisely `≤ ((3/4)^{1/3} + o(1))·3^n/n^{1/3}`, from a variation of B. Alexeev's construction for Erdős Problem #1. (Earlier versions of this file wrongly attributed this to Korsky and dated the n = 5, 6 values 17 Sep; both errors were copied from the audit repository's report.) |
+| **erdosproblems.com forum thread #817, carlomitchener** | **2026-09-23, 06:41 forum time** | "**g_3(7) <= 474**: the 7-set {302, 409, 447, 459, 465, 466, 474} has 2187 distinct ternary digit sums (checked from the definition), so … g_3(n)/3^n stays below 0.216736 for n >= 7." Same set as ours, found independently (our repository was private). **This is the first public report of the upper bound.** It gives no lower bound and no uniqueness. |
+| OEIS **A399720** (M. Czech) | created 2026-09-09, last edit 2026-09-14 | Terms `1, 3, 8, 22, 60, 168`; comment: "`419 <= a(7) <= 504` … `a(7) = 466` is not excluded"; keywords `hard,more,new`. Unchanged on the live site on 2026-09-23 (2nd pass). |
 | GitHub `firesh/erdos817-subset-sum-progressions-audit` (commit dee165d, 2026-09-18) | 2026-09-18 | Independent exhaustive computation of `g_3(5)`, `g_3(6)`; states "**The n = 7 search is incomplete: N ≤ 313 excluded**", "Still open …: the exact value `g_3(7)` and beyond". |
 
 ## Related concepts under other names
 
-* **q-fold subset-sum-distinct sets** (all sums with coefficients in `{0,…,q}` distinct): J. Bae (1996, 1998),
-  J. Bae & S. Choi, *A generalization of a subset-sum-distinct sequence*, J. Korean Math. Soc. 40 (2003).
-  `q = 2` is exactly the admissibility condition used here. These papers study Conway–Guy-type
-  constructions and asymptotics; no source found (and none cited by Korsky 2026, OEIS A399720 or the audit
-  repository, all of which were aware of Bae's notion) gives exact minima for `n ≥ 5`.
+* **q-fold subset-sum-distinct sets** (all sums with coefficients in `{0,…,q}` distinct). Case `q = 2` is
+  exactly the admissibility condition used here.
+  * **Bae–Choi (2003), read in the 2nd pass:** J. Bae & S. Choi, *A generalization of a subset-sum-distinct
+    sequence*, J. Korean Math. Soc. 40 (2003) 757–768, doi:10.4134/JKMS.2003.40.5.757.
+    * **Definition:** their "k-SSD" (Def. 2.1) is equivalent to having no non-zero relation with coefficients
+      in `{−k..k}` (their Lemma 3.2). So 2-SSD = admissible.
+    * **Their claim for n = 6 (§2, p. 759):** "Lots of calculations shows that {109, 147, 161, 166, 168, 169}
+      is the unique answer" for a 2-SSD 6-set of minimal height. That would mean `g_3(6) = 169`.
+    * **Why it is wrong:** our exhaustive search gives `g_3(6) = 168`, attained by two sets, in agreement with
+      A399720, M. Czech and the audit repository. Their set is the unique admissible 6-set with maximum
+      exactly 169 (`results/prior_art/bae_choi_n6_check.txt`).
+    * **n = 7:** they give no value.
+    * **Their construction:** `S_2^n` has maxima `1, 3, 9, 25, 73, 213, 621, 1845` for n = 1…8, against 474
+      and ≤ 1368 here for n = 7, 8.
+    * **Other literature:** Semantic Scholar lists only one citing work, Finch's *Errata and Addenda to
+      Mathematical Constants* (arXiv:2001.00578), which cites it without values.
+  * **Other Bae papers:** J. Bae (1996, 1998) treat ordinary (1-fold) subset-sum-distinct sets. J. Bae (2002,
+    IJPAM), which Korsky cites for the q-fold notion, was not found.
+  * **Dutta (2026), read in full in the 2nd pass:** S. Dutta, *The greedy algorithm for dissociated sets*
+    (arXiv:2601.07068). His "D_k sets" (no non-zero relation with coefficients in `{−k..k}`) are the same
+    notion. The paper proves density bounds and studies the bottom-up greedy algorithm. It has no tables and
+    no exact minima.
 * **Distinct subset sums** (binary analog, OEIS A276661): values known up to `n = 10` (a(10) = 309,
-  P. W. Dyson, Oct 2025).
-* OEIS search for the value string `1,3,8,22,60,168` finds only A399720 and two unrelated rooted-tree
-  sequences A318821/A318863 (which continue `466`); this coincidence is noted in A399720.
+  P. W. Dyson, 2025).
+* **The value string `1,3,8,22,60,168`:** the only OEIS hits are A399720 and two unrelated rooted-tree
+  sequences, A318821/A318863 (which continue `466`). A399720 itself notes this coincidence.
 
 ## Additional checks after the result (2026-09-23)
 
-* Web searches for the specific set `{302, 409, 447, 459, 465, 466, 474}`, for "g_3(7)", "Erdős Sárközy subset
-  sums three-term progression n=7", "erdosproblems 817 forum n=7": no source reports an n = 7 value.
-* `github.com/TheJustinSunPrize/awards` PR #1030 (JSP-000674 = Erdős #817), opened 2026-09-18, still open:
-  records "The n = 7 run remains incomplete (N ≤ 313 excluded, against the proven b_7 = 419)".
-* q-fold subset-sum-distinct literature: S. Dutta, *The greedy algorithm for dissociated sets*
-  (arXiv:2601.07068, 2026) treats greedy sequences and asymptotic bounds for D_q-sets, not exact minima.
-  The Conway–Guy-type constructions of Bae–Choi (2003) could not be read; as a proxy, every recurrence
+* **Web searches** (first pass): queries for the specific set `{302, 409, 447, 459, 465, 466, 474}`, for
+  "g_3(7)", "Erdős Sárközy subset sums three-term progression n=7" and "erdosproblems 817 forum n=7". None
+  found an n = 7 value. The forum itself could not be read then; see the 2nd pass.
+* **Awards repository:** `github.com/TheJustinSunPrize/awards` PR #1030 (JSP-000674 = Erdős #817), opened
+  2026-09-18, still open. It records "The n = 7 run remains incomplete (N ≤ 313 excluded, against the proven
+  b_7 = 419)".
+* **Conway–Guy-type recurrences** (proxy for Bae–Choi before it could be read): every recurrence
   `u_{n+1} = 3u_n − u_{n−r_n}` with sets `{u_n − u_i}` was enumerated for n ≤ 8
-  (`scripts/conway_guy_ternary.py`): the best admissible 7-set of that family has maximum 543 > 474.
-* OEIS export: no entry contains `1,3,8,22,60,169`, `0,1,3,8,22,60,169`, `8,9,15,27,65,172`, `1368,3974`,
-  `3974,11578`, `11578,34088`, `34088,100422` or `1387,4041`; the only hit for `474,1368` is an unrelated
-  array-counting sequence (A250978). For the k = 4, 5 values: no entry contains `1,3,5,14,40` or
-  `1,2,4,6,14,22,60` (`2,4,6,14,22` occurs only in unrelated A084685, A307676).
+  (`scripts/conway_guy_ternary.py`). The best admissible 7-set of that family has maximum 543 > 474.
+  Bae–Choi's own construction (read later) gives 621.
+* **OEIS export:**
+  * no entry contains `1,3,8,22,60,169`, `0,1,3,8,22,60,169`, `8,9,15,27,65,172`, `1368,3974`,
+    `3974,11578`, `11578,34088`, `34088,100422` or `1387,4041`;
+  * the only hit for `474,1368` is an unrelated array-counting sequence (A250978);
+  * for the k = 4, 5 values, no entry contains `1,3,5,14,40` or `1,2,4,6,14,22,60`. (`2,4,6,14,22` occurs
+    only in unrelated A084685 and A307676.)
 
-* Re-check on 2026-09-23 (~09:30 UTC), just before the final commit: the newer OEIS export (time.txt
-  2026-09-23T03:00:19-04:00, 399,527 entries) was fetched and `scripts/oeis_novelty_check.py` re-run on it
-  (output: `results/prior_art/oeis_novelty_check_2026-09-23.txt`). A399720 is unchanged
-  (revision #6, Sep 14 2026, terms `1, 3, 8, 22, 60, 168`), all value strings above still have no entry, and none of
-  the 390 entries changed since the 2026-09-22 export mention these values or the Erdős–Sárközy problem. The audit
-  repository has no commits after dee165d. Web searches ("JSP-000674", "474" together with the problem's
-  keywords) turned up nothing new.
+* **Re-check at ~09:30 UTC on 2026-09-23:**
+  * **Newer OEIS export:** time.txt 2026-09-23T03:00:19-04:00, 399,527 entries. `scripts/oeis_novelty_check.py`
+    was re-run on it (output: `results/prior_art/oeis_novelty_check_2026-09-23.txt`).
+    * A399720 is unchanged (revision #6, Sep 14 2026, terms `1, 3, 8, 22, 60, 168`).
+    * All value strings above still have no entry.
+    * None of the 390 entries changed since the 2026-09-22 export mentions these values or the
+      Erdős–Sárközy problem.
+  * **Audit repository:** no commits after dee165d.
+  * **Web searches** ("JSP-000674", "474" together with the problem's keywords): nothing new.
+  * **Missed at the time:** the forum post of the upper bound (see the table), because the forum could not
+    be read then.
 
-* Hole-chain construction: in the spirit of the Conway–Guy construction (`{u_n − u_i}`) for distinct subset
-  sums. The greedy algorithm studied by Dutta (arXiv:2601.07068) builds D_q-sets bottom-up (smallest
-  admissible next element), which is a different rule. No source found describes the top-down "least hole"
-  chain for `{0,1,2}`-sums or its values.
+* **Second pass (afternoon of 2026-09-23, full access):**
+  * **Forum:** the problem page, proof claims and discussion thread were read directly; their content is in
+    the table above.
+  * **Forum rules (quoted):** "AI assistance in generating ideas or helping to formulate the text of a comment
+    is allowed, but should be disclosed. The contents of all comments, including any mathematical claims,
+    should be independently verified by a human before posting here. If you do not understand the
+    mathematics yourself, please do not post it here. Long proofs (or partial proofs) should not be posted
+    here in full - instead, post a link".
+  * **Live OEIS searches** (control query `1,3,8,22,60,168` returns A318821, A318863, A399720): no results for
+    `1,3,5,14,40,79`, `1,2,4,6,14,22,60,92`, `302,409,447,459,465,466,474`, `8,22,60,168,474`,
+    `1,3,8,22,60,169`, `109,147,161,166,168,169` or `1,3,9,25,73,213`.
+  * **arXiv API searches** ("subset sums" with "progression", "subset-sum-distinct", "Erdős–Sárközy",
+    "Erdős problem 817", newest first): nothing after Costa's preprint of 2026-09-05.
+  * **Papers:** Korsky, Costa, Dutta and Bae–Choi are summarised above.
+
+* **Hole-chain construction.** It is in the spirit of the Conway–Guy construction (`{u_n − u_i}`) for
+  distinct subset sums, as is Bae–Choi's `S_2^n` (a fixed recurrence in the same offset form). The greedy
+  algorithm studied by Dutta builds the sets bottom-up (smallest admissible next element), which is a
+  different rule. No source found describes the top-down "least hole" chain for `{0,1,2}`-sums or its values.
 
 ## Novelty statement
 
-As of 2026-09-23 no source located by these searches reports the value of `g_3(7)`; the most recent
-explicit statements (OEIS A399720, 2026-09-14; audit repository, 2026-09-18) describe it as open, with
-`419 ≤ g_3(7) ≤ 504`. Searches used: "g_3(7)", "Erdős–Sárközy subset sums three-term progression",
-"Erdős problem 817", "k-fold subset-sum-distinct", "2-fold subset-sum-distinct", "sums with coefficients
-0,1,2 distinct smallest largest element", and the value string `1,3,8,22,60,168` in the full OEIS export.
+As of the afternoon of 2026-09-23:
+* **The exact value is unreported.** No source reports `g_3(7)` itself, and none gives a lower bound above
+  Korsky's 419 or the uniqueness of the extremal set.
+* **The upper bound is already public.** `g_3(7) ≤ 474`, with the same set, was posted independently on the
+  forum on 2026-09-23 by carlomitchener. That is the first public report of the upper bound, and it must be
+  credited.
+* **What remains new here:** the matching lower bound, uniqueness and hence the exact value; the n = 8…14
+  upper bounds; the hole-chain structure; the `k = 4, 5` values; and the correction of Bae–Choi's n = 6 claim.
 
-For `k = 4, 5` (secondary results): no OEIS entry for `g_4(n)` or `g_5(n)` exists (full-text search of the export
-for entries mentioning both "subset sums" and "arithmetic progression" returns only A399720 and unrelated
-Stanley sequences; value strings checked above). Korsky (arXiv:2606.24139) treats `k ≥ 4` (lower bound
-`g_k(n) ≫ ((k−1)/(k−2))^n n^{−log_2((k−1)/(k−2))}` and digit constructions); the paper could not be read in
-full, so small exact values of `g_4`, `g_5` reported there cannot be excluded. The novelty claim for `k ≥ 4` is
-therefore weaker than for `g_3(7)`.
+Search terms included "g_3(7)", "Erdős–Sárközy subset sums three-term progression", "Erdős problem 817",
+"k-fold subset-sum-distinct", "2-fold subset-sum-distinct", "dissociated" and "sums with coefficients 0,1,2
+distinct smallest largest element". Value strings were searched in the full OEIS export and the live OEIS.
+
+**For `k = 4, 5`** (secondary results):
+* no OEIS entry for `g_4(n)` or `g_5(n)` exists (export full-text search and live searches);
+* Korsky's paper, read in full, has small values only for `g_3`, n ≤ 4;
+* the forum thread #817 contains no k ≥ 4 values.
+
+The earlier caveat that Korsky might report small `g_4`, `g_5` values is therefore withdrawn. Bae (2002) could
+not be checked.

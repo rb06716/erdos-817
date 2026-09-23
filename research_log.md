@@ -380,3 +380,28 @@ gk_search 4 7 225 225 0 (full enumeration, 2834 s on one core; results/gk/g4_n7_
 V = 1 224 24535 1584876 37683222 31525830 6 and the same six extremal sets as gk_verify
 (compare_output.txt: count vectors identical, solution lists identical). g_4(7) = 225 with exactly six extremal sets is
 now established by two programs over the whole range. Documents updated; finalize.sh re-run for the checksums.
+
+## 2026-09-23 ~13:50–14:20 — forum review and second prior-art pass (full internet access)
+The user asked for an evaluation against erdosproblems.com/forum/thread/817/proof-claims; network access was then
+opened. Read directly: problem page (status "OPEN — cannot be resolved with a finite computation"), proof claims
+(1 claim: Costa, partial; comments by Korsky, Xiao Hu [not a full solution: Erdős asked for an estimate], moderator
+reclassification, Costa's Lean update), discussion thread (Korsky, Bloom, M. Czech 9 Sep, Costa 17 Sep, and
+**carlomitchener 23 Sep 06:41 forum time: "g_3(7) <= 474" with our exact set**), forum rules (AI use must be
+disclosed; claims verified by a human who understands them).
+- Credit: the upper bound with the same set was posted publicly by carlomitchener; our search found it at 00:20 UTC
+  but the repository is private (checked via the GitHub API), so theirs is the first public report. Our new part:
+  lower bound + uniqueness => exact value. Documents corrected accordingly (README, DISCOVERY, PRIOR_ART,
+  LIMITATIONS, SUBMISSION_DRAFTS). Forum timezone: Costa's claim (01:48:23 forum time) cites a Zenodo record
+  created 23:50:56 UTC the previous day, so forum time is at most ~2 h ahead of UTC; the 06:41 post was therefore
+  at 04:44 UTC or later, after our 00:20 UTC find (the order does not change the public priority).
+- Attribution errors fixed: the 3^n/n^{1/3} bound was posted by Costa (adapting B. Alexeev), not Korsky; the
+  forum's g_3(5), g_3(6) post is M. Czech's of 9 Sep, not 17 Sep (both errors came from the audit report).
+- Korsky (arXiv source, read in full): small values only g_3(n), n <= 4; nothing for k >= 4 -> k >= 4 caveat
+  withdrawn. Costa: no small values. Dutta: D_k sets = our notion for k = 2; no tables.
+- **Bae & Choi, J. Korean Math. Soc. 40 (2003) 757-768** (scan, p. 759): "Lots of calculations shows that
+  {109, 147, 161, 166, 168, 169} is the unique answer" for a 2-SSD (= admissible) 6-set of minimal height. False:
+  g_3(6) = 168 with two sets; theirs is the unique admissible 6-set with maximum 169 (C and Rust agree;
+  results/prior_art/bae_choi_n6_check.txt). It is the greedy first-hole chain set (u = 0,1,3,8,22,60,169).
+  Their Conway-Guy-type construction has maxima 1,3,9,25,73,213,621,1845 (n = 1..8). No n = 7 value.
+- Live OEIS searches (control query ok): no entries for our new values, Bae-Choi's set or maxima. arXiv API: nothing
+  after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online).
