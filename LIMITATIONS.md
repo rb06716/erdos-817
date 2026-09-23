@@ -13,7 +13,13 @@
      programs (Python brute force; `gk_search.c`) on smaller instances, including the n = 6 optimum.
 
    A common-mode error (a mistake shared by all implementations) is the main residual risk. The
-   implementations share only the two lemmas.
+   implementations share only the two lemmas. All programs in this package were written by the same author
+   (an AI agent), so their independence lies in code structure, language and search order, not authorship.
+   External anchors: the programs reproduce the independently published values `g₃(1..6)` (Korsky; the
+   firesh audit repository; forum posts) and the extremal sets reported there, e.g. both n = 6 sets
+   {107,145,159,162,164,168} and {107,145,159,162,166,168}. A third-party program (the audit repository's
+   `g3.c`) exists but is far too slow for N ≈ 470. An independent re-implementation by a different person
+   would be the most valuable further check.
 
 2. **No compact certificate for non-existence.** Unlike SAT/DRAT proofs, the exhaustive search does not emit a
    small independently checkable proof object. The check is to re-run the search (a few CPU-hours per

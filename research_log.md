@@ -300,3 +300,13 @@ Failed / abandoned attempts recorded above: first room-pruned scan (restarted fo
 nice-based scheduling (autogroups); offset local search (no improvement); first-hole recursion from single seeds
 (does not reach 474; needs one non-first hole).
 Compute used: C 4.0 CPU-h; Rust ~2.5x; auxiliary runs (band check, beam, k>=4, n=8 probes) ~3 CPU-h.
+
+## 2026-09-23 04:25 — Third implementations on the critical values
+- Reference program src/g3search.c (full-range bitsets, no windows, no PEXT; room-pruned tree) at N = 473 (and 474: identical output incl. the unique set):
+  node counts 1 467 108116 15646745 1173662320 6508189521 0 -- identical to g3fast2 in the same (room-pruned) mode.
+  (results/n7_reference_check/)
+- Third-party code (firesh/erdos817-subset-sum-progressions-audit g3.c, commit dee165d; different author;
+  searches all 7-subsets of [1..N] by increasing DFS with sum-set bitsets): n = 7, N = 200 -> "none"
+  (10,009,274,004 nodes, 1434 s). Consistent with our result; the third-party code is too slow for N ~ 470.
+  (results/thirdparty_check/firesh_g3c_n7_N200.txt)
+- g_4(7) search (3 processes): N = 176..185 exhausted, no admissible 7-set (k = 4).

@@ -121,7 +121,8 @@ Both are exact integer computations.
 * **Offset form (explains the profile).** Write `A = {M} ∪ {M − b : b ∈ B}`. A relation
   `Σ cᵢaᵢ = 0` becomes `M·s = Σ_{b∈B} c_b b` with `s = c_M + Σ c_b`. Hence `A` is admissible iff
   (i) `B` has no relation `Σ c_b b = 0` with `c ∈ {−2..2}^B \ {0}` and `|Σ c_b| ≤ 2` (the `s = 0` case, the
-  coefficient of `M` absorbing the imbalance), and (ii) for `s = 1, 2, …`: `sM ∉ {Σ c_b b : s − 2 ≤ Σ c_b ≤ s + 2}`.
+  coefficient of `M` absorbing the imbalance), and (ii) for `s = 1, 2, …`: `sM ∉ {Σ c_b b : s − 2 ≤ Σ c_b ≤ s + 2}`
+  (negative `s` give the same conditions under `c ↦ −c`).
   In particular, if `B` satisfies (i) then `A` is admissible for every `M > 2ΣB`. The extremal sets have
   `B` of total size ≈ 0.6·M (e.g. n = 7: `B = {8, 9, 15, 27, 65, 172}`, `ΣB = 296`, `M = 474`), so only
   `s = ±1` matters and `M` is the first "hole" of the set in (ii) above `max B`.
@@ -139,7 +140,7 @@ when (i) holds. `hole_dp.py` computes the sets `E_t = {Σ c_b b : Σ c_b = t}` b
 hence `B ∪ {M}` has holes (every integer `> 2(ΣB + M)`).
 
 *Proof.* A violation is a nonzero `c` on `B ∪ {M}` with `c_M M + Σ c_b b = 0` and `|c_M + Σ c_b| ≤ 2`.
-If `c_M = 0` it violates (i) for `B`, which is impossible because `M` is a hole. Otherwise put `s = −c_M` and
+If `c_M = 0` it violates (i) for `B`, which is impossible because `M` is a hole. Otherwise put
 `c_0 = −(c_M + Σ c_b) ∈ [−2, 2]`. Then `c_0 M + Σ c_b (M − b) = M(c_0 + Σ c_b) − Σ c_b b = −c_M M − Σ c_b b = 0`
 is a relation on `A = {M} ∪ (M − B)`. It is nonzero, since `c_b ≡ 0` would force `c_M M = 0`, i.e. `c_M = 0`.
 This contradicts admissibility of `A`. ∎

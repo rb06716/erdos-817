@@ -101,6 +101,8 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 | C = Rust canonical counts and solution lists, n = 4…7 (N ≤ 40 / 90 / 175 / 150) | implementations agree where cheap |
 | Mutation testing (5 injected bugs, all detected at n = 6) | the cross-check is sensitive |
 | Band check, n = 7, N = 474…520: 12,010 solutions, identical in C and Rust | last search level correct where solutions exist |
+| Reference program `g3search.c` (no windowing/PEXT) at N = 473, 474: output identical to `g3fast2` (same mode), incl. the unique set | windowing and PEXT logic of the main program |
+| Third-party `g3.c` (firesh audit repository, different author): no admissible 7-subset of [1..200] | agreement with an externally written program where it is fast enough |
 | **C = Rust, n = 7, N = 419…478** (full count vectors and solution lists) | **main claim, two independent programs** |
 | **C = Rust, n = 7, N = 1…418** | removes dependence on Korsky's bound |
 | Conway–Guy-type ternary recurrences (all `u_{n+1} = 3u_n − u_{n−r}`) | no construction of this family beats 474 (none below 543) |
