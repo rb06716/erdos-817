@@ -9,6 +9,40 @@ The least `N` for which some 7-element subset of `{1,…,N}` has subset sums con
 Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 22, 60, 168` and states
 `419 ≤ a(7) ≤ 504`.
 
+## Statement as a theorem
+
+**Theorem 1.** `g₃(7) = 474`. Moreover `A* = {302, 409, 447, 459, 465, 466, 474}` is the only 7-element subset
+of `{1,…,474}` whose subset sums contain no non-constant 3-term arithmetic progression.
+
+*Proof (computer-assisted).*
+* *Upper bound, `g₃(7) ≤ 474`.* The `3⁷ = 2187` sums `Σ εᵢaᵢ` with `ε ∈ {0,1,2}⁷` over the elements of `A*` are
+  pairwise distinct, so `H(A*)` has no non-constant 3-AP by Lemma 1 (METHODS.md §2). `verify/check_set.py`
+  checks this with exact integer arithmetic. It also checks the definition directly: the 128 subset sums
+  contain no 3-AP. This half is a certificate that anyone can check in milliseconds.
+* *Lower bound and uniqueness.* By Lemma 1 a 7-set qualifies iff it is admissible. For every `N ≤ 474` the
+  search enumerates all admissible 7-subsets of `[1, N]` with maximum `N`.
+  * *Why the enumeration is complete:* admissibility is hereditary, so every admissible set is reached by
+    adding its elements one at a time in sorted order. Lemma 2 (§3) decides each step exactly, and the
+    window invariant (§4) shows that the bitset windowing is exact.
+  * *Result:* there is no admissible 7-set for `N ≤ 473`, and exactly one, `A*`, for `N = 474`. ∎
+
+The second half has no short human-readable proof. Its correctness rests on Lemmas 1 and 2, which are proved
+by hand in METHODS.md, and on the search programs. Two independently written implementations ran the search
+(C, increasing order; Rust, decreasing order). They report identical canonical count vectors
+`(V₁(N), …, V₇(N))` and identical solution lists for every `N ≤ 478`. The evidence and the checks are listed
+below.
+
+**Also proved in this package:**
+* **By certificates** (fully rigorous): `g₃(n) ≤ 1368, 3974, 11578, 34088, 100422, 295924, 879824` for
+  `n = 8, …, 14`.
+* **Computer-assisted, two programs:** `g₄(6) = 79`, `g₅(7) = 60`, `g₅(8) = 92`.
+* **Computer-assisted, one program so far:** `g₄(7) = 225`; the second program's re-check is in progress
+  (item 3 below).
+
+**Not proved (conjectures):**
+* `g₃(8) = 1368`;
+* the claim that extremal sets are hole chains for all `n` (verified for `n ≤ 7`).
+
 ## Secondary results (same package, weaker status where noted)
 
 1. **New upper bounds** (explicit, certified sets; previously best: `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ` once
