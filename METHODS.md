@@ -125,3 +125,28 @@ Both are exact integer computations.
   In particular, if `B` satisfies (i) then `A` is admissible for every `M > 2ΣB`. The extremal sets have
   `B` of total size ≈ 0.6·M (e.g. n = 7: `B = {8, 9, 15, 27, 65, 172}`, `ΣB = 296`, `M = 474`), so only
   `s = ±1` matters and `M` is the first "hole" of the set in (ii) above `max B`.
+
+## 8. Hole chains (constructions; `scripts/holes_all.py`, `scripts/beam.py`, `scripts/hole_dp.py`)
+
+For a finite set `B` of positive integers call `M > max B` a **hole** of `B` if
+`A = {M} ∪ {M − b : b ∈ B}` is admissible. By §7, `M` is a hole iff `B` satisfies condition (i) and
+`sM ∉ F_s(B) = {Σ c_b b : c ∈ {−2..2}^B, s−2 ≤ Σ c_b ≤ s+2}` for every `s ≥ 1`. Every `M > 2ΣB` is a hole
+when (i) holds. `hole_dp.py` computes the sets `E_t = {Σ c_b b : Σ c_b = t}` by dynamic programming
+(bitsets indexed by `(t, value)`), tests (i) incrementally (a new element `x` violates (i) iff
+`c·x ∈ ⋃_{t ∈ [c−2, c+2]} E_t` for `c ∈ {1, 2}`), and lists all holes up to `2ΣB + 1`.
+
+**Lemma 3 (the chain never gets stuck).** If `M` is a hole of `B`, then `B ∪ {M}` satisfies condition (i);
+hence `B ∪ {M}` has holes (every integer `> 2(ΣB + M)`).
+
+*Proof.* A violation is a nonzero `c` on `B ∪ {M}` with `c_M M + Σ c_b b = 0` and `|c_M + Σ c_b| ≤ 2`.
+If `c_M = 0` it violates (i) for `B`, which is impossible because `M` is a hole. Otherwise put `s = −c_M` and
+`c_0 = −(c_M + Σ c_b) ∈ [−2, 2]`. Then `c_0 M + Σ c_b (M − b) = M(c_0 + Σ c_b) − Σ c_b b = −c_M M − Σ c_b b = 0`
+is a relation on `A = {M} ∪ (M − B)`. It is nonzero, since `c_b ≡ 0` would force `c_M M = 0`, i.e. `c_M = 0`.
+This contradicts admissibility of `A`. ∎
+
+A **hole chain** is `0 = u_0 < u_1 < … < u_n` where each `u_{k+1}` is a hole of `{u_1,…,u_k}`. It yields the
+admissible `n`-set `{u_n − u_i : 0 ≤ i < n}`. The *greedy* chain takes the least hole each time.
+`beam.py W K NMAX S0` keeps the `W` chains with the smallest current maximum, extends each by its first `K`
+holes, and starts from all seeds `u_1 ≤ S0`. Chains are a restricted family (87–95 % of admissible sets near
+the optimum for n = 5, 6 are chains), so beam results are upper bounds. For n ≤ 7 they coincide with the
+exhaustively verified optima.

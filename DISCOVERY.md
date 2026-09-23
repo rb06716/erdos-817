@@ -14,19 +14,20 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
 1. **New upper bounds** (explicit, certified sets; previously best: `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ` once
    `g₃(7)` is known):
 
-   | n | 8 | 9 | 10 | 11 | 12 |
-   | --- | --- | --- | --- | --- | --- |
-   | new bound | **1368** | **3974** | **11578** | **34088** | **100422** |
-   | previous (168/729)·3ⁿ | 1512 | 4536 | 13608 | 40824 | 122472 |
+   | n | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
+   | --- | --- | --- | --- | --- | --- | --- | --- |
+   | new bound | **1368** | **3974** | **11578** | **34088** | **100422** | **295924** | **879824** |
+   | previous (168/729)·3ⁿ | 1512 | 4536 | 13608 | 40824 | 122472 | 367416 | 1102248 |
 
    All are of the form `A_n = {u_n − u_i : 0 ≤ i < n}` with
-   `u = (0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422)`; certified by
-   `verify/check_set.py` (e.g. n = 12: all 531,441 ternary sums distinct, 4096 subset sums with no 3-AP).
+   `u = (0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422, 295924, 879824)`, where from
+   `u_4 = 27` on every term is the least admissible "hole". All are certified by `verify/check_set.py`
+   (e.g. n = 14: all 4,782,969 ternary sums distinct, and the 16,384 subset sums contain no 3-AP).
 2. **Structure ("hole chains").** Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
    one for n = 7) has the form `{u_n − u_i}` where each `u_{k+1}` is an admissible "hole" for
    `{u_1,…,u_k}` (i.e. `{u_{k+1} − u_i : i ≤ k}` is itself admissible). A beam search restricted to such chains
    (`scripts/beam.py`, seconds) reproduces **every** known exact value `8, 22, 60, 168, 474` together with
-   the extremal sets, and gives the n = 8–12 bounds above. Chains are common but not universal (87–95 % of
+   the extremal sets, and gives the n = 8–14 bounds above. Chains are common but not universal (87–95 % of
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
 3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist):
    `g₄(1..6) = 1, 3, 5, 14, 40, 79` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6; `g₄(7) ≥ 174`),

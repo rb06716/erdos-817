@@ -230,3 +230,28 @@ u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, ...: u_2 = 9 is the first hole of {8}; 
 (holes 11, 12, 14, 15, ...); every later term (27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422) is the FIRST
 hole of the preceding offsets. So the unique optimum for n = 7 and the n = 8..12 constructions are determined
 by the seed (8, 9, 15) plus the greedy first-hole rule.
+
+## 2026-09-23 02:10 — Hole ranks along the chains of all extremal sets (n = 4..7)
+rank k = the chosen value is the k-th admissible hole; ">2S" = beyond 2*sum(B) where every value is admissible.
+| extremal set | chain u | ranks from u_2 |
+| {7,19,21,22} | 0,1,3,15,22 | 1, >2S, 1 |
+| {14,19,21,22} | 0,1,3,8,22 | 1, 1, 1 |
+| {19,52,57,59,60} | 0,1,3,8,41,60 | 1, 1, >2S, 1 |
+| {38,52,57,59,60} | 0,1,3,8,22,60 | 1, 1, 1, 1 |
+| {107,145,159,162,164,168} | 0,4,6,9,23,61,168 | 2, 1, 1, 1, 1 |
+| {107,145,159,162,166,168} | 0,2,6,9,23,61,168 | >2S, 1, 1, 1, 1 |
+| {302,409,447,459,465,466,474} | 0,8,9,15,27,65,172,474 | 1, 4, 1, 1, 1, 1 |
+Observation: every extremal set is "greedy first-hole" except for at most one early deviation.
+
+## 2026-09-23 02:15 — Greedy chain continued to n = 13, 14 (certified)
+u_13 = 295924, u_14 = 879824 (first holes). check_set.py PASS: n=13 (1,594,323 distinct ternary sums; 8192 subset
+sums, no 3-AP), n=14 (4,782,969 distinct ternary sums; 16384 subset sums, no 3-AP).
+=> g_3(13) <= 295924 (ratio to 3^13: 0.1856), g_3(14) <= 879824 (0.1839).
+
+## 2026-09-23 02:48 — C coverage complete for N = 1..478
+results/n7_c_lo/c_0.log: N = 1..418, no admissible 7-set for any N (V_7(N) = 0). Together with results/n7_scan:
+the C search alone shows V_7(N) = 0 for all N <= 473 and V_7(474) = 1, i.e. g_3(7) = 474 without using
+Korsky's bound. Rust verification of N = 1..418 launched (results/n7_verify_rust_lo, 4 processes).
+Band cross-check (results/n7_band_crosscheck): N = 474..480 so far, identical solution lists (6 solutions).
+Reproducibility: the Rust verifier rebuilt from the current source (which adds the optional band argument)
+gives byte-identical output to the production binary on n=5 (N<=90), n=6 (N<=175), n=7 (N<=140) and N=474.

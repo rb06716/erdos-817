@@ -53,6 +53,11 @@ all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (p
   array-counting sequence (A250978). For the k = 4, 5 values: no entry contains `1,3,5,14,40` or
   `1,2,4,6,14,22,60` (`2,4,6,14,22` occurs only in unrelated A084685, A307676).
 
+* Hole-chain construction: in the spirit of the Conway–Guy construction (`{u_n − u_i}`) for distinct subset
+  sums. The greedy algorithm studied by Dutta (arXiv:2601.07068) builds D_q-sets bottom-up (smallest
+  admissible next element), which is a different rule. No source found describes the top-down "least hole"
+  chain for `{0,1,2}`-sums or its values.
+
 ## Novelty statement
 
 As of 2026-09-22 no source located by these searches reports the value of `g_3(7)`; the most recent
