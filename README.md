@@ -1,7 +1,7 @@
 # Erdős Problem #817: exact values of the Erdős–Sárközy function
 
-[![checks](https://github.com/rb06716/NovelDiscovery/actions/workflows/checks.yml/badge.svg)](https://github.com/rb06716/NovelDiscovery/actions/workflows/checks.yml)
-[![verify](https://github.com/rb06716/NovelDiscovery/actions/workflows/verify.yml/badge.svg)](https://github.com/rb06716/NovelDiscovery/actions/workflows/verify.yml)
+[![checks](https://github.com/rb06716/erdos-817/actions/workflows/checks.yml/badge.svg)](https://github.com/rb06716/erdos-817/actions/workflows/checks.yml)
+[![verify](https://github.com/rb06716/erdos-817/actions/workflows/verify.yml/badge.svg)](https://github.com/rb06716/erdos-817/actions/workflows/verify.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 For a finite set `A` of positive integers, let `H(A) = {Σ_{a∈S} a : S ⊆ A}` be its set of subset sums. The
@@ -43,8 +43,12 @@ of `g_k(n)`.
 
 ## Verify it yourself
 
+Requirements: a C compiler (gcc or clang), Rust/cargo for the independent verifier, and Python 3. The
+verification tools use only the Python standard library; the construction scripts and `make check` also need
+NumPy (`python3 -m pip install -r requirements.txt`).
+
 ```sh
-make all        # build the programs (gcc; cargo for the Rust verifier)
+make all        # build the programs
 make check      # ~2 min: 12 consistency checks (definition vs. programs, C vs. Rust, certificates, known values)
 make verify     # 5-15 min: certificates and the decisive values N = 473, 474, compared with the published table
 python3 verify/verify_result.py critical   # ~1 h on 8 cores: every N from Korsky's bound b_7 = 419 up to 478
@@ -88,7 +92,8 @@ GitHub access. GitHub Actions runs `make check` on every push ([`checks.yml`](.g
 ├── scripts/                runs, comparisons, constructions, novelty check (see scripts/README.md)
 ├── results/                logs of every run, count tables, certificates, checksums (see results/README.md)
 ├── research/pruning/       feasibility study and prototypes towards g₃(8)
-└── docs/                   write-up (below)
+├── docs/                   write-up (below)
+└── Makefile, requirements.txt, CITATION.cff, LICENSE
 ```
 
 ## Documentation

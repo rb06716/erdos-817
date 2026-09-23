@@ -1,0 +1,5 @@
+# Python packages beyond the standard library (install with: python3 -m pip install -r requirements.txt).
+# Needed only by the hole-chain construction scripts (scripts/holes_all.py, hole_dp.py, beam.py, seeds.py,
+# offset_recursion.py, offset_localsearch.py) and hence by `make check`, which runs beam.py.
+# The verification tools (verify/*.py, scripts/aggregate.py) use only the standard library.
+numpy

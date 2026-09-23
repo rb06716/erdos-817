@@ -1,7 +1,8 @@
 # scripts/
 
 Helper scripts. Run them from the repository root, e.g. `python3 scripts/beam.py 300 12 8 40`. The search
-programs themselves are in `src/` and `verify/`.
+programs themselves are in `src/` and `verify/`. The construction scripts need NumPy
+(`python3 -m pip install -r requirements.txt`); the others use only the standard library.
 
 ## Running and comparing the exhaustive searches
 

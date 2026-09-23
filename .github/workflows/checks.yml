@@ -16,10 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Python packages (requirements.txt)
+        run: python3 -m pip install -r requirements.txt
       - name: Toolchain
         run: |
           gcc --version | head -1; cargo --version; python3 --version; nproc
+          python3 -c 'import numpy; print("numpy", numpy.__version__)'
           lscpu | grep -E 'Model name|Vendor ID' || true
       - name: Build all programs
         run: make all

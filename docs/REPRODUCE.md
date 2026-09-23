@@ -2,7 +2,10 @@
 
 Tested on Ubuntu 24.04, x86-64 (Intel Xeon with AVX-512/BMI2), gcc 13.3, rustc 1.94, Python 3.11; the
 `quick` and `critical` verifications were also run by the repository owner on Google Colab (Intel, 8 vCPUs).
-Only standard tools are needed; no network access after cloning. All commands are run from the repository root.
+Only standard tools are needed: a C compiler, Rust/cargo (for the independent verifier) and Python 3. The
+verification tools use only the Python standard library; the construction scripts in `scripts/` (and hence
+`make check`) also need NumPy: `python3 -m pip install -r requirements.txt`. No network access is needed after
+cloning and installing. All commands are run from the repository root.
 
 ## Fast checks
 
@@ -35,7 +38,7 @@ Rebuild it with `python3 scripts/make_standalone_notebook.py`.
 Colab without the notebook file: paste this into one cell of a new notebook and run it.
 ```python
 import getpass, os, subprocess
-REPO, DEST = 'rb06716/NovelDiscovery', '/content/NovelDiscovery'
+REPO, DEST = 'rb06716/erdos-817', '/content/erdos-817'
 if not os.path.exists(DEST):
     token = getpass.getpass('GitHub token (empty if the repository is public): ').strip()
     url = f'https://x-access-token:{token}@github.com/{REPO}.git' if token else f'https://github.com/{REPO}.git'
