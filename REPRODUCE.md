@@ -13,7 +13,22 @@ python3 verify/verify_result.py full        # hours: every N = 1..478 (without i
 ```
 Every check prints PASS/FAIL, and the exit status is 0 only if all pass. Runs are resumable: there is one log
 per N in `--out`, default `results/verify_run/`. The same checks run in Google Colab with no local setup; see
-`verify/colab_verify.ipynb`, where a CPU runtime is enough.
+`verify/colab_verify.ipynb`, where a CPU runtime is enough. To open it in Colab: File → Open notebook → GitHub.
+For a private repository, tick "Include private repos". Alternatively, upload the file unchanged.
+
+Colab without the notebook file: paste this into one cell of a new notebook and run it.
+```python
+import getpass, os, subprocess
+REPO, BRANCH, DEST = 'rb06716/NovelDiscovery', 'claude/autonomous-research-discovery-yqinv8', '/content/NovelDiscovery'
+if not os.path.exists(DEST):
+    token = getpass.getpass('GitHub token (empty if the repository is public): ').strip()
+    url = f'https://x-access-token:{token}@github.com/{REPO}.git' if token else f'https://github.com/{REPO}.git'
+    r = subprocess.run(['git', 'clone', '--depth', '1', '-b', BRANCH, url, DEST], capture_output=True, text=True)
+    print((r.stdout + r.stderr).replace(token, '***') if token else r.stdout + r.stderr)
+    subprocess.run(['git', '-C', DEST, 'remote', 'set-url', 'origin', f'https://github.com/{REPO}.git'])
+os.chdir(DEST)
+!python3 verify/verify_result.py quick
+```
 
 ## 0. Build (seconds)
 
