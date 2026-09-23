@@ -17,7 +17,7 @@ reference `bin/g3search` (same results, ~3x slower) — see step 4.
 ```sh
 python3 verify/check_set.py 302,409,447,459,465,466,474
 # PASS n=7 max=474 ... ternary sums distinct: True (2187 sums) | H(A) 3-AP-free: True (|H|=128)
-python3 verify/check_set.py 878,1192,1299,1335,1349,1353,1356,1380     # g_3(8) <= 1380
+python3 verify/check_set.py 894,1196,1303,1341,1353,1359,1360,1368     # g_3(8) <= 1368
 ```
 
 ## 2. Sanity checks against known values (under a minute)
@@ -94,7 +94,7 @@ python3 scripts/oeis_novelty_check.py      # sparse-clones github.com/oeis/oeisd
 ## 5. Secondary results
 
 ```sh
-# upper bounds for n = 8..14 (hole chains); certificates
+# upper bounds for n = 8..14 (hole chains); certificates (n = 13, 14 sets: see DISCOVERY.md)
 python3 scripts/beam.py 300 12 12 40            # n = 3..12: 8 22 60 168 474 1368 3974 11578 34088 100422 (~1 min)
 python3 scripts/offset_recursion.py             # greedy chains from several seeds
 python3 verify/check_set.py 894,1196,1303,1341,1353,1359,1360,1368
@@ -102,5 +102,7 @@ python3 verify/check_set.py 894,1196,1303,1341,1353,1359,1360,1368
 ./bin/gk_search 4 6 1 79 1                      # g_4(6) = 79, witness {2,29,45,74,77,79}
 ./bin/gk_search 5 7 1 60 0 > a.log; ./bin/gk_verify 5 7 1 60 > b.log   # g_5(7) = 60, 4 extremal sets
 diff <(grep -v SOL a.log | sed 's/ time=.*//') <(grep -v SOL b.log) && echo "counts identical"
+./bin/gk_search 5 8 1 92 0 > c.log; ./bin/gk_verify 5 8 1 92 > d.log   # g_5(8) = 92 (~1 h for gk_verify)
+diff <(grep -v SOL c.log | sed 's/ time=.*//') <(grep -v SOL d.log) && echo "counts identical"
 python3 scripts/summary_table.py                # table of values, Korsky bounds, ratios
 ```

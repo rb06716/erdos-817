@@ -13,7 +13,8 @@ all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (p
   (Kalamazoo 1988), Wiley 1991, 397–406. Asks to estimate `g_k(n)`, in particular whether `g_3(n) ≫ 3^n`.
   Database status (teorth/erdosproblems, `data/problems.yaml`): **open**, last update 2025-08-31.
 * **P. Erdős, A. Sárközy**, *Arithmetic progressions in subset sums*, Discrete Math. 102 (1992) 249–264.
-  Lower bound of the form `3^n / n^{O(1)}`.
+  Contains the lower-bound remark behind the question (paper not reachable here; the sharpest known lower
+  bound is Korsky's `g_3(n) ≥ b_n = (√3/(2√π) + o(1))·3^n/√n`, see below).
 
 ## Recent work (2026)
 
