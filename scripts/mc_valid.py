@@ -1,3 +1,8 @@
+"""
+mc_valid.py -- early Monte Carlo sizing of the n = 7 search: the fraction of random k-subsets of [1..460]
+(k = 3..7) that are admissible, and the implied number of admissible k-subsets. Superseded by the exact counts
+in results/n7_counts.csv, and by research/pruning/mc_counts.c for n = 8.
+"""
 import random, itertools, math
 def valid(A):
     S = {0}

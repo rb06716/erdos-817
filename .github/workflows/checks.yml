@@ -1,0 +1,27 @@
+# Fast checks on every push and pull request (a few minutes): build everything, then tests/run_checks.sh
+# (definition vs. programs, C vs. Rust, certificates, known values).
+name: checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: build and fast checks (make check)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: |
+          gcc --version | head -1; cargo --version; python3 --version; nproc
+          lscpu | grep -E 'Model name|Vendor ID' || true
+      - name: Build all programs
+        run: make all
+      - name: Fast checks
+        run: make check

@@ -6,7 +6,8 @@ oeis_novelty_check.py -- reproducible part of the novelty check: search the offi
 usage:
   python3 scripts/oeis_novelty_check.py [path-to-oeisdata]
 If no path is given, the export is sparse-cloned into ./oeisdata (needs git and ~1.6 GB of disk).
-The run recorded in PRIOR_ART.md used the export with time.txt = 2026-09-22T03:00:19-04:00.
+The runs recorded in docs/PRIOR_ART.md used the exports with time.txt = 2026-09-22T03:00:19-04:00 and
+2026-09-23T03:00:19-04:00 (output of the second run: results/prior_art/oeis_novelty_check_2026-09-23.txt).
 """
 import os
 import subprocess

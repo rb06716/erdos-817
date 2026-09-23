@@ -6,7 +6,7 @@ Checks, with exact integer arithmetic and no shortcuts:
   (a) the 3^n sums  sum_i e_i a_i  (e in {0,1,2}^n)  are pairwise distinct;
   (b) the subset-sum set H(A) = { sum_{a in S} a : S subset of A } contains no nonconstant 3-term AP
       (u < v < w with u + w = 2v), checked by testing every pair (u, w) of subset sums.
-(a) and (b) are equivalent by Lemma 1 of METHODS.md; both are checked independently.
+(a) and (b) are equivalent by Lemma 1 of docs/METHODS.md; both are checked independently.
 
 usage: python3 check_set.py 1,321,435,477,486,492,504  [more sets ...]
 exit status 0 iff every set passes both checks.

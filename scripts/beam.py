@@ -1,3 +1,12 @@
+"""
+beam.py W K NMAX S0 -- beam search over hole chains (upper-bound constructions for g_3(n)).
+
+A set is written in offset form A = {M} u {M - b : b in B}. Starting from B = {s} for every seed s <= S0, each level
+extends a state (M, B) to (M', B u {M}) for the K smallest holes M' of B u {M} (scripts/holes_all.py). It keeps the
+W states with the smallest M and prints the best set for each n <= NMAX.
+Example: python3 scripts/beam.py 300 12 8 40 prints 8, 22, 60, 168, 474, 1368 (the known optima for n <= 7, and
+the n = 8 upper bound) in about a second.
+"""
 import sys, time
 from holes_all import holes
 W = int(sys.argv[1]); K = int(sys.argv[2]); NMAX = int(sys.argv[3]); S0 = int(sys.argv[4])

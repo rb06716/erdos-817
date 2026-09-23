@@ -1,5 +1,6 @@
-# Build all programs.  Requirements: gcc (x86-64 with BMI2 for g3fast2; the portable reference g3search
-# needs nothing special), Rust toolchain (cargo) for the independent verifier, Python 3 for checks.
+# Build all programs.  Requirements: a C compiler (gcc or clang; g3fast2 uses the BMI2 PEXT instruction when
+# -march=native enables it and an equivalent portable code path otherwise, e.g. on ARM), a Rust toolchain
+# (cargo) for the independent verifier, and Python 3 for the checks.
 CC ?= gcc
 CFLAGS ?= -O3 -march=native
 
@@ -30,7 +31,16 @@ bin/g3verify: verify/g3verify_rs/src/main.rs verify/g3verify_rs/Cargo.toml | bin
 	cd verify/g3verify_rs && cargo build --release
 	cp verify/g3verify_rs/target/release/g3verify $@
 
+# fast consistency checks (about 2 minutes): definition vs. programs, C vs. Rust, certificates, known values
+check: bin/g3fast2 bin/g3fast2_noroom bin/g3verify bin/gk_search bin/gk_verify
+	bash tests/run_checks.sh
+
+# independent-verifier entry point: certificates + the decisive values N = 473, 474 (5-15 minutes);
+# use `python3 verify/verify_result.py critical` (hours) to re-run every N = 419..478
+verify:
+	python3 verify/verify_result.py quick
+
 clean:
 	rm -rf bin verify/g3verify_rs/target
 
-.PHONY: all clean
+.PHONY: all check verify clean

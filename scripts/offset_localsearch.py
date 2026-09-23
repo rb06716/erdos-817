@@ -1,3 +1,8 @@
+"""
+offset_localsearch.py [seed] [iterations] -- randomized local search over offset sets B with |B| = 7 (n = 8),
+minimising the first admissible maximum M (the "first hole"). This gives upper-bound constructions only; it was
+used to test whether some n = 8 set beats the hole-chain bound 1368. None was found.
+"""
 import numpy as np, itertools, random, sys, time
 k = 7  # |B| for n = 8
 C = np.array(list(itertools.product(range(-2, 3), repeat=k)), dtype=np.int64)   # 78125 x 7

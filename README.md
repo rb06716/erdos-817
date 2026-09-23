@@ -1,90 +1,129 @@
-# g₃(7) = 474: a new exact value for Erdős Problem #817
+# Erdős Problem #817: exact values of the Erdős–Sárközy function
 
-**Main result.** The Erdős–Sárközy function `g₃(n)` is the least `N` such that some `n`-element set
-`A ⊆ {1,…,N}` has subset sums `H(A) = {Σ_{a∈S} a : S ⊆ A}` containing no non-constant 3-term arithmetic
-progression. Previously known: `g₃(1..6) = 1, 3, 8, 22, 60, 168` and `419 ≤ g₃(7) ≤ 504`
-(OEIS [A399720](https://oeis.org/A399720), September 2026). This package establishes
+[![checks](https://github.com/rb06716/NovelDiscovery/actions/workflows/checks.yml/badge.svg)](https://github.com/rb06716/NovelDiscovery/actions/workflows/checks.yml)
+[![verify](https://github.com/rb06716/NovelDiscovery/actions/workflows/verify.yml/badge.svg)](https://github.com/rb06716/NovelDiscovery/actions/workflows/verify.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **g₃(7) = 474**, attained by the **unique** extremal set `A = {302, 409, 447, 459, 465, 466, 474}`.
+For a finite set `A` of positive integers, let `H(A) = {Σ_{a∈S} a : S ⊆ A}` be its set of subset sums. The
+**Erdős–Sárközy function** `g_k(n)` is the least `N` such that some `n`-element set `A ⊆ {1,…,N}` has `H(A)`
+free of non-constant `k`-term arithmetic progressions. It is the subject of
+[Erdős Problem #817](https://www.erdosproblems.com/817), and `g_3` is OEIS [A399720](https://oeis.org/A399720).
+This repository contains exhaustive searches, verification tools and data for small values.
 
-The upper bound `g₃(7) ≤ 474`, with the same set, was found independently and posted on the Erdős Problems forum
-on 23 Sep 2026 by carlomitchener. That post is the first public report of the upper bound. This package adds
-the matching lower bound (no admissible 7-set with maximum ≤ 473) and the uniqueness, which give the exact value.
+## Main result
 
-This does not solve Erdős Problem #817. That problem asks for an estimate of `g_k(n)`, and the site notes it
-"cannot be resolved with a finite computation"; exact values are data for it, not a solution.
+> **g₃(7) = 474**, and `{302, 409, 447, 459, 465, 466, 474}` is the only 7-element set attaining it.
 
-**Secondary results.**
+The proof is computer-assisted:
+* **Upper bound:** a certificate. The 3⁷ = 2187 sums `Σ εᵢaᵢ` with `εᵢ ∈ {0,1,2}` are pairwise distinct.
+  This is checked directly, in milliseconds.
+* **Lower bound:** an exhaustive search of every `N ≤ 473`, run by two independently written programs (C and
+  Rust). They agree on the full per-level count vectors for every `N ≤ 478`.
+* **Independent re-run:** the repository owner re-ran the critical range `N = 419…478` on separate hardware
+  (Google Colab). All 60 count vectors were identical to the published table
+  ([`results/external_verification/`](results/external_verification/)). This used the same code, so it guards
+  against hardware and environment errors, not against a logic error shared by both runs.
 
-* New certified upper bounds for `n = 8…14`. The previous best was `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ` given `g₃(7) ≤ 474` (e.g. 1422 for n = 8):
+**Credit.** The upper bound `g₃(7) ≤ 474`, with the same set, was first posted publicly by carlomitchener on the
+Erdős Problems forum (23 Sep 2026); it was found independently here. What is new here is the matching lower
+bound and the uniqueness. This does not solve Erdős Problem #817 itself, which asks for an asymptotic estimate
+of `g_k(n)`.
 
-  | n | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
-  | --- | --- | --- | --- | --- | --- | --- | --- |
-  | g₃(n) ≤ | 1368 | 3974 | 11578 | 34088 | 100422 | 295924 | 879824 |
-  | previous | 1512 | 4536 | 13608 | 40824 | 122472 | 367416 | 1102248 |
+## Results
 
-* Structure: every extremal set for `n = 4…7` is a *hole chain* `{u_n − u_i}` in which each `u_{k+1}` is
-  the least (or, at most once, a later) value keeping `{u_{k+1} − u_i}` admissible. For n = 7:
-  `u = 0, 8, 9, 15, 27, 65, 172, 474`. A beam search over such chains rediscovers every known optimum in
-  about a second. Continuing the n = 7 chain greedily gives the bounds above.
-* The 4- and 5-term analogues from the same Erdős problem (not in the OEIS or any source we found; see PRIOR_ART.md):
-  `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` and `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92`.
-* The value `a(7) = 466` suggested as possible in A399720 is excluded, and `{1} ∪ 3A` (giving 504) is not
-  optimal at n = 7.
-* A correction to the literature: Bae and Choi (J. Korean Math. Soc. 2003) state that `{109,147,161,166,168,169}`
-  is the unique minimal "2-fold subset-sum-distinct" 6-set. Those are the same sets as here, and in fact
-  `g₃(6) = 168`: their set is the unique one with maximum 169.
+| quantity | value | status | details |
+| --- | --- | --- | --- |
+| g₃(1), …, g₃(6) | 1, 3, 8, 22, 60, 168 | known (Korsky 2026 for n ≤ 4; M. Czech 2026 for n = 5, 6); reproduced here | [A399720](https://oeis.org/A399720) |
+| **g₃(7)** | **474**, unique extremal set | **new; computer-assisted proof** | [DISCOVERY](docs/DISCOVERY.md) |
+| g₃(8), …, g₃(14) | ≤ 1368, 3974, 11578, 34088, 100422, 295924, 879824 | new certified upper bounds | [DISCOVERY](docs/DISCOVERY.md) |
+| g₃(8) | = 1368? | conjecture (evidence only) | [DISCOVERY](docs/DISCOVERY.md), [feasibility study](research/pruning/NOTES.md) |
+| g₄(1), …, g₄(7) | 1, 3, 5, 14, 40, 79, 225 | new; two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
+| g₅(1), …, g₅(8) | 1, 2, 4, 6, 14, 22, 60, 92 | new; two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
+| n = 6 claim of Bae–Choi (2003) | they state 169, but g₃(6) = 168 | correction | [DISCOVERY](docs/DISCOVERY.md) |
 
-**How.** An exhaustive search, organized per maximum `N`. It uses the fact that `H(A)` is 3-AP-free iff
-all `3ⁿ` sums `Σ εᵢaᵢ` (`εᵢ ∈ {0,1,2}`) are distinct (proved in METHODS.md), and a bitset of all
-`{−2..2}`-combinations for O(1) incremental tests. The search was re-run by an independently written Rust
-program with the opposite search order. Both report identical canonical counts (`V_k(N)` = number of
-admissible `k`-subsets of `[1, N]` containing `N`, e.g. `V₆(473) = 6,608,257,434`) for every `N`.
+## Verify it yourself
 
-## Documents
+```sh
+make all        # build the programs (gcc; cargo for the Rust verifier)
+make check      # ~2 min: 12 consistency checks (definition vs. programs, C vs. Rust, certificates, known values)
+make verify     # 5-15 min: certificates and the decisive values N = 473, 474, compared with the published table
+python3 verify/verify_result.py critical   # ~1 h on 8 cores: every N from Korsky's bound b_7 = 419 up to 478
+```
 
-| file | content |
+No local setup is needed with Google Colab: `verify/colab_verify_standalone.ipynb` runs the same checks without
+GitHub access. GitHub Actions runs `make check` on every push ([`checks.yml`](.github/workflows/checks.yml)), and
+`verify_result.py quick` with both the C and the Rust program whenever the programs or the published data change
+([`verify.yml`](.github/workflows/verify.yml)). Details: [docs/REPRODUCE.md](docs/REPRODUCE.md).
+
+## How it works
+
+1. **Reformulation.** Lemma 1 (proved in [docs/METHODS.md](docs/METHODS.md); also Korsky 2026, Prop. 4.1):
+   `H(A)` has no non-constant 3-term progression iff the `3ⁿ` sums `Σ εᵢaᵢ` with `εᵢ ∈ {0,1,2}` are pairwise
+   distinct. Such sets are called *admissible*.
+2. **Search.** For each maximum `N`, every admissible set containing `N` is enumerated, one element at a time.
+   A bitset of all `{−2,…,2}`-combinations of the chosen elements makes each extension test a pair of bit
+   look-ups (Lemma 2).
+3. **Verification by fingerprints.** The canonical counts `V_k(N)` are the numbers of admissible `k`-subsets
+   of `[1, N]` containing `N` (e.g. `V₆(473) = 6,608,257,434`). They do not depend on the search order. An
+   independently written Rust program, which searches in the opposite order, reproduces all of them
+   (`results/n7_counts.csv`). Any re-implementation must match them exactly.
+
+## Repository layout
+
+```
+├── src/                    search programs (C)
+│   ├── g3fast2.c           main exhaustive search (-DNOROOM: canonical counts)
+│   ├── g3search.c          portable reference search
+│   ├── g3profile.c         profile-window search (n = 8 constructions)
+│   ├── gk_search.c         search for general k (subset-sum bitset + AP test)
+│   └── g3fast.c            earlier version, kept for provenance
+├── verify/                 independent programs and verification tools
+│   ├── g3verify_rs/        independent implementation in Rust (opposite search order)
+│   ├── gk_verify.c         independent program for general k
+│   ├── bruteforce.py       definition-level brute force for small cases
+│   ├── check_set.py        certificate checker for a given set
+│   ├── verify_result.py    one-command verification: quick / critical / full
+│   └── colab_verify*.ipynb the same checks in Google Colab
+├── tests/run_checks.sh     fast consistency checks (make check)
+├── scripts/                runs, comparisons, constructions, novelty check (see scripts/README.md)
+├── results/                logs of every run, count tables, certificates, checksums (see results/README.md)
+├── research/pruning/       feasibility study and prototypes towards g₃(8)
+└── docs/                   write-up (below)
+```
+
+## Documentation
+
+| document | content |
 | --- | --- |
-| [DISCOVERY.md](DISCOVERY.md) | the claim, novelty, significance, evidence, falsification, verification status |
-| [METHODS.md](METHODS.md) | proofs of the reformulation and search lemmas, window invariant, algorithms, constructions |
-| [PRIOR_ART.md](PRIOR_ART.md) | literature and database search, novelty assessment |
-| [REPRODUCE.md](REPRODUCE.md) | commands to rebuild and re-run everything |
-| [LIMITATIONS.md](LIMITATIONS.md) | what is and is not established |
-| [research_log.md](research_log.md) | chronological log: directions considered, decisions, failures, timings |
-| [SUBMISSION_DRAFTS.md](SUBMISSION_DRAFTS.md) | draft OEIS / forum texts (not submitted) |
+| [docs/DISCOVERY.md](docs/DISCOVERY.md) | the result stated as a theorem, evidence, novelty, verification record, secondary results |
+| [docs/METHODS.md](docs/METHODS.md) | proofs of the lemmas, the search and why it is exhaustive, constructions |
+| [docs/REPRODUCE.md](docs/REPRODUCE.md) | how to rebuild and re-run everything |
+| [docs/LIMITATIONS.md](docs/LIMITATIONS.md) | what is and is not established |
+| [docs/PRIOR_ART.md](docs/PRIOR_ART.md) | literature, databases and forum; novelty assessment |
+| [docs/research_log.md](docs/research_log.md) | chronological research log |
+| [docs/SUBMISSION_DRAFTS.md](docs/SUBMISSION_DRAFTS.md) | drafts for the OEIS and the Erdős Problems forum |
+| [results/README.md](results/README.md) | index of result files |
+| [research/pruning/NOTES.md](research/pruning/NOTES.md) | how large the g₃(8) computation is, and ideas for reducing it |
 
-## Layout
+## Citing
 
-```
-src/g3fast2.c          optimized exhaustive search (PEXT); -DNOROOM = canonical counts   [main computation]
-src/g3search.c         portable reference search;  src/g3fast.c  intermediate version (provenance)
-src/g3profile.c        profile-window search (constructions only, n = 8)
-src/gk_search.c        definition-level search for general k (subset-sum bitset + AP test)
-verify/g3verify_rs/    independent Rust implementation (decreasing order)                  [verification]
-verify/gk_verify.c     independent implementation for general k (pairwise AP test)
-verify/bruteforce.py   definition-level brute force for small cases
-verify/verify_result.py  one-command verification (quick / critical / full), PASS/FAIL; colab_verify.ipynb
-verify/check_set.py    exact certificate checker for a given set
-scripts/               run_range.sh, aggregate.py, finalize.sh, verify_pipeline.sh (runs and comparisons);
-                       hole_dp.py, holes_all.py, beam.py, offset_*.py (chain constructions);
-                       summary_table.py, conway_guy_ternary.py, mc_valid.py
-results/               raw logs of every run, count tables, certificates, checksums
-```
+If you use the results, programs or data, please cite this repository; see [CITATION.cff](CITATION.cff) or
+GitHub's "Cite this repository" button. Please also cite the original sources: P. Erdős (1991), P. Erdős and
+A. Sárközy, *Discrete Math.* 102 (1992), S. Korsky, arXiv:2606.24139 (2026), and OEIS A399720.
 
-## Quick check
+## License
 
-One command, or in Google Colab `verify/colab_verify.ipynb` (`verify/colab_verify_standalone.ipynb` needs no GitHub access):
+MIT; see [LICENSE](LICENSE).
 
-```sh
-python3 verify/verify_result.py quick       # ~5-15 min, PASS/FAIL; "critical"/"full" re-run every N (hours)
-```
+## Acknowledgements and AI disclosure
 
-Individual steps:
+This work builds on:
+* S. Korsky: the reformulation and the lower bound `g₃(n) ≥ b_n`;
+* S. Costa: the answer to the "in particular" question;
+* M. Czech: OEIS A399720, and `g₃(5)`, `g₃(6)`;
+* carlomitchener: the upper bound for n = 7;
+* firesh: the audit repository, whose program was used as a third-party check;
+* T. Bloom: the Erdős Problems site.
 
-```sh
-make all
-python3 verify/check_set.py 302,409,447,459,465,466,474    # certificate for g_3(7) <= 474 (ms)
-./bin/g3fast2_noroom 7 473 473                              # one of the non-existence runs (~3 min)
-./bin/g3verify       7 473 473                              # same N, independent program (~8 min)
-python3 scripts/beam.py 300 12 8 40                         # chain search: 8, 22, 60, 168, 474, 1368 (~1 s)
-```
+The search design, programs, computations and write-up were produced by an AI agent (Claude, Anthropic), working
+with the repository owner. The owner re-ran the verification independently.

@@ -1,7 +1,19 @@
 # Reproducing the results
 
-Tested on Ubuntu 24.04, x86-64 (Intel Xeon with AVX-512/BMI2), gcc 13.3, rustc 1.94, Python 3.11.
-Only standard tools are needed; no network access after cloning.
+Tested on Ubuntu 24.04, x86-64 (Intel Xeon with AVX-512/BMI2), gcc 13.3, rustc 1.94, Python 3.11; the
+`quick` and `critical` verifications were also run by the repository owner on Google Colab (Intel, 8 vCPUs).
+Only standard tools are needed; no network access after cloning. All commands are run from the repository root.
+
+## Fast checks
+
+```sh
+make all       # build everything (section 0)
+make check     # ~2 min: 12 consistency checks (tests/run_checks.sh), prints PASS/FAIL per check
+make verify    # = python3 verify/verify_result.py quick (below)
+```
+GitHub Actions runs `make all` and `make check` on every push (`.github/workflows/checks.yml`), and
+`verify_result.py quick --rust` when the programs or the published data change, or on demand
+(`.github/workflows/verify.yml`).
 
 ## One-command verification (recommended for a human verifier)
 
@@ -23,11 +35,11 @@ Rebuild it with `python3 scripts/make_standalone_notebook.py`.
 Colab without the notebook file: paste this into one cell of a new notebook and run it.
 ```python
 import getpass, os, subprocess
-REPO, BRANCH, DEST = 'rb06716/NovelDiscovery', 'claude/autonomous-research-discovery-yqinv8', '/content/NovelDiscovery'
+REPO, DEST = 'rb06716/NovelDiscovery', '/content/NovelDiscovery'
 if not os.path.exists(DEST):
     token = getpass.getpass('GitHub token (empty if the repository is public): ').strip()
     url = f'https://x-access-token:{token}@github.com/{REPO}.git' if token else f'https://github.com/{REPO}.git'
-    r = subprocess.run(['git', 'clone', '--depth', '1', '-b', BRANCH, url, DEST], capture_output=True, text=True)
+    r = subprocess.run(['git', 'clone', '--depth', '1', url, DEST], capture_output=True, text=True)
     print((r.stdout + r.stderr).replace(token, '***') if token else r.stdout + r.stderr)
     subprocess.run(['git', '-C', DEST, 'remote', 'set-url', 'origin', f'https://github.com/{REPO}.git'])
 os.chdir(DEST)
@@ -91,8 +103,8 @@ python3 scripts/aggregate.py compare 7 --c results/repro_c_lo/*.log --rust resul
 ```
 
 Expected: `0 mismatches`, no `SOLUTION` line for any `N ≤ 473`, exactly one for `N = 474`.
-To compare against the published logs instead, pass `results/n7_scan/*.log` etc. (file list in README.md), or
-compare with the CSV table:
+To compare against the published logs instead, pass `results/n7_scan/*.log` etc. (file list in
+`results/README.md`), or compare with the CSV table:
 
 ```sh
 python3 scripts/aggregate.py table 7 results/repro_c_lo/*.log results/repro_c_hi/*.log > my_counts.csv

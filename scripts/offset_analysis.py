@@ -1,3 +1,10 @@
+"""
+offset_analysis.py -- offset-form analysis of a set A (default: the n = 7 extremal set).
+
+Writes A = {M} u {M - b : b in B}. It checks condition (i) (no non-zero c in {-2..2}^B with |sum c| <= 2 and
+sum c_b b = 0) and lists the admissible maxima M ("holes") for these offsets in (max B, 2 sum B + 1].
+See docs/METHODS.md, sections 7-8.
+"""
 import itertools
 def analyze(A):
     A = sorted(A); M = A[-1]

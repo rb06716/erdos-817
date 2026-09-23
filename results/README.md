@@ -17,6 +17,7 @@ With `-DNOROOM` (C) and always (Rust), `V_k` = number of admissible k-subsets of
 | `n7_reference_check/` | reference `g3search.c` vs `g3fast2` (room-pruned mode) at N = 473, 474 |
 | `n7_roompruned_partial/` | first (room-pruned) scan N = 419..434, superseded by `n7_scan/` |
 | `n7_probe/` | band probe that found the upper-bound set at N = 474 (not part of the proof) |
+| `external_verification/` | runs by the repository owner (a human) on Google Colab, 2026-09-23: `verify_result.py quick` and `critical` (all 60 count vectors N = 419..478 identical to `n7_counts.csv`) |
 | `thirdparty_check/` | third-party `g3.c` (firesh audit repository) at n = 7, N = 200 |
 | `certificates/` | sorted ternary sums / subset sums and SHA-256 of the certificate sets (n = 7, n = 8) |
 | `n8_upper/` | n = 8 construction searches (band, profile windows, beam) — upper bounds only |

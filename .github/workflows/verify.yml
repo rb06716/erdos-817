@@ -1,0 +1,40 @@
+# Quick verification of g_3(7) = 474 (about 20-30 minutes): certificates, Lemma 1, g_3(5), g_3(6), and the
+# exhaustive search at the decisive values N = 473, 474 with both the C and the Rust program, compared with the
+# published count table. Runs when the programs or the published data change, and on demand (Actions tab).
+name: verify
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'verify/*.py'
+      - 'verify/*.c'
+      - 'verify/g3verify_rs/**'
+      - 'Makefile'
+      - 'results/n7_counts.csv'
+      - 'results/n7_scan/**'
+      - '.github/workflows/verify.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'verify/*.py'
+      - 'verify/*.c'
+      - 'verify/g3verify_rs/**'
+      - 'Makefile'
+      - 'results/n7_counts.csv'
+      - 'results/n7_scan/**'
+      - '.github/workflows/verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quick-verification:
+    name: quick verification (N = 473, 474; C and Rust)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: verify_result.py quick --rust
+        run: python3 verify/verify_result.py quick --rust

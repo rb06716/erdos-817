@@ -1,3 +1,8 @@
+"""
+seeds.py [NMAX] [SMAX] -- greedy first-hole chains from every seed u_1 = s <= SMAX, up to n = NMAX. It prints each
+chain and the best maximum per n. The seed s = 1 gives 0, 1, 3, 8, 22, 60, 169, 477, ...; its n = 6 set is
+Bae-Choi's {109, 147, 161, 166, 168, 169}.
+"""
 from hole_dp import first_hole
 import sys
 NMAX = int(sys.argv[1]) if len(sys.argv) > 1 else 9
