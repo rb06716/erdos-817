@@ -419,3 +419,18 @@ algorithms (goal: make g_3(8) or similar reachable).
   Tested in a fresh clone: quick = 7/7 PASS in 5.2 min (2 parallel jobs); resume skips finished N.
 - verify/colab_verify.ipynb: clones the (private) repository with a token that is not stored, optional Google Drive
   for resumable logs, runs quick / critical / full / Rust. Validated with nbformat; Python parts compile.
+
+## 2026-09-23 ~14:45–15:30 — pruning research, phase 1 (research/pruning/)
+Goal (user): find pruning that makes g_3(8) reachable. Findings (details in research/pruning/NOTES.md):
+- Calibration: Monte Carlo estimator mc_counts.c (validated: V_6(473) 6.57e9 vs exact 6.61e9, V_5(473), V_6(400)).
+  For n = 8 the canonical tree per N is ~1e13 (N = 1169) to ~4.5e13 (N = 1367) nodes, mostly admissible 6- and
+  7-sets; total over N = 1169..1367 ~4e15 nodes, ~10-20 CPU-years with g3fast2 (70-100 ns/node measured).
+  (Corrects the 30-45 CPU-years quoted to the user earlier.)
+- g3tail3.c (last three elements from D_{n-3}, no D_{n-2}): output identical to g3fast2 -DNOROOM (n = 4, 5, 6 all
+  N; n = 7 at 300, 419; n = 8 at 300, 400) but not faster (n = 8, N = 400: 120 s vs 106 s): per-node overhead
+  dominates, restructuring gives <= ~2x.
+- Analysis: all-N-at-once (offset form) shares little at deep levels (N-specific relations); partial local-density /
+  bandwidth bounds cannot prune early (T(P) of a 5-set has density ~0.03; the obstruction appears only with >= 7
+  elements); pair-graph look-ahead costs as much as the bit-parallel scans; "7-set first" has ~3e15 7-sets.
+  => no algorithmic reduction by 100-1000x found; the realistic route is GPU parallelism (estimated 1-3 weeks of one
+  A100, uncertain by 3-5x), beyond Colab Pro's monthly allowance.

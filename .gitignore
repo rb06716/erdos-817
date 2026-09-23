@@ -5,3 +5,5 @@ __pycache__/
 results/**/*.bin
 oeisdata/
 results/verify_run/
+research/pruning/g3tail3
+research/pruning/mc_counts
