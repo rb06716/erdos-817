@@ -177,3 +177,56 @@ Exhaustive over all recurrences u_{n+1} = 3u_n - u_{n-r_n} (r_n in 1..n, u_0=0, 
 S_n = {u_n - u_i : i < n}: the smallest admissible S_n has max 1, 3, 8, 23, 64, 189, 543, 1565 for n = 1..8.
 No such set beats g_3(n) for n <= 7 (consistent with the exhaustive search), and none beats the new n = 8
 construction (1380). So this construction family neither contradicts nor anticipates g_3(7) = 474.
+
+## 2026-09-23 02:00 — Offset recursion: a ternary Conway–Guy-type construction; new upper bounds n = 8..12
+- scripts/hole_dp.py: first_hole(B) = least M > max B with {M} u {M - b : b in B} admissible (DP over
+  (sum c, sum c*b) bitsets; incremental test of condition (i)). Reproduces 22, 60, 168, 474, 1380 exactly.
+- Recursion B_{n+1} = B_n u {M_n}, M_{n+1} = first_hole(B_{n+1}) (scripts/offset_recursion.py):
+  from B_3 = {1,3} (M=8): 22, 60, 169, 477, 1387  -> exact optimum for n <= 5, within 0.6% for n = 6, 7.
+  from the n=7 optimum B_7 = {8,9,15,27,65,172} (M=474): n=8..12: 1368, 3974, 11578, 34088, 100422.
+  Equivalently A_n = {u_n - u_i : 0 <= i < n} with u = (0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578,
+  34088, 100422).
+- verify/check_set.py PASS for all six sets n = 7..12 (n=12: 531,441 distinct ternary sums; 4096 subset sums,
+  all 8,386,560 pairs checked, no 3-AP). A perturbed n=12 set (max 100421) correctly FAILS.
+- New upper bounds (previous best: 3 * (previous bound), i.e. (168/729) 3^n from the OEIS entry):
+  g_3(8) <= 1368 (was 1512), g_3(9) <= 3974 (4536), g_3(10) <= 11578 (13608), g_3(11) <= 34088 (40824),
+  g_3(12) <= 100422 (122472).  Ratios to 3^n: .2085 .2019 .1961 .1924 .1890.
+- Offset local search from the 1380 set: no improvement in 20k moves; seeds B_7 u {474} + delta fail
+  condition (i) for every delta in 1..40 (only delta = 0 works).
+
+## 2026-09-23 02:10 — "Hole chains": structure of all extremal sets; beam search reproduces every known optimum
+Definition: write A = {u_n - u_i : 0 <= i < n} with 0 = u_0 < u_1 < ... < u_n = max A. A is a *hole chain* if for
+every k the set {u_{k+1} - u_i : 0 <= i <= k} is admissible (u_{k+1} is an admissible "hole" of {u_1..u_k}).
+- scripts/holes_all.py: all holes of an offset set (vectorised DP); scripts/beam.py: beam search over chains
+  (keep W best partial chains per level, extend each by its first K holes).
+- W=300,K=12 (1 s) and W=3000,K=40 (4 min, up to n=12) both give: n=3..7: 8, 22, 60, 168, 474 with exactly the
+  known extremal sets (incl. the unique n=7 set); n=8..12: 1368, 3974, 11578, 34088, 100422 (same as the
+  first-hole recursion seeded by the n=7 optimum).
+- ALL extremal sets for n = 4..7 (both n=4 sets, both n=5 sets, both n=6 sets, the n=7 set) and all admissible
+  7-sets with max <= 478 are hole chains. The n=7 optimum's chain: u = 0, 8, 9, 15, 27, 65, 172, 474, where 15 is
+  NOT the first hole of {8, 9} (holes 11, 12, 14, 15, ...) -- the greedy first-hole rule alone does not find it
+  (seeds s = 1..40 with first holes give at best 477 at n = 7).
+- Hole chains are common but not universal: 21,353 / 22,590 admissible 5-sets with max 60..80 and
+  72,953 / 83,395 admissible 6-sets with max 168..200 are chains. So "optimum = best chain" is an empirical
+  observation for n <= 7, not a theorem; the n >= 8 values are upper bounds only.
+- Pure first-hole recursion from u_1 = 1: u = 0, 1, 3, 8, 22, 60, 169, 477, 1387, 4041, 11785, 34709, 102263
+  (exact optimum for n <= 5; not in OEIS).
+
+## 2026-09-23 02:15 — g_5(7) = 60
+gk_search (stop at first) finds the first admissible 7-set for k = 5 at N = 60; full enumeration by gk_search and
+gk_verify for N = 1..60 gives identical canonical counts and the same 4 extremal sets at N = 60:
+{1,39,44,55,56,59,60}, {1,5,39,55,56,59,60}, {9,10,44,53,54,59,60}, {2,5,39,55,57,58,60}.
+Direct check of {1,5,39,55,56,59,60}: |H| = 80, no 5-term AP (it does contain 4-term APs).
+g_5(1..7) = 1, 2, 4, 6, 14, 22, 60; g_4(1..6) = 1, 3, 5, 14, 40, 79 and g_4(7) >= 174.
+
+## 2026-09-23 02:25 — Definition-level check at an extremal instance
+src/gk_search.c with k = 3 (subset-sum bitsets + direct 3-AP test; no reformulation) at n = 6, N = 167, 168:
+N=168 canonical counts 1 166 13168 555821 4600840 2 -- identical to g3fast2 -DNOROOM (N=167: 0 solutions,
+identical counts). So Lemma 1 + Lemma 2 + the fast implementation agree with the raw definition at the size
+where the optimum occurs for n = 6.
+
+## 2026-09-23 02:05 — Exact chain description of the n = 7 optimum
+u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, ...: u_2 = 9 is the first hole of {8}; u_3 = 15 is the 4th hole of {8, 9}
+(holes 11, 12, 14, 15, ...); every later term (27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422) is the FIRST
+hole of the preceding offsets. So the unique optimum for n = 7 and the n = 8..12 constructions are determined
+by the seed (8, 9, 15) plus the greedy first-hole rule.

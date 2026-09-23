@@ -1,0 +1,49 @@
+{
+ "g3_7_extremal": {
+  "set": [
+   302,
+   409,
+   447,
+   459,
+   465,
+   466,
+   474
+  ],
+  "n": 7,
+  "max": 474,
+  "num_ternary_sums": 2187,
+  "distinct_ternary_sums": 2187,
+  "ternary_sum_range": [
+   0,
+   6044
+  ],
+  "num_subset_sums": 128,
+  "three_term_APs_in_subset_sums": 0,
+  "sha256_ternary_sums_file": "b2dc38bc89a251c699fbeb2cd8911a040cc5a4a2f96f078338f2bbb28acb6efc",
+  "sha256_subset_sums_file": "7f091a344bd0ba94e42c66eef6982f3f789f2643d8a79add50da0e81da77d8cb"
+ },
+ "g3_8_construction": {
+  "set": [
+   878,
+   1192,
+   1299,
+   1335,
+   1349,
+   1353,
+   1356,
+   1380
+  ],
+  "n": 8,
+  "max": 1380,
+  "num_ternary_sums": 6561,
+  "distinct_ternary_sums": 6561,
+  "ternary_sum_range": [
+   0,
+   20284
+  ],
+  "num_subset_sums": 256,
+  "three_term_APs_in_subset_sums": 0,
+  "sha256_ternary_sums_file": "2fb2b97820ff5061d505d263f68e70060ec8e4d1a8fc3a7e02a9b9d185411a59",
+  "sha256_subset_sums_file": "52d119a0619aa5a9601836f707ab6e3c59bef2d46d635d0916508aef661f2844"
+ }
+}

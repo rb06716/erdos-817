@@ -37,6 +37,22 @@ all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (p
 * OEIS search for the value string `1,3,8,22,60,168` finds only A399720 and two unrelated rooted-tree
   sequences A318821/A318863 (which continue `466`); this coincidence is noted in A399720.
 
+## Additional checks after the result (2026-09-23)
+
+* Web searches for the specific set `{302, 409, 447, 459, 465, 466, 474}`, for "g_3(7)", "Erdős Sárközy subset
+  sums three-term progression n=7", "erdosproblems 817 forum n=7": no source reports an n = 7 value.
+* `github.com/TheJustinSunPrize/awards` PR #1030 (JSP-000674 = Erdős #817), opened 2026-09-18, still open:
+  records "The n = 7 run remains incomplete (N ≤ 313 excluded, against the proven b_7 = 419)".
+* q-fold subset-sum-distinct literature: S. Dutta, *The greedy algorithm for dissociated sets*
+  (arXiv:2601.07068, 2026) treats greedy sequences and asymptotic bounds for D_q-sets, not exact minima.
+  The Conway–Guy-type constructions of Bae–Choi (2003) could not be read; as a proxy, every recurrence
+  `u_{n+1} = 3u_n − u_{n−r_n}` with sets `{u_n − u_i}` was enumerated for n ≤ 8
+  (`scripts/conway_guy_ternary.py`): the best admissible 7-set of that family has maximum 543 > 474.
+* OEIS export: no entry contains `1,3,8,22,60,169`, `0,1,3,8,22,60,169`, `8,9,15,27,65,172`, `1368,3974`,
+  `3974,11578`, `11578,34088`, `34088,100422` or `1387,4041`; the only hit for `474,1368` is an unrelated
+  array-counting sequence (A250978). For the k = 4, 5 values: no entry contains `1,3,5,14,40` or
+  `1,2,4,6,14,22,60` (`2,4,6,14,22` occurs only in unrelated A084685, A307676).
+
 ## Novelty statement
 
 As of 2026-09-22 no source located by these searches reports the value of `g_3(7)`; the most recent

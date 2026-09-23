@@ -1,31 +1,56 @@
 # Limitations and remaining uncertainty
 
-1. **Computer-assisted proof.** The lower bound (no admissible 7-set with maximum below the claimed value) is
-   established by exhaustive search, not by a human-readable argument. Trust rests on
-   * the elementary lemmas in METHODS.md (Lemma 1: reformulation; Lemma 2: one-step extension), and
-   * the correctness of the search programs, supported by agreement of independent implementations
-     (C increasing-order search, Rust decreasing-order search, definition-level brute force for small
-     cases) on the *canonical counts* `V_k(N)` for every `N` compared, not only on the final yes/no answer.
-   A common-mode error (a mistake shared by all implementations) is the main residual risk; the
-   implementations share only the mathematical lemmas, which are proved in METHODS.md and checked
-   numerically by `verify/bruteforce.py --equivalence`.
+## Main result (g₃(7) = 474)
+
+1. **Computer-assisted proof.** The upper bound is a certificate (an explicit set checked by exact
+   arithmetic, directly against Erdős's definition). The lower bound (no admissible 7-set with maximum
+   below 474) is established by exhaustive search, not by a human-readable argument. Trust rests on
+   * two elementary lemmas proved in METHODS.md (Lemma 1: reformulation as `{0,1,2}`-injectivity; Lemma 2:
+     one-step extension test), both also checked numerically against the raw definition; and
+   * the correctness of the search programs, supported by agreement of independently written
+     implementations (C, increasing order; Rust, decreasing order) on the *canonical count vectors*
+     `V_k(N)` for every `N`, not only on the final yes/no answer, plus agreement with definition-level
+     programs (Python brute force; `gk_search.c`) on smaller instances, including the n = 6 optimum.
+
+   A common-mode error (a mistake shared by all implementations) is the main residual risk. The
+   implementations share only the two lemmas.
 
 2. **No compact certificate for non-existence.** Unlike SAT/DRAT proofs, the exhaustive search does not emit a
-   small independently checkable proof object. Re-running the search (a few CPU-hours) is the check. The
-   per-`N` count vectors act as fingerprints: any re-implementation must reproduce them exactly.
+   small independently checkable proof object. The check is to re-run the search (a few CPU-hours per
+   implementation for the critical range). The per-`N` count vectors act as fingerprints, and any
+   re-implementation must reproduce them exactly.
 
-3. **Hardware / transient errors.** Mitigated by two independent full runs on different code paths; both
+3. **Hardware / transient errors.** Mitigated by two independent full runs on different code paths. Both
    would have to fail in the same way for the same `N`.
 
-4. **Dependence on the literature bound `g_3(7) ≥ 419`.** Korsky's bandwidth bound (arXiv:2606.24139) is
-   only used to skip `N ≤ 418` in the first pass; the range `N ≤ 418` is also searched exhaustively so that the
-   final claim does not depend on it (see results/ for the exact coverage of each implementation).
+4. **Literature bound `g₃(7) ≥ 419`** (Korsky, arXiv:2606.24139). The first pass used it to skip `N ≤ 418`.
+   That range was then searched exhaustively as well (see DISCOVERY.md "VERIFICATION STATUS" for which
+   implementations cover it), so the final claim does not depend on the theorem.
 
-5. **Novelty.** Access to arXiv, the OEIS web site, erdosproblems.com and publisher sites was blocked from the
-   research environment; novelty was assessed through the OEIS git export (dated 2026-09-22), the Erdős
-   problems git database, GitHub, and web-search summaries (see PRIOR_ART.md). A computation of `g_3(7)`
-   posted after 2026-09-22 or in a venue not indexed by these sources would not have been detected.
+5. **Mutation testing** showed that bugs confined to the last search level are invisible when no solutions
+   exist, which is the case for n = 7 and every N < 474. The final level of both programs was therefore
+   also exercised where solutions exist: n = 6 over N ≤ 175, and n = 7 at N = 474…478, where the solution
+   lists of both programs are compared.
 
-6. **Secondary results (`g_4(n)`)** rest on a single fast implementation (`src/gk_search.c`) plus
-   definition-level Python brute force for the smallest cases; they are reported separately and with that
-   caveat.
+6. **Novelty.** arXiv, the OEIS web site, erdosproblems.com and publisher sites could not be fetched from the
+   research environment. Novelty was assessed through the OEIS git export (dated 2026-09-22), the Erdős
+   problems git database, GitHub, and web-search summaries (PRIOR_ART.md). The most recent public
+   statements found (2026-09-14 and 2026-09-18) describe `g₃(7)` as open. A computation posted after
+   2026-09-22, or in a venue not indexed by these sources, would not have been detected. Bae–Choi (2003)
+   could not be read; the Conway–Guy-type family it studies was re-enumerated as a proxy.
+
+## Secondary results
+
+7. **Upper bounds for n = 8…12** are certified constructions (exact checks), so they are upper bounds with no
+   uncertainty. Whether they are *optimal* is unknown. The beam search is restricted to "hole chains", which
+   contain every known optimum (n ≤ 7) but not every admissible set, and exhaustive search for n = 8 is far
+   beyond the computation done here (roughly 10¹⁴ admissible 7-subsets per value of the maximum near 1360,
+   extrapolating the n = 7 counts).
+
+8. **Structural statements** ("all extremal sets for n ≤ 7 are hole chains") are verified facts for n ≤ 7 and
+   an empirical pattern beyond that.
+
+9. **`g₄`, `g₅` values** rest on two independent C implementations (increasing vs. decreasing order;
+   bitset shifted-AND vs. pairwise AP detection) that agree on all canonical counts for the reported ranges.
+   Python brute force independently confirms the smaller cases (k = 4: n ≤ 5; k = 5: n ≤ 6). `g₄(7)` is
+   only bounded below (≥ 174) by a single implementation's partial run.
