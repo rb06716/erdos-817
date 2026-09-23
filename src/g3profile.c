@@ -1,5 +1,6 @@
 /*
- * g3profile.c -- profile-window variant of g3fast2.c, for UPPER-BOUND constructions only exhaustive search for g_3(n) (Erdos Problem #817, OEIS A399720).
+ * g3profile.c -- profile-window variant of g3fast2.c (Erdos Problem #817, OEIS A399720): the search is exhaustive only
+ * inside the given windows, so it is used for UPPER-BOUND constructions only, never for non-existence.
  *
  * Same mathematics and same search tree as g3search.c (see the comments there):
  *   A admissible  <=>  no nonzero c in {-2..2}^n with sum c_i a_i = 0
@@ -15,16 +16,32 @@
  * Node counts: nodes[k] = number of admissible k-sets {N} u B (|B| = k-1) with max B <= N-(n-k+1)
  * (the DFS visits exactly these).  For k = n this is the number of admissible n-sets with max N.
  *
- * usage: g3fast2 n Nlo Nhi [stop_at_first=0] [step=1] [offset=0] [minelem=1]
- *        processes N = Nlo+offset, Nlo+offset+step, ... <= Nhi
- *        minelem > 1 restricts the other elements to [minelem, N-1] (upper-bound searches only)
+ * usage: g3profile n Nlo Nhi [stop_at_first=0] [step=1] [offset=0] [lo:hi ...]
+ *        processes N = Nlo+offset, Nlo+offset+step, ... <= Nhi (Nhi <= 1536)
+ *        the k-th "lo:hi" (per mille of N) restricts the k-th smallest element to [floor(lo*N/1000), ceil(hi*N/1000)]
+ *        (default 0:1000 for every element), e.g. g3profile 7 474 474 0 1 0 600:700 830:900 920:970 940:1000
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <time.h>
+/* even_bits(x): the 32 bits of x at even positions, packed into the low half (as in g3fast2.c): BMI2 PEXT when
+   available, otherwise (e.g. ARM) or with -DNO_PEXT an equivalent portable routine. */
+#if defined(__BMI2__) && !defined(NO_PEXT)
 #include <immintrin.h>
+static inline uint64_t even_bits(uint64_t x) { return _pext_u64(x, 0x5555555555555555ULL); }
+#else
+static inline uint64_t even_bits(uint64_t x) {
+    x &= 0x5555555555555555ULL;
+    x = (x | (x >> 1)) & 0x3333333333333333ULL;
+    x = (x | (x >> 2)) & 0x0F0F0F0F0F0F0F0FULL;
+    x = (x | (x >> 4)) & 0x00FF00FF00FF00FFULL;
+    x = (x | (x >> 8)) & 0x0000FFFF0000FFFFULL;
+    x = (x | (x >> 16)) & 0x00000000FFFFFFFFULL;
+    return x;
+}
+#endif
 
 #define MAXN 10
 typedef uint64_t u64;
@@ -95,8 +112,8 @@ static inline void window_even(const u64 *D, int start, int len, u64 *out) {
     if (nw2 & 1) tmp[nw2] = 0;
     int nw = (len + 63) >> 6;
     for (int i = 0; i < nw; i++) {
-        u64 lo = _pext_u64(tmp[2 * i], 0x5555555555555555ULL);
-        u64 hi = _pext_u64(tmp[2 * i + 1], 0x5555555555555555ULL);
+        u64 lo = even_bits(tmp[2 * i]);
+        u64 hi = even_bits(tmp[2 * i + 1]);
         out[i] = lo | (hi << 32);
     }
     int rem = len & 63;
@@ -219,7 +236,7 @@ static int dfs(int L, int last, long long sum) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 4) { fprintf(stderr, "usage: %s n Nlo Nhi [stop_first] [step] [offset]\n", argv[0]); return 2; }
+    if (argc < 4) { fprintf(stderr, "usage: %s n Nlo Nhi [stop_at_first=0] [step=1] [offset=0] [lo:hi ...]\n", argv[0]); return 2; }
     n = atoi(argv[1]);
     int Nlo = atoi(argv[2]), Nhi = atoi(argv[3]);
     stop_first = argc > 4 ? atoi(argv[4]) : 0;

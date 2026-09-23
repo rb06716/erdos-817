@@ -79,6 +79,9 @@ Definition-level brute force (Python) and gk_search.c: g_4(1..5) = 1, 3, 5, 14, 
 {1,4,5}, {1,9,13,14}, {1,13,35,39,40}. No OEIS entry for g_4. To be extended after the main computation.
 
 ## 2026-09-23 00:20 — Upper bound g_3(7) <= 474 (new; previous best 504)
+[Corrections added on the evening of 2026-09-23: the set was found at about 00:25 UTC (the probe started at 00:20
+and reached N = 474 last); carlomitchener posted the same bound on the forum at 06:41 forum time; Bae (2002)
+already implied g_3(7) <= 477. See the last entries.]
 
 - Observation (n = 4, 5, 6 extremal sets): elements as fractions of the maximum follow a common profile,
   min ~0.636, next ~0.864, next ~0.95, rest clustered near 1 (e.g. 107/168, 145/168, 159/168; 38/60, 52/60, 57/60;
@@ -153,7 +156,7 @@ guard). Rebuilt binaries give byte-identical outputs on regression ranges.
 ## 2026-09-23 ~01:40 — Offset analysis of the extremal sets (scripts/offset_analysis.py)
 With A = {M} u {M - b : b in B}: all extremal sets satisfy condition (i) (no relation with |sum c| <= 2), and M
 is exactly the FIRST admissible value above max B:
-- n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values) -> M = 474.
+- n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values) [corrected: 96 values; every M >= 593 = 2*sum(B) + 1 is also a hole] -> M = 474.
 - n=6: B = {4,6,9,23,61} -> first allowed M = 168; B = {2,6,9,23,61} -> 168.
 - n=5: B = {1,3,8,22} -> 60.
 So g_3(n) = min over offset sets B (|B| = n-1, condition (i)) of the first hole of
@@ -389,6 +392,7 @@ reclassification, Costa's Lean update), discussion thread (Korsky, Bloom, M. Cze
 **carlomitchener 23 Sep 06:41 forum time: "g_3(7) <= 474" with our exact set**), forum rules (AI use must be
 disclosed; claims verified by a human who understands them).
 - Credit: the upper bound with the same set was posted publicly by carlomitchener; our search found it at 00:20 UTC
+  [corrected: about 00:25 UTC]
   but the repository is private (checked via the GitHub API), so theirs is the first public report. Our new part:
   lower bound + uniqueness => exact value. Documents corrected accordingly (README, DISCOVERY, PRIOR_ART,
   LIMITATIONS, SUBMISSION_DRAFTS). Forum timezone: Costa's claim (01:48:23 forum time) cites a Zenodo record
@@ -404,7 +408,8 @@ disclosed; claims verified by a human who understands them).
   results/prior_art/bae_choi_n6_check.txt). It is the greedy first-hole chain set (u = 0,1,3,8,22,60,169).
   Their Conway-Guy-type construction has maxima 1,3,9,25,73,213,621,1845 (n = 1..8). No n = 7 value.
 - Live OEIS searches (control query ok): no entries for our new values, Bae-Choi's set or maxima. arXiv API: nothing
-  after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online).
+  after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online) [corrected: it is online and was
+  read in the pre-publication audit; see the last entry].
 
 ## 2026-09-23 ~14:30 — publication path: one-command verification (+ Colab notebook)
 Plan agreed with the user: publish what we have after the required human verification, then research pruning
@@ -424,7 +429,8 @@ algorithms (goal: make g_3(8) or similar reachable).
 Goal (user): find pruning that makes g_3(8) reachable. Findings (details in research/pruning/NOTES.md):
 - Calibration: Monte Carlo estimator mc_counts.c (validated: V_6(473) 6.57e9 vs exact 6.61e9, V_5(473), V_6(400)).
   For n = 8 the canonical tree per N is ~1e13 (N = 1169) to ~4.5e13 (N = 1367) nodes, mostly admissible 6- and
-  7-sets; total over N = 1169..1367 ~4e15 nodes, ~10-20 CPU-years with g3fast2 (70-100 ns/node measured).
+  7-sets; total over N = 1169..1367 ~4e15 nodes, ~10-20 CPU-years with g3fast2 (70-100 ns/node measured)
+  [corrected: 55-70 ns/node measured at N = 300-400, 70-100 ns assumed near N = 1300, i.e. ~9-13 CPU-years].
   (Corrects the 30-45 CPU-years quoted to the user earlier.)
 - g3tail3.c (last three elements from D_{n-3}, no D_{n-2}): output identical to g3fast2 -DNOROOM (n = 4, 5, 6 all
   N; n = 7 at 300, 419; n = 8 at 300, 400) but not faster (n = 8, N = 400: 120 s vs 106 s): per-node overhead
@@ -465,3 +471,39 @@ disclosure line now states exactly what the owner ran. Pre-publication check: al
 "Claude <noreply@anthropic.com>" and no personal data appears in tracked files, so the repository can be made public.
 Remaining steps (owner): make the repository public or archive it on Zenodo, then post the forum comment and the
 OEIS extension (SUBMISSION_DRAFTS.md).
+
+## 2026-09-23 ~17:50–19:30 — pre-publication restructure, independent audits, corrections
+The owner renamed the repository to rb06716/erdos-817 (the old URL redirects) before making it public, and asked for
+a deep pass so that the repository is current, accurate and organised like comparable research repositories.
+- Layout: long-form documents moved to docs/; README rewritten as a front page; added LICENSE (MIT), CITATION.cff
+  (validated against the CFF 1.2.0 schema), CHANGELOG.md, requirements.txt (NumPy, for the construction scripts)
+  and scripts/README.md.
+- Tests and CI: tests/run_checks.sh (`make check`, 12 checks, ~1.5 min); GitHub Actions checks.yml (every push) and
+  verify.yml (`verify_result.py quick --rust` when programs or data change). The first CI run failed because NumPy
+  was used but not declared; fixed (failure reproduced in a clean venv, then 12/12 with requirements.txt). On
+  GitHub's runner (AMD EPYC, 2 vCPUs): `make check` passed, and `quick --rust` passed 8/8 in 17.5 min.
+- Two independent read-only audits (content against data and literature; commands, paths and tooling). Findings
+  were checked against the primary sources and fixed:
+  * Prior art: J. Bae, Int. J. Pure Appl. Math. 1 (2002) 335-343, is online (URL in Korsky's reference list). It
+    already makes the n = 6 claim (pp. 337-338) that Bae-Choi (2003) repeat verbatim, and the proof of its Thm 3.6
+    (p. 341) uses the admissible 7-set {308,417,455,469,474,476,477}: g_3(7) <= 477 was implicit in 2002 (no
+    minimality claimed; unnoticed by A399720 and the forum). Credit statements updated in README, DISCOVERY,
+    PRIOR_ART, LIMITATIONS, SUBMISSION_DRAFTS and CITATION.cff. The exact value, the lower bound and uniqueness
+    remain new.
+  * M. Czech's forum post of 9 Sep also noted the offset form {G_n - G_k} of the optima for n <= 5 (the Conway-Guy
+    analogy) and the monotonicity g_3(n+1) <= 3 g_3(n); both are now credited (hole chains extend the remark).
+  * Corrections: the best previously published bounds for n >= 8 are 474*3^(n-7) (forum, 23 Sep), not
+    (168/729)*3^n; the profile windows contain the n = 6, 7 optima but not every n = 4, 5 optimum; the band check
+    uses floor(0.55 N); 0.565 -> 0.564; the n = 7 set was found at about 00:25 UTC; count-vector entries reach
+    7.9e9, not 1e10; the hole count above is 96, not 97; NOTES.md cost 9-13 CPU-years; LIMITATIONS item 7 made
+    consistent with NOTES.md; METHODS §7 no longer says the windows "give" the 1380 set.
+  * Tooling: scripts/verify_pipeline.sh wrote into the published result directories, and scripts/finalize.sh
+    hard-coded c_0.log, so a JOBS=4 re-run would have corrupted results/n7_counts.csv; both fixed (git-ignored
+    output directory; globbed inputs; table validated before it is written). SHA256SUMS now covers exactly the
+    tracked result files (the two Colab logs were missing). src/g3profile.c got the portable PEXT fallback (make
+    all failed on ARM and without -march=native); its output is identical for n = 5, 6, 7 and for the n = 8 window
+    search at M = 1368 (portable build, 339 s). Cargo.lock is now format v3 (cargo 1.75 builds it, identical
+    output; v4 needed >= 1.78). Usage strings fixed. Certificate files for the n = 8 set with maximum 1368 added;
+    scripts/make_certificates.py reproduces the existing certificate files byte for byte.
+- Re-checked at about 18:15-18:45 UTC: forum thread (latest post still carlomitchener's), proof claims, OEIS
+  A399720 (revision 6, unchanged), arXiv: nothing new.

@@ -12,8 +12,8 @@ For each N it enumerates ALL n-subsets of [1..N] containing N and reports how ma
 canonical counts V_k(N) (number of good k-subsets of [1..N] containing N) for k = 1..n, which must agree
 with src/g3fast2.c compiled with -DNOROOM and with verify/g3verify_rs.
 
-usage: python3 bruteforce.py n Nmax           (prints one line per N = 1..Nmax)
-       python3 bruteforce.py --equivalence    (random + exhaustive equivalence test)
+usage: python3 verify/bruteforce.py n Nmax           (prints one line per N = 1..Nmax)
+       python3 verify/bruteforce.py --equivalence    (random + exhaustive equivalence test)
 """
 import itertools
 import random

@@ -1,7 +1,7 @@
-# Build all programs.  Requirements: a C compiler (gcc or clang; g3fast2 uses the BMI2 PEXT instruction when
-# -march=native enables it and an equivalent portable code path otherwise, e.g. on ARM), a Rust toolchain
-# (cargo) for the independent verifier, and Python 3 for the checks.
-CC ?= gcc
+# Build all programs.  Requirements: a C compiler (make's default `cc`, i.e. gcc or clang; override with
+# `make CC=...`), Rust >= 1.75 with cargo for the independent verifier, Python 3, and NumPy (requirements.txt)
+# for `make check`.  g3fast2 and g3profile use the BMI2 PEXT instruction when -march=native enables it and an
+# equivalent portable code path otherwise (e.g. ARM / Apple Silicon: make CFLAGS="-O3 -mcpu=native").
 CFLAGS ?= -O3 -march=native
 
 all: bin/g3fast2 bin/g3fast2_noroom bin/g3search bin/gk_search bin/gk_verify bin/g3profile bin/g3verify

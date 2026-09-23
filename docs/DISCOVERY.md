@@ -11,8 +11,10 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
 
 **Credit for the upper bound.** The same set was found independently by carlomitchener and posted as
 `g₃(7) ≤ 474` in the Erdős Problems forum thread #817 on 23 Sep 2026 (06:41 forum time). This package's
-search had found it at 00:20 UTC that day, but its repository was private, so **the forum post is the first
-public report of the upper bound**. As far as we can find, this package's own new contributions are:
+search had found it at about 00:25 UTC that day, but its repository was private, so **the forum post is the
+first public report of the upper bound**. (A weaker bound, `g₃(7) ≤ 477`, was implicit much earlier: J. Bae,
+Int. J. Pure Appl. Math. 1 (2002), p. 341, uses the admissible 7-set `{308, 417, 455, 469, 474, 476, 477}`
+without claiming minimality.) As far as we can find, this package's own new contributions are:
 * the matching lower bound, i.e. no admissible 7-set with maximum ≤ 473;
 * uniqueness of the extremal set;
 * hence the exact value.
@@ -54,13 +56,14 @@ below.
 
 ## Secondary results (same package, weaker status where noted)
 
-1. **New upper bounds** (explicit, certified sets). The previous best was `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ`
-   from the upper bound `g₃(7) ≤ 474` (as also noted in carlomitchener's forum post):
+1. **New upper bounds** (explicit, certified sets). The best previously published bounds are
+   `g₃(n) ≤ 474·3ⁿ⁻⁷` (carlomitchener's forum post, 23 Sep 2026, from `g₃(7) ≤ 474` and `g₃(n+1) ≤ 3g₃(n)`) and,
+   before that day, `(168/729)·3ⁿ` (A399720 and M. Czech's forum post) or, implicitly, `477·3ⁿ⁻⁷` (Bae 2002):
 
    | n | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
    | --- | --- | --- | --- | --- | --- | --- | --- |
    | new bound | **1368** | **3974** | **11578** | **34088** | **100422** | **295924** | **879824** |
-   | previous (168/729)·3ⁿ | 1512 | 4536 | 13608 | 40824 | 122472 | 367416 | 1102248 |
+   | previous 474·3ⁿ⁻⁷ | 1422 | 4266 | 12798 | 38394 | 115182 | 345546 | 1036638 |
 
    All are of the form `A_n = {u_n − u_i : 0 ≤ i < n}` with
    `u = (0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422, 295924, 879824)`, where from
@@ -68,11 +71,13 @@ below.
    (e.g. n = 14: all 4,782,969 ternary sums distinct, and the 16,384 subset sums contain no 3-AP).
 
    **Conjecture: g₃(8) = 1368.** Evidence (not a proof): (a) a beam search over hole chains up to width 20,000
-   finds nothing below 1368; (b) an exhaustive search over *all* admissible 8-sets whose elements lie in the
-   windows observed for every known optimum (per mille of the maximum: 600–700, 830–900, 920–970, then
-   940–1000) finds none with maximum 1300, 1301, 1320, 1340 or 1360–1367, and exactly one with maximum 1368:
-   the set above (`results/n8_upper/profile8_*.log`).
-2. **Structure ("hole chains").** Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
+   finds nothing below 1368; (b) an exhaustive search over *all* admissible 8-sets whose elements lie in fixed
+   windows (per mille of the maximum: 600–700, 830–900, 920–970, then 940–1000; they contain every extremal
+   set for n = 6, 7 and one of the two for n = 4 and for n = 5) finds none with maximum 1300, 1301, 1320, 1340
+   or 1360–1367, and exactly one with maximum 1368: the set above (`results/n8_upper/profile8_*.log`).
+2. **Structure ("hole chains").** This extends a forum remark of M. Czech (9 Sep 2026): for n ≤ 5 an optimal set
+   is `{G_n − G_k}` with `G = 0, 1, 3, 8, 22, 60`, like the Conway–Guy sets for distinct subset sums.
+   Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
    one for n = 7) has the form `{u_n − u_i}` where each `u_{k+1}` is an admissible "hole" for
    `{u_1,…,u_k}` (i.e. `{u_{k+1} − u_i : i ≤ k}` is itself admissible). A beam search restricted to such chains
    (`scripts/beam.py`, seconds) reproduces **every** known exact value `8, 22, 60, 168, 474` together with
@@ -95,22 +100,25 @@ below.
    * **Other exact values:** two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on
      all canonical counts (for g₅(8): all N ≤ 92). A Python brute force also confirms n ≤ 5 (k = 4) and
      n ≤ 6 (k = 5).
-4. **A correction to an earlier claim (n = 6).** Bae and Choi (J. Korean Math. Soc. 40 (2003) 757–768, §2,
-   p. 759) study "2-fold subset-sum-distinct" sets, which are exactly the admissible sets. They state that
-   "lots of calculations" show `{109, 147, 161, 166, 168, 169}` to be the unique such 6-set of minimal
-   height, which would mean `g₃(6) = 169`. **This is incorrect.**
+4. **A correction to an earlier claim (n = 6).** J. Bae (Int. J. Pure Appl. Math. 1 (2002) 335–343, pp. 337–338)
+   and, repeating it verbatim, Bae and Choi (J. Korean Math. Soc. 40 (2003) 757–768, §2, p. 759) study
+   "2-fold subset-sum-distinct" sets, which are exactly the admissible sets. They state that "lots of
+   calculations" show `{109, 147, 161, 166, 168, 169}` to be the unique such 6-set of minimal height, which
+   would mean `g₃(6) = 169`. **This is incorrect.**
    * **The true value:** `g₃(6) = 168`, attained by `{107,145,159,162,164,168}` and `{107,145,159,162,166,168}`.
      OEIS A399720 lists the second of these.
    * **Their set:** it is the unique admissible 6-set with maximum exactly 169. It is the greedy "first-hole"
      chain set `{169 − u_i}` with `u = 0, 1, 3, 8, 22, 60, 169`.
    * **Reproduce:** `./bin/g3fast2_noroom 6 168 169`; output in `results/prior_art/bae_choi_n6_check.txt`.
-   * **n = 7:** they give no value.
+   * **n = 7:** no minimum is claimed. Bae (2002, proof of Thm 3.6, p. 341) uses the admissible 7-set
+     `{308, 417, 455, 469, 474, 476, 477}` (maximum 477; one of the two sets found here at N = 477, and the
+     greedy first-hole chain set from `u₁ = 1`).
 
 ## Why it appears novel
 
 * **OEIS A399720** (created 2026-09-09, last edited 2026-09-14) gives only `419 ≤ a(7) ≤ 504` and remarks
   that `a(7) = 466` "is not excluded". Checked in the git exports of 2026-09-22 and 2026-09-23 and on the live
-  site on the afternoon of 2026-09-23.
+  site on the afternoon and evening (about 18:30 UTC) of 2026-09-23.
 * **Erdős Problems forum thread #817** (read directly on 2026-09-23):
   * M. Czech (9 Sep) gives `g₃(5) = 60`, `g₃(6) = 168` and `419 ≤ g₃(7) ≤ 504`, and says `n = 7` is beyond
     their search.
@@ -120,27 +128,32 @@ below.
   `g₃(5), g₃(6)` and reports its `n = 7` search as incomplete (only `N ≤ 313` excluded), listing `g₃(7)` as open.
 * **Korsky** (arXiv:2606.24139, June 2026; read in full) proves `g₃(7) ≥ b₇ = 419` and computes `g₃(n)`
   only for `n ≤ 4`.
-* **Bae–Choi (2003)** is the only earlier source found with an exact minimum for these sets. It covers only
-  n = 6, and its value there is wrong (item 4 above).
-* **Nothing else** reports the exact value, the lower bound, uniqueness or the chain sequence. Sources
-  searched: the OEIS (full-text search of all 399,527 entries, plus live searches), arXiv, the forum and the
-  web. Details: PRIOR_ART.md.
+* **Bae (2002) and Bae–Choi (2003)** are the only pre-2026 sources found that state an exact minimum for these
+  sets. They cover only n = 6, and the value there is wrong (item 4 above). Bae (2002) also exhibits an
+  admissible 7-set with maximum 477, so `g₃(7) ≤ 477` was implicit there; A399720 and the forum do not
+  mention it.
+* **Nothing else** reports the exact value, the lower bound, uniqueness or the chain sequence
+  `u = 0, 8, 9, 15, 27, 65, 172, 474, 1368, …` (the offset form of the optimal sets for n ≤ 5 was noted by
+  M. Czech on the forum, 9 Sep 2026). Sources searched: the OEIS (full-text search of all 399,527 entries,
+  plus live searches), arXiv, the forum and the web. Details: PRIOR_ART.md.
 
 ## Why it matters
 
 * **The next exact value.** It is the next exact value of a function asked about by Erdős and Sárközy.
   * Their "in particular" question, whether `g₃(n) ≫ 3ⁿ`, was answered negatively only this month (Costa,
-    arXiv:2609.06303). Together with monotonicity this gives `g₃(n)/3ⁿ → 0`.
+    arXiv:2609.06303). Together with monotonicity (`g₃(n+1) ≤ 3g₃(n)`, noted by M. Czech and in A399720) this
+    gives `g₃(n)/3ⁿ → 0`.
   * erdosproblems.com lists Costa's result as a *partial* proof claim, because the problem asks for an
     estimate. The true order of `g₃(n)` remains open.
   * Exact small values are the only ground truth for calibrating constructions and bounds.
 * **The 466 question.** It settles the question left open in the OEIS entry and the forum thread:
   `a(7) ≠ 466`. So the coincidence of `1, 3, 8, 22, 60, 168` with the rooted-tree sequences
   A318821/A318863, which continue with 466, ends here. Only the lower bound can show this.
-* **504 is not optimal.** It also shows `a(7) < 504 = 3·a(6)`: the recursive construction `A ↦ {1} ∪ 3A` is
-  not optimal at n = 7. The forum post of the upper bound shows this too.
+* **504 was not optimal.** `a(7) < 504 = 3·a(6)`, so the recursive construction `A ↦ {1} ∪ 3A` is not optimal
+  at n = 7. This already follows from Bae's 7-set with maximum 477 (2002), which A399720 and the forum did
+  not notice; the forum post of the upper bound (474) shows it too.
 * The gap to Korsky's bandwidth lower bound grows: `g₃(n) − b_n = 0, 0, 0, 1, 4, 16, 55` for `n = 1…7`.
-* The normalised values `g₃(n)·√n/3ⁿ = 0.543, 0.552, 0.565, 0.573` (n = 4…7), and the new upper bounds
+* The normalised values `g₃(n)·√n/3ⁿ = 0.543, 0.552, 0.564, 0.573` (n = 4…7), and the new upper bounds
   (≤ 0.590, 0.606, 0.620, 0.638, 0.655 for n = 8…12), are data for the open question of the true order of
   `g₃(n)` between `c·3ⁿ/√n` (lower bound, Korsky) and `O(3ⁿ/n^{1/3})` (best upper bound, posted on the forum by
   Costa on 17 Sep 2026, adapting B. Alexeev's construction for Erdős Problem #1).
@@ -199,8 +212,8 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 ## Remaining uncertainty
 
 See LIMITATIONS.md. The non-existence part is a computer-assisted exhaustive search without a compact proof
-object. It is supported by two independently written programs that agree on count vectors of order 10⁹–10¹⁰
-for every N, plus agreement with definition-level brute force on smaller instances.
+object. It is supported by two independently written programs that agree on the full count vector for every
+N ≤ 478 (entries up to 7.9·10⁹), plus agreement with definition-level brute force on smaller instances.
 
 ## VERIFICATION STATUS
 
@@ -208,13 +221,13 @@ for every N, plus agreement with definition-level brute force on smaller instanc
 | --- | --- | --- | --- |
 | 419 … 478 | complete (`results/n7_scan/`) | complete (`results/n7_verify_rust_hi/`) | identical count vectors and solution lists (60 values, 0 mismatches) |
 | 1 … 418 | complete (`results/n7_c_lo/`) | complete (`results/n7_verify_rust_lo/`) | identical count vectors; no admissible 7-set |
-| band check 474 … 520 (other elements ≥ 0.55 N) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists: 47 values of N, 12,010 admissible 7-sets, 0 mismatches (exercises the last search level of both programs) |
+| band check 474 … 520 (other elements ≥ ⌊0.55 N⌋) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists: 47 values of N, 12,010 admissible 7-sets, 0 mismatches (exercises the last search level of both programs) |
 
 **Result of `scripts/finalize.sh`:** 478 values of N compared, 0 mismatches; the first N with an admissible
 7-set is 474. `results/n7_counts.csv` (SHA-256 `e54df8b158490ee84f3932d449caec038681f979db50d1c953af4ed5de0e6369`)
 holds the canonical counts for N = 1…478. Over N = 1…473 each program enumerated 274,105,685,447 admissible 6-sets
 and 95,595,217,293 admissible 5-sets, none of which extends to an admissible 7-set. Total cost: C 4.0 CPU-hours,
-Rust about 2.5× that (2.1 GHz Xeon cores).
+Rust about 2–2.5× that (2.1 GHz Xeon cores; spot timings, the Rust logs record no times).
 
 Solutions found by both programs for N = 474…478: N = 474: {302,409,447,459,465,466,474}; N = 475:
 {307,414,452,466,469,473,475}; N = 476: none; N = 477: {308,417,455,469,474,476,477},

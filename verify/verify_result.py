@@ -135,11 +135,13 @@ def check_range(Ns, out, jobs, table, psols, prog='c'):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('mode', choices=['quick', 'critical', 'full'])
-    ap.add_argument('--jobs', type=int, default=os.cpu_count() or 1)
-    ap.add_argument('--out', default=os.path.join(ROOT, 'results', 'verify_run'))
-    ap.add_argument('--rust', action='store_true')
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('mode', choices=['quick', 'critical', 'full'], help='what to verify (see above)')
+    ap.add_argument('--jobs', type=int, default=os.cpu_count() or 1, help='parallel processes (default: all CPUs)')
+    ap.add_argument('--out', default=os.path.join(ROOT, 'results', 'verify_run'),
+                    help='directory for the per-N logs (default: results/verify_run, git-ignored)')
+    ap.add_argument('--rust', action='store_true',
+                    help='also run the independent Rust verifier at N = 473, 474 (needs cargo)')
     a = ap.parse_args()
 
     if not build(['bin/g3fast2', 'bin/g3fast2_noroom']):

@@ -11,8 +11,9 @@ programs themselves are in `src/` and `verify/`. The construction scripts need N
 | `run_range.sh PROGRAM n NLO NHI JOBS OUTDIR` | run the C (`bin/g3fast2_noroom`) or Rust (`bin/g3verify`) search for `N = NLO..NHI` in `JOBS` parallel processes |
 | `aggregate.py table n LOGS...` | build the canonical count table (`N, V_1..V_n, solutions`) from search logs |
 | `aggregate.py compare n --c LOGS... --rust LOGS...` | compare C and Rust logs value by value (count vectors and solution lists); exit status 1 on any mismatch |
-| `verify_pipeline.sh JOBS` | the full n = 7 computation, in the order it was run (C and Rust, N = 1..478) |
-| `finalize.sh` | rebuild `results/n7_counts.csv`, repeat all C-vs-Rust comparisons, check the certificates, rewrite `results/SHA256SUMS` |
+| `verify_pipeline.sh [JOBS] [STAGES] [OUT]` | re-run the full n = 7 computation (C and Rust, N = 1..478) in the order it was run, into `results/verify_run/pipeline/` (git-ignored) |
+| `finalize.sh` | maintainer script: rebuild `results/n7_counts.csv` from the published logs, repeat all C-vs-Rust comparisons, check the certificates, rewrite `results/SHA256SUMS` (tracked result files) |
+| `make_certificates.py [OUTDIR]` | write the sorted ternary-sum and subset-sum lists and `certificates.json` of `results/certificates/` |
 | `make_standalone_notebook.py` | rebuild `verify/colab_verify_standalone.ipynb` from the committed files (git HEAD) |
 
 ## Constructions (upper bounds only; never used for a lower bound)

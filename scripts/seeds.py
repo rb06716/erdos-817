@@ -1,7 +1,7 @@
 """
 seeds.py [NMAX] [SMAX] -- greedy first-hole chains from every seed u_1 = s <= SMAX, up to n = NMAX. It prints each
-chain and the best maximum per n. The seed s = 1 gives 0, 1, 3, 8, 22, 60, 169, 477, ...; its n = 6 set is
-Bae-Choi's {109, 147, 161, 166, 168, 169}.
+chain and the best maximum per n. The seed s = 1 gives 0, 1, 3, 8, 22, 60, 169, 477, ...; its n = 6 and n = 7
+sets, {109, 147, 161, 166, 168, 169} and {308, 417, 455, 469, 474, 476, 477}, both appear in Bae (2002).
 """
 from hole_dp import first_hole
 import sys

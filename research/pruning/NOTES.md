@@ -1,7 +1,12 @@
 # Research notes: can pruning make g₃(8) reachable?
 
 Status: exploratory (2026-09-23). Nothing here affects the published results; the programs in this directory are
-research prototypes.
+research prototypes, not built by `make`:
+```sh
+cc -O3 -march=native -DNOROOM -o research/pruning/g3tail3 research/pruning/g3tail3.c   # usage as g3fast2; x86-64
+                                         # with BMI2 only; -DNOROOM is required (canonical counts)
+cc -O3 -o research/pruning/mc_counts research/pruning/mc_counts.c -lm                 # usage: mc_counts k N samples seed
+```
 
 ## 1. How big is the g₃(8) computation? (calibrated)
 
@@ -30,8 +35,9 @@ Estimates (2·10⁶ samples each):
 **Totals and cost.**
 * **Per N:** about 1–4.5·10¹³ nodes at levels 6–7.
 * **Over all 199 values of N:** about **4·10¹⁵ nodes**.
-* **Measured speed:** `g3fast2`, n = 8, runs at about 70–100 ns per node (N = 300: 10 s; N = 400: 103 s).
-* **CPU cost:** about **10–20 CPU-years**, i.e. years on 4 cores.
+* **Measured speed:** `g3fast2`, n = 8, runs at about 55–70 ns per node at N = 300–400 (N = 300: 9–10 s for
+  1.7·10⁸ nodes; N = 400: 103 s for 1.5·10⁹ nodes). Near N ≈ 1300 we assume 70–100 ns (not measured).
+* **CPU cost:** about **9–13 CPU-years** (4·10¹⁵ nodes × 70–100 ns), i.e. 2–3 years on 4 cores.
 
 **Tree shape.** Level 5→6 branches about 100 ways (legal 6th elements), level 6→7 about 1, level 7→8 zero
 (for N < g₃(8)). Almost all the work is visiting admissible 6- and 7-sets.
@@ -43,7 +49,7 @@ Estimates (2·10⁶ samples each):
    * *Correctness:* output identical to `g3fast2 -DNOROOM` for n = 4, 5, 6 at all N ≤ 40/80/180, for n = 7 at
      N = 300, 419, and for n = 8 at N = 300, 400.
    * *Speed:* no gain. n = 8, N = 400: 120 s vs 106 s. n = 7, N = 419: 284 s vs 113 s (pair loop).
-   * *Lesson:* the cost per node (about 100 ns) is dominated by per-node overhead, not by the bitset width.
+   * *Lesson:* the cost per node (about 50–100 ns) is dominated by per-node overhead, not by the bitset width.
      Restructuring gives constant factors of at most about 2×.
 2. **All N at once** ("offset form" `a_i = N − u_i`). A relation reads `δ·u = (Σδ)N`, so only the
    `Σδ = 0` part is independent of N. The idea was to search over offset vectors u, keeping a mask of the N
@@ -85,7 +91,7 @@ gives about 1 day at full efficiency. With the 5–20 % efficiency typical of di
 **1–3 weeks on one A100**, uncertain by a factor of about 3–5.
 
 **What that means in practice:**
-* about 170–500 A100-hours;
+* about 110–450 A100-hours (1 day of full-efficiency work at 5–20 % efficiency);
 * cloud cost roughly a few hundred to about two thousand dollars;
 * Colab Pro's roughly 7 A100-hours a month is not enough; Pro+ or a cluster allocation would be.
 

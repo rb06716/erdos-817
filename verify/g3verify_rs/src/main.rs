@@ -210,7 +210,7 @@ impl Search {
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 4 {
-        eprintln!("usage: g3verify n Nlo Nhi [step] [offset]");
+        eprintln!("usage: g3verify n Nlo Nhi [step=1] [offset=0] [minelem_permille=0]");
         std::process::exit(2);
     }
     let n: usize = args[1].parse().unwrap();

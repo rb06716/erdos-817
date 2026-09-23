@@ -113,22 +113,31 @@ Both are exact integer computations.
 * **Band / profile search** (`g3fast2 … minelem`, `src/g3profile.c`): the same exhaustive DFS restricted to
   sets whose non-maximal elements lie in prescribed windows (per mille of the maximum). It is complete
   *within the windows* only, so it can certify existence but never non-existence.
-* **Observed profile.** The extremal sets for n = 4…7, divided by their maximum:
+* **Observed profile.** One extremal set for each n = 4…7, divided by its maximum (the other n = 6 set fits the
+  same profile; the other n = 4 and n = 5 sets, {7,19,21,22} and {19,52,57,59,60}, have smallest element
+  ≈ 0.32·max):
   `{14,19,21,22}/22 = .636 .864 .955 1`; `{38,52,57,59,60}/60 = .633 .867 .950 .983 1`;
   `{107,145,159,162,164,168}/168 = .637 .863 .946 .964 .976 1`;
   `{302,409,447,459,465,466,474}/474 = .637 .863 .943 .968 .981 .983 1`.
   Windows `600:700 830:900 920:970` plus `940:1000` for the rest reproduce the n = 6, 7 extremal sets in
-  well under a second and give the n = 8 construction with maximum 1380.
+  well under a second. For n = 8, a coarse stop-at-first scan (M = 1420, 1400, 1380, …) first found a set with
+  maximum 1380; a full enumeration inside the windows later found none for M = 1361…1367 and exactly one for
+  M = 1368, the hole-chain set of §8 (`results/n8_upper/profile8_*.log`).
 * **Offset form (explains the profile).** Write `A = {M} ∪ {M − b : b ∈ B}`. A relation
   `Σ cᵢaᵢ = 0` becomes `M·s = Σ_{b∈B} c_b b` with `s = c_M + Σ c_b`. Hence `A` is admissible iff
   (i) `B` has no relation `Σ c_b b = 0` with `c ∈ {−2..2}^B \ {0}` and `|Σ c_b| ≤ 2` (the `s = 0` case, the
   coefficient of `M` absorbing the imbalance), and (ii) for `s = 1, 2, …`: `sM ∉ {Σ c_b b : s − 2 ≤ Σ c_b ≤ s + 2}`
   (negative `s` give the same conditions under `c ↦ −c`).
-  In particular, if `B` satisfies (i) then `A` is admissible for every `M > 2ΣB`. The extremal sets have
-  `B` of total size ≈ 0.6·M (e.g. n = 7: `B = {8, 9, 15, 27, 65, 172}`, `ΣB = 296`, `M = 474`), so only
-  `s = ±1` matters and `M` is the first "hole" of the set in (ii) above `max B`.
+  In particular, if `B` satisfies (i) then `A` is admissible for every `M > 2ΣB`. All known extremal sets have
+  `ΣB < M` (≈ 0.6·M on the profile above, e.g. n = 7: `B = {8, 9, 15, 27, 65, 172}`, `ΣB = 296`, `M = 474`;
+  0.86·M and 0.88·M for {7,19,21,22} and {19,52,57,59,60}), so only `s = ±1` matters and `M` is the first
+  "hole" of the set in (ii) above `max B`.
 
 ## 8. Hole chains (constructions; `scripts/holes_all.py`, `scripts/beam.py`, `scripts/hole_dp.py`)
+
+The offset form of the small optima was first noted by M. Czech (Erdős Problems forum, thread #817, 9 Sep
+2026): for n ≤ 5 an optimal set is `{G_n − G_k}` with `G = 0, 1, 3, 8, 22, 60`, as for the Conway–Guy sets. The
+chains below generalise this.
 
 For a finite set `B` of positive integers call `M > max B` a **hole** of `B` if
 `A = {M} ∪ {M − b : b ∈ B}` is admissible. By §7, `M` is a hole iff `B` satisfies condition (i) and

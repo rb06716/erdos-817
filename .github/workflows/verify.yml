@@ -29,12 +29,16 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quick-verification:
     name: quick verification (N = 473, 474; C and Rust)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: verify_result.py quick --rust
         run: python3 verify/verify_result.py quick --rust

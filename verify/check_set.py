@@ -8,7 +8,7 @@ Checks, with exact integer arithmetic and no shortcuts:
       (u < v < w with u + w = 2v), checked by testing every pair (u, w) of subset sums.
 (a) and (b) are equivalent by Lemma 1 of docs/METHODS.md; both are checked independently.
 
-usage: python3 check_set.py 1,321,435,477,486,492,504  [more sets ...]
+usage: python3 verify/check_set.py 1,321,435,477,486,492,504  [more sets ...]
 exit status 0 iff every set passes both checks.
 """
 import itertools

@@ -10,6 +10,10 @@ free of non-constant `k`-term arithmetic progressions. It is the subject of
 [Erdős Problem #817](https://www.erdosproblems.com/817), and `g_3` is OEIS [A399720](https://oeis.org/A399720).
 This repository contains exhaustive searches, verification tools and data for small values.
 
+**Status:** v1.0.0 (2026-09-23). The results below are complete, and the decisive computation was re-run by the
+repository owner on separate hardware. They have not been peer-reviewed. Changes are listed in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Main result
 
 > **g₃(7) = 474**, and `{302, 409, 447, 459, 465, 466, 474}` is the only 7-element set attaining it.
@@ -25,9 +29,10 @@ The proof is computer-assisted:
   against hardware and environment errors, not against a logic error shared by both runs.
 
 **Credit.** The upper bound `g₃(7) ≤ 474`, with the same set, was first posted publicly by carlomitchener on the
-Erdős Problems forum (23 Sep 2026); it was found independently here. What is new here is the matching lower
-bound and the uniqueness. This does not solve Erdős Problem #817 itself, which asks for an asymptotic estimate
-of `g_k(n)`.
+Erdős Problems forum (23 Sep 2026); it was found independently here. A weaker bound, `g₃(7) ≤ 477`, was
+implicit in J. Bae (2002), which uses an admissible 7-set with maximum 477. What is new here is the matching
+lower bound and the uniqueness. This does not solve Erdős Problem #817 itself, which asks for an asymptotic
+estimate of `g_k(n)`.
 
 ## Results
 
@@ -37,15 +42,15 @@ of `g_k(n)`.
 | **g₃(7)** | **474**, unique extremal set | **new; computer-assisted proof** | [DISCOVERY](docs/DISCOVERY.md) |
 | g₃(8), …, g₃(14) | ≤ 1368, 3974, 11578, 34088, 100422, 295924, 879824 | new certified upper bounds | [DISCOVERY](docs/DISCOVERY.md) |
 | g₃(8) | = 1368? | conjecture (evidence only) | [DISCOVERY](docs/DISCOVERY.md), [feasibility study](research/pruning/NOTES.md) |
-| g₄(1), …, g₄(7) | 1, 3, 5, 14, 40, 79, 225 | new; two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
-| g₅(1), …, g₅(8) | 1, 2, 4, 6, 14, 22, 60, 92 | new; two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
-| n = 6 claim of Bae–Choi (2003) | they state 169, but g₃(6) = 168 | correction | [DISCOVERY](docs/DISCOVERY.md) |
+| g₄(1), …, g₄(7) | 1, 3, 5, 14, 40, 79, 225 | first published here (small n elementary); two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
+| g₅(1), …, g₅(8) | 1, 2, 4, 6, 14, 22, 60, 92 | first published here (small n elementary); two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
+| n = 6 claim of Bae (2002), repeated by Bae–Choi (2003) | they state 169, but g₃(6) = 168 | correction | [DISCOVERY](docs/DISCOVERY.md) |
 
 ## Verify it yourself
 
-Requirements: a C compiler (gcc or clang), Rust/cargo for the independent verifier, and Python 3. The
-verification tools use only the Python standard library; the construction scripts and `make check` also need
-NumPy (`python3 -m pip install -r requirements.txt`).
+Requirements: a C compiler (gcc or clang), Rust ≥ 1.75 with cargo (for the independent verifier), and Python 3
+(tested with 3.11 and 3.12). The verification tools use only the Python standard library; the construction
+scripts and `make check` also need NumPy (`python3 -m pip install -r requirements.txt`).
 
 ```sh
 make all        # build the programs
@@ -93,7 +98,7 @@ GitHub access. GitHub Actions runs `make check` on every push ([`checks.yml`](.g
 ├── results/                logs of every run, count tables, certificates, checksums (see results/README.md)
 ├── research/pruning/       feasibility study and prototypes towards g₃(8)
 ├── docs/                   write-up (below)
-└── Makefile, requirements.txt, CITATION.cff, LICENSE
+└── Makefile, requirements.txt, CITATION.cff, LICENSE, CHANGELOG.md
 ```
 
 ## Documentation
@@ -110,6 +115,12 @@ GitHub access. GitHub Actions runs `make check` on every push ([`checks.yml`](.g
 | [results/README.md](results/README.md) | index of result files |
 | [research/pruning/NOTES.md](research/pruning/NOTES.md) | how large the g₃(8) computation is, and ideas for reducing it |
 
+## Reporting a problem
+
+If any command gives a different result, please open an issue with the command, its output and your platform.
+For the exhaustive search the per-`N` count vectors are fingerprints: a single differing value of `N` pinpoints
+the problem (see "How it can be falsified" in [docs/DISCOVERY.md](docs/DISCOVERY.md)).
+
 ## Citing
 
 If you use the results, programs or data, please cite this repository; see [CITATION.cff](CITATION.cff) or
@@ -125,7 +136,9 @@ MIT; see [LICENSE](LICENSE).
 This work builds on:
 * S. Korsky: the reformulation and the lower bound `g₃(n) ≥ b_n`;
 * S. Costa: the answer to the "in particular" question;
-* M. Czech: OEIS A399720, and `g₃(5)`, `g₃(6)`;
+* M. Czech: OEIS A399720, `g₃(5)`, `g₃(6)`, and the offset form of the small extremal sets;
+* J. Bae and S. Choi: 2-fold subset-sum-distinct sets (the admissible sets); Bae (2002) also gives an admissible
+  7-set with maximum 477;
 * carlomitchener: the upper bound for n = 7;
 * firesh: the audit repository, whose program was used as a third-party check;
 * T. Bloom: the Erdős Problems site.

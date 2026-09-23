@@ -227,7 +227,7 @@ static int dfs(int L, int last, long long sum) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 4) { fprintf(stderr, "usage: %s n Nlo Nhi [stop_first] [step] [offset]\n", argv[0]); return 2; }
+    if (argc < 4) { fprintf(stderr, "usage: %s n Nlo Nhi [stop_at_first=0] [step=1] [offset=0] [minelem=1]\n", argv[0]); return 2; }
     n = atoi(argv[1]);
     int Nlo = atoi(argv[2]), Nhi = atoi(argv[3]);
     stop_first = argc > 4 ? atoi(argv[4]) : 0;

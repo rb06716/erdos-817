@@ -48,18 +48,21 @@
    * **Second pass:** made later that day with full access. It read the forum, the live OEIS, arXiv and
      Bae–Choi (2003) directly (PRIOR_ART.md). No source reports the exact value, a lower bound above 419,
      or uniqueness.
-   * **Not read:** Erdős–Sárközy (1992), because the publisher blocks automated download, and Bae (2002,
-     IJPAM), which was not found online.
-   * **Still possible:** a result posted after the afternoon of 2026-09-23, or in a venue these searches
-     don't index, would not have been detected.
+   * **Third pass:** a pre-publication audit that evening found J. Bae (2002, IJPAM) online (at the URL in
+     Korsky's reference list). It contains the n = 6 claim corrected here and an admissible 7-set with maximum
+     477; the credit statements were updated accordingly (PRIOR_ART.md).
+   * **Not read:** Erdős–Sárközy (1992), because the publisher blocks automated download.
+   * **Still possible:** a result posted after the last re-check (about 18:30 UTC on 2026-09-23), or in a venue
+     these searches don't index, would not have been detected.
 
 ## Secondary results
 
-7. **Upper bounds for n = 8…12** are certified constructions (exact checks), so they are upper bounds with no
+7. **Upper bounds for n = 8…14** are certified constructions (exact checks), so they are upper bounds with no
    uncertainty. Whether they are *optimal* is unknown. The beam search is restricted to "hole chains", which
-   contain every known optimum (n ≤ 7) but not every admissible set, and exhaustive search for n = 8 is far
-   beyond the computation done here (roughly 10¹⁴ admissible 7-subsets per value of the maximum near 1360,
-   extrapolating the n = 7 counts).
+   contain every known optimum (n ≤ 7) but not every admissible set. An exhaustive search for n = 8 is far
+   beyond the computation done here: about 1.5·10¹³ admissible 6-subsets and 3·10¹³ admissible 7-subsets
+   contain N = 1367 (Monte Carlo estimates), and the search needs about 4·10¹⁵ nodes over N = 1169…1367
+   (`research/pruning/NOTES.md` §1).
 
 8. **Structural statements** ("all extremal sets for n ≤ 7 are hole chains") are verified facts for n ≤ 7 and
    an empirical pattern beyond that.
@@ -76,4 +79,4 @@
    without stopping at the first solution: identical count vectors and the same six sets
    (`results/gk/g4_n7_verify/compare_output.txt`). As for g₃, both programs were written by the same author.
    Novelty for `k ≥ 4`: Korsky's paper (read in full), the forum thread and the OEIS contain no small `g₄`, `g₅`
-   values. Only Bae (2002), which was not found online, remains unchecked.
+   values; Bae (2002), read later, has none either.
