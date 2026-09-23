@@ -3,3 +3,5 @@ compared N = 80..224 present in both: 145 values; mismatches: []
 not yet compared in 80..224: []
 gk_verify: N <= 224 with an admissible 7-set: []
 N = 225: V = (1, 224, 24535, 1584876, 37683222, 31525830, 6) ; all admissible 7-sets: ['14,90,135,201,215,224,225', '16,90,135,204,211,220,225', '17,90,135,205,222,223,225', '2,90,135,193,220,222,225', '4,90,135,206,215,219,225', '7,90,135,202,213,220,225']
+N = 225, gk_search full enumeration: V = (1, 224, 24535, 1584876, 37683222, 31525830, 6)
+N = 225: count vectors identical: True ; solution lists identical: True (6 sets)

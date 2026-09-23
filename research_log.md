@@ -374,3 +374,9 @@ N = 225: V = 1 224 24535 1584876 37683222 31525830 6, i.e. exactly six extremal 
 98 distinct subset sums; a direct definition-level check (all subset sums, pairwise 4-AP test) passes for all six
 and for all their 6-subsets. To cross-check the list of six, gk_search is now enumerating N = 225 in full
 (no stop at first; ~40 min on one core).
+
+## 2026-09-23 12:07 — N = 225 cross-check: same six sets from both programs
+gk_search 4 7 225 225 0 (full enumeration, 2834 s on one core; results/gk/g4_n7_verify/gk_search_full_N225.log):
+V = 1 224 24535 1584876 37683222 31525830 6 and the same six extremal sets as gk_verify
+(compare_output.txt: count vectors identical, solution lists identical). g_4(7) = 225 with exactly six extremal sets is
+now established by two programs over the whole range. Documents updated; finalize.sh re-run for the checksums.

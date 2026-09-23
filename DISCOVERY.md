@@ -77,9 +77,9 @@ below.
      `{14,90,135,201,215,224,225}`, `{16,90,135,204,211,220,225}`, `{17,90,135,205,222,223,225}`.
    * **How it was checked:** `verify/gk_verify.c` enumerated every N = 1…225. `src/gk_search.c` covers
      N = 80…224; below 80, `g₄(6) = 79` rules out any 7-set. The two programs have identical count vectors
-     on all 145 shared values of N. Both find nothing for N ≤ 224. At N = 225 `gk_verify` lists all six
-     sets; a full `gk_search` enumeration at N = 225, to cross-check that list, is still running. Each set
-     is also checked directly against the definition. Files: `results/gk/g4_n7_verify/`.
+     on all 145 shared values of N. Both find nothing for N ≤ 224. At N = 225 both enumerated everything
+     and list the same six sets, with identical count vectors. Each set is also checked directly against
+     the definition. Files: `results/gk/g4_n7_verify/`, summary in `compare_output.txt`.
    * **Other exact values:** two independent programs (`src/gk_search.c`, `verify/gk_verify.c`) agree on
      all canonical counts (for g₅(8): all N ≤ 92). A Python brute force also confirms n ≤ 5 (k = 4) and
      n ≤ 6 (k = 5).

@@ -64,7 +64,7 @@
    * by `gk_search`: N = 80…224, stopping at the first solution, with N ≤ 79 excluded by `g₄(6) = 79`;
    * by a full `gk_verify` enumeration of N = 1…225.
 
-   The two programs give identical count vectors for all 145 shared values of N (80…224). At N = 225
-   `gk_verify` lists six sets. A full `gk_search` enumeration at N = 225, to cross-check that list, is still
-   running. As for g₃, both programs were written by the same author, and the novelty caveat for k ≥ 4 in
-   PRIOR_ART.md applies.
+   The two programs give identical count vectors for all 145 shared values of N (80…224). At N = 225 both ran
+   without stopping at the first solution: identical count vectors and the same six sets
+   (`results/gk/g4_n7_verify/compare_output.txt`). As for g₃, both programs were written by the same author,
+   and the novelty caveat for k ≥ 4 in PRIOR_ART.md applies.

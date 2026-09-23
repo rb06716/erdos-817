@@ -25,8 +25,7 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 
 * **g_4(n)**: `1, 3, 5, 14, 40, 79, 225` (least N such that some n-subset of [1..N] has subset sums with no
   nonconstant 4-term AP; Erdős Problem #817 with k = 4). a(6) = 79 attained only by {2,29,45,74,77,79};
-  a(7) = 225 attained by exactly six sets (cross-check of this list by the second program pending):
-  {2,90,135,193,220,222,225}, {4,90,135,206,215,219,225},
+  a(7) = 225 attained by exactly six sets: {2,90,135,193,220,222,225}, {4,90,135,206,215,219,225},
   {7,90,135,202,213,220,225}, {14,90,135,201,215,224,225}, {16,90,135,204,211,220,225},
   {17,90,135,205,222,223,225}.
 * **g_5(n)**: `1, 2, 4, 6, 14, 22, 60, 92` (k = 5). a(7) = 60 attained by exactly four sets:
