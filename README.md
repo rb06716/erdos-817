@@ -16,7 +16,7 @@ This does not solve Erdős Problem #817. That problem asks for an estimate of `g
 
 **Secondary results.**
 
-* New certified upper bounds for `n = 8…14` (previous best `(168/729)·3ⁿ`):
+* New certified upper bounds for `n = 8…14`. The previous best was `(168/729)·3ⁿ`, or `(474/2187)·3ⁿ` given `g₃(7) ≤ 474` (e.g. 1422 for n = 8):
 
   | n | 8 | 9 | 10 | 11 | 12 | 13 | 14 |
   | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -27,7 +27,7 @@ This does not solve Erdős Problem #817. That problem asks for an estimate of `g
   the least (or, at most once, a later) value keeping `{u_{k+1} − u_i}` admissible. For n = 7:
   `u = 0, 8, 9, 15, 27, 65, 172, 474`. A beam search over such chains rediscovers every known optimum in
   about a second. Continuing the n = 7 chain greedily gives the bounds above.
-* The 4- and 5-term analogues from the same Erdős problem (not in the OEIS; see PRIOR_ART.md for caveats):
+* The 4- and 5-term analogues from the same Erdős problem (not in the OEIS or any source we found; see PRIOR_ART.md):
   `g₄(1..7) = 1, 3, 5, 14, 40, 79, 225` and `g₅(1..8) = 1, 2, 4, 6, 14, 22, 60, 92`.
 * The value `a(7) = 466` suggested as possible in A399720 is excluded, and `{1} ∪ 3A` (giving 504) is not
   optimal at n = 7.
@@ -63,6 +63,7 @@ src/gk_search.c        definition-level search for general k (subset-sum bitset 
 verify/g3verify_rs/    independent Rust implementation (decreasing order)                  [verification]
 verify/gk_verify.c     independent implementation for general k (pairwise AP test)
 verify/bruteforce.py   definition-level brute force for small cases
+verify/verify_result.py  one-command verification (quick / critical / full), PASS/FAIL; colab_verify.ipynb
 verify/check_set.py    exact certificate checker for a given set
 scripts/               run_range.sh, aggregate.py, finalize.sh, verify_pipeline.sh (runs and comparisons);
                        hole_dp.py, holes_all.py, beam.py, offset_*.py (chain constructions);
@@ -71,6 +72,14 @@ results/               raw logs of every run, count tables, certificates, checks
 ```
 
 ## Quick check
+
+One command (or open `verify/colab_verify.ipynb` in Google Colab):
+
+```sh
+python3 verify/verify_result.py quick       # ~5-15 min, PASS/FAIL; "critical"/"full" re-run every N (hours)
+```
+
+Individual steps:
 
 ```sh
 make all

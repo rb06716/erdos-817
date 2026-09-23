@@ -405,3 +405,17 @@ disclosed; claims verified by a human who understands them).
   Their Conway-Guy-type construction has maxima 1,3,9,25,73,213,621,1845 (n = 1..8). No n = 7 value.
 - Live OEIS searches (control query ok): no entries for our new values, Bae-Choi's set or maxima. arXiv API: nothing
   after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online).
+
+## 2026-09-23 ~14:30 — publication path: one-command verification (+ Colab notebook)
+Plan agreed with the user: publish what we have after the required human verification, then research pruning
+algorithms (goal: make g_3(8) or similar reachable).
+- src/g3fast2.c: `even_bits()` wrapper: PEXT when BMI2 is available, otherwise (or with -DNO_PEXT) a portable
+  shift-and-mask routine, so the main program builds on ARM/Apple Silicon and runs fast on AMD Zen 1/2. Checks:
+  1e8 random words + edge cases identical to _pext_u64; n = 5 (N <= 70) and n = 6 (N <= 175) outputs identical in
+  both modes (room / NOROOM); n = 7 at N = 473, 474 identical to results/n7_counts.csv with both builds
+  (PEXT 301 s / portable 305 s at N = 473).
+- verify/verify_result.py quick|critical|full [--rust]: builds, certificates, Lemma 1 test, g_3(5), g_3(6) (both
+  sets), exhaustive runs compared with the published table and solution lists; resumable per-N logs; PASS/FAIL.
+  Tested in a fresh clone: quick = 7/7 PASS in 5.2 min (2 parallel jobs); resume skips finished N.
+- verify/colab_verify.ipynb: clones the (private) repository with a token that is not stored, optional Google Drive
+  for resumable logs, runs quick / critical / full / Rust. Validated with nbformat; Python parts compile.

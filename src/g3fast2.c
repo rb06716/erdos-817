@@ -24,10 +24,27 @@
 #include <string.h>
 #include <stdint.h>
 #include <time.h>
-#include <immintrin.h>
 
 #define MAXN 10
 typedef uint64_t u64;
+
+/* even_bits(x): the 32 bits of x at even positions, packed into the low half.  Uses BMI2 PEXT when available;
+   the portable version (same result, a few more instructions) is used without BMI2 (e.g. ARM), or with
+   -DNO_PEXT (for CPUs where PEXT is microcoded and slow, such as AMD Zen 1/2). */
+#if defined(__BMI2__) && !defined(NO_PEXT)
+#include <immintrin.h>
+static inline u64 even_bits(u64 x) { return _pext_u64(x, 0x5555555555555555ULL); }
+#else
+static inline u64 even_bits(u64 x) {
+    x &= 0x5555555555555555ULL;
+    x = (x | (x >> 1)) & 0x3333333333333333ULL;
+    x = (x | (x >> 2)) & 0x0F0F0F0F0F0F0F0FULL;
+    x = (x | (x >> 4)) & 0x00FF00FF00FF00FFULL;
+    x = (x | (x >> 8)) & 0x0000FFFF0000FFFFULL;
+    x = (x | (x >> 16)) & 0x00000000FFFFFFFFULL;
+    return x;
+}
+#endif
 
 static int n, N;
 static int R;                     /* position p is stored at bit index p + R (+ padding) */
@@ -94,8 +111,8 @@ static inline void window_even(const u64 *D, int start, int len, u64 *out) {
     if (nw2 & 1) tmp[nw2] = 0;
     int nw = (len + 63) >> 6;
     for (int i = 0; i < nw; i++) {
-        u64 lo = _pext_u64(tmp[2 * i], 0x5555555555555555ULL);
-        u64 hi = _pext_u64(tmp[2 * i + 1], 0x5555555555555555ULL);
+        u64 lo = even_bits(tmp[2 * i]);
+        u64 hi = even_bits(tmp[2 * i + 1]);
         out[i] = lo | (hi << 32);
     }
     int rem = len & 63;

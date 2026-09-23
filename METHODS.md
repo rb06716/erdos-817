@@ -61,7 +61,8 @@ For each `N` the program enumerates **all** admissible `n`-sets with maximum exa
   Because admissibility is hereditary, every admissible set with maximum `N` is reached along exactly one
   path (its elements sorted), so the enumeration is complete.
 * **Candidate scan.** The legal next elements in a window `[s, s+ℓ)` are `~(D[s..s+ℓ) | D[2s, 2s+2, …])`;
-  the even-position read is done with the BMI2 `PEXT` instruction.
+  the even-position read is done with the BMI2 `PEXT` instruction (or an equivalent portable shift-and-mask
+  routine when BMI2 is unavailable or `-DNO_PEXT` is set; identical results).
 * **Last two levels.** With `D_{n−2}` known and the `(n−1)`-th element `y` accepted, the last element `x`
   must satisfy `x − jy ∉ D_{n−2}` and `2x − jy ∉ D_{n−2}` for `j ∈ {−2..2}` (because
   `D_{n−1} = D_{n−2} + {0, ±y, ±2y}`), which is evaluated with five shifted word windows instead of

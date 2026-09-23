@@ -4,3 +4,4 @@ verify/g3verify_rs/target/
 __pycache__/
 results/**/*.bin
 oeisdata/
+results/verify_run/

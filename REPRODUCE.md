@@ -3,14 +3,33 @@
 Tested on Ubuntu 24.04, x86-64 (Intel Xeon with AVX-512/BMI2), gcc 13.3, rustc 1.94, Python 3.11.
 Only standard tools are needed; no network access after cloning.
 
+## One-command verification (recommended for a human verifier)
+
+```sh
+python3 verify/verify_result.py quick       # ~5-15 min: builds, certificates, Lemma 1, g_3(5), g_3(6),
+                                            #   exhaustive search at N = 473, 474 vs. the published table
+python3 verify/verify_result.py critical    # hours: every N = 419..478 (with Korsky's bound g_3(7) >= 419)
+python3 verify/verify_result.py full        # hours: every N = 1..478 (without it); add --rust for the Rust check
+```
+Every check prints PASS/FAIL, and the exit status is 0 only if all pass. Runs are resumable: there is one log
+per N in `--out`, default `results/verify_run/`. The same checks run in Google Colab with no local setup; see
+`verify/colab_verify.ipynb`, where a CPU runtime is enough.
+
 ## 0. Build (seconds)
 
 ```sh
 make all          # builds bin/g3fast2, bin/g3fast2_noroom, bin/g3search, bin/gk_search, bin/gk_verify,
                   #        bin/g3profile, bin/g3verify
 ```
-`src/g3fast2.c` uses the BMI2 `PEXT` instruction (`-march=native`). On a CPU without BMI2 use the portable
-reference `bin/g3search` (same results, ~3x slower) — see step 4.
+`src/g3fast2.c` uses the BMI2 `PEXT` instruction when `-march=native` enables it. Otherwise, e.g. on ARM /
+Apple Silicon, it compiles a portable replacement that gives identical results. On Apple clang use
+`make CFLAGS="-O3 -mcpu=native"`. On AMD Zen 1/2, where `PEXT` is microcoded and slow, build with
+`make CFLAGS="-O3 -march=native -DNO_PEXT"`; `verify_result.py` does this automatically.
+
+The portable path was checked against the PEXT build:
+* 10⁸ random words;
+* identical output for n = 5, 6 (N ≤ 175, both search modes);
+* identical output for n = 7 at N = 473, 474, matching `results/n7_counts.csv`.
 
 ## 1. Check the certificate for the upper bound (milliseconds)
 

@@ -14,11 +14,12 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
   * "Long proofs (or partial proofs) should not be posted here in full - instead, post a link."
 
   This package was produced by an AI agent (Claude), so the poster should disclose that. The poster should
-  also verify the claims personally before posting. Minimum:
-  * run `python3 verify/check_set.py 302,409,447,459,465,466,474`;
-  * run a few values of N, e.g. `./bin/g3fast2_noroom 7 473 473` and `./bin/g3verify 7 473 473`.
+  also verify the claims personally before posting:
+  * **Minimum:** `python3 verify/verify_result.py quick`, about 10 min.
+  * **Better:** `python3 verify/verify_result.py critical`, a few hours, which re-runs every N = 419…478.
 
-  Ideally, re-run the full search (REPRODUCE.md, about 1–3 h on 4 cores).
+  Either can be run in Google Colab with `verify/colab_verify.ipynb`, no local setup needed. Say in the post
+  what was run.
 * **Post as a comment in the discussion thread, not as a proof claim.** The problem asks for an estimate of
   `g_k(n)`, which "cannot be resolved with a finite computation". An exact small value is data for it, not a
   (partial) solution.
