@@ -29,8 +29,8 @@
 
 5. **Mutation testing** showed that bugs confined to the last search level are invisible when no solutions
    exist, which is the case for n = 7 and every N < 474. The final level of both programs was therefore
-   also exercised where solutions exist: n = 6 over N ≤ 175, and n = 7 at N = 474…478, where the solution
-   lists of both programs are compared.
+   also exercised where solutions exist: n = 6 over N ≤ 175, n = 7 at N = 474…478 (complete solution lists),
+   and a band-restricted run over N = 474…520 in which both programs list the same 12,010 admissible 7-sets.
 
 6. **Novelty.** arXiv, the OEIS web site, erdosproblems.com and publisher sites could not be fetched from the
    research environment. Novelty was assessed through the OEIS git export (dated 2026-09-22), the Erdős

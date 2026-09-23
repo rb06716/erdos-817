@@ -277,3 +277,9 @@ compare: 418 values of N (1..418), 0 mismatches. scripts/finalize.sh: canonical 
 certificates PASS. Totals over N <= 473: 274,105,685,447 admissible 6-sets, 95,595,217,293 admissible 5-sets,
 0 admissible 7-sets. g_3(7) = 474 now rests on two independent exhaustive searches over all N, with no use of
 Korsky's bound. C CPU time (sum of per-N clock()): 2.82 h (N=419..478) + 1.18 h (N<=418).
+
+## 2026-09-23 04:05 — Band cross-check complete
+results/n7_band_crosscheck: for N = 474..520, all admissible 7-sets with max N and other elements >= floor(0.55 N),
+enumerated by C (g3fast2 minelem) and Rust (g3verify band argument): identical solution lists for all 47 values of
+N, 12,010 sets in total. This exercises the last search level of both programs on thousands of solutions (the
+mutation test showed last-level bugs are invisible where no solutions exist).

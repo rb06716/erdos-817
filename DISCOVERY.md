@@ -100,6 +100,7 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 | `gk_search.c` (definition only: subset-sum bitsets + 3-AP test) = C, n = 5 (N ≤ 62) and n = 6 at N = 167, 168 | reformulation + fast code agree with the definition at the n = 6 optimum |
 | C = Rust canonical counts and solution lists, n = 4…7 (N ≤ 40 / 90 / 175 / 150) | implementations agree where cheap |
 | Mutation testing (5 injected bugs, all detected at n = 6) | the cross-check is sensitive |
+| Band check, n = 7, N = 474…520: 12,010 solutions, identical in C and Rust | last search level correct where solutions exist |
 | **C = Rust, n = 7, N = 419…478** (full count vectors and solution lists) | **main claim, two independent programs** |
 | **C = Rust, n = 7, N = 1…418** | removes dependence on Korsky's bound |
 | Conway–Guy-type ternary recurrences (all `u_{n+1} = 3u_n − u_{n−r}`) | no construction of this family beats 474 (none below 543) |
@@ -116,7 +117,7 @@ for every N, plus agreement with definition-level brute force on smaller instanc
 | --- | --- | --- | --- |
 | 419 … 478 | complete (`results/n7_scan/`) | complete (`results/n7_verify_rust_hi/`) | identical count vectors and solution lists (60 values, 0 mismatches) |
 | 1 … 418 | complete (`results/n7_c_lo/`) | complete (`results/n7_verify_rust_lo/`) | identical count vectors; no admissible 7-set |
-| band check 474 … 520 (elements ≥ 0.55 N) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists |
+| band check 474 … 520 (other elements ≥ 0.55 N) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists: 47 values of N, 12,010 admissible 7-sets, 0 mismatches (exercises the last search level of both programs) |
 
 **Result of `scripts/finalize.sh`:** 478 values of N compared, 0 mismatches; the first N with an admissible
 7-set is 474. `results/n7_counts.csv` (SHA-256 `e54df8b158490ee84f3932d449caec038681f979db50d1c953af4ed5de0e6369`)
