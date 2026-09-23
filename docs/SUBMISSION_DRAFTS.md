@@ -2,6 +2,11 @@
 
 These are drafts for the repository owner. Nothing has been posted to OEIS, erdosproblems.com or elsewhere.
 
+**Decision (23 Sep 2026, evening):** the owner, who is not a mathematician, will not post the result or submit it to
+the OEIS personally. Instead the owner is asking researchers who work on the problem (S. Korsky, M. Czech) to review
+it privately and to share it as they see fit ([HOW_THIS_WAS_PRODUCED.md](HOW_THIS_WAS_PRODUCED.md)). The sections
+below remain as fact sheets.
+
 **Before posting anywhere:**
 * **Credit the upper bound.** carlomitchener posted `g_3(7) <= 474` with the same set in the Erdős Problems
   forum thread #817 on 23 Sep 2026. That post is the first public report of the upper bound. What is new here

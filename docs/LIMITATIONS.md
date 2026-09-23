@@ -19,7 +19,9 @@
    firesh audit repository; forum posts) and the extremal sets reported there, e.g. both n = 6 sets
    {107,145,159,162,164,168} and {107,145,159,162,166,168}. A third-party program (the audit repository's
    `g3.c`) exists but is far too slow for N ≈ 470. An independent re-implementation by a different person
-   would be the most valuable further check.
+   would be the most valuable further check. The pre-publication reviews were also done by AI (separately
+   prompted instances of the same model), and no human mathematician has reviewed the result yet
+   ([HOW_THIS_WAS_PRODUCED.md](HOW_THIS_WAS_PRODUCED.md)).
 
 2. **No compact certificate for non-existence.** Unlike SAT/DRAT proofs, the exhaustive search does not emit a
    small independently checkable proof object. The check is to re-run the search (a few CPU-hours per

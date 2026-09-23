@@ -484,8 +484,8 @@ a deep pass so that the repository is current, accurate and organised like compa
   verify.yml (`verify_result.py quick --rust` when programs or data change). The first CI run failed because NumPy
   was used but not declared; fixed (failure reproduced in a clean venv, then 12/12 with requirements.txt). On
   GitHub's runner (AMD EPYC, 2 vCPUs): `make check` passed, and `quick --rust` passed 8/8 in 17.5 min.
-- Two independent read-only audits (content against data and literature; commands, paths and tooling). Findings
-  were checked against the primary sources and fixed:
+- Two independent read-only audits by separately prompted AI instances (content against data and literature;
+  commands, paths and tooling). Findings were checked against the primary sources and fixed:
   * Prior art: J. Bae, Int. J. Pure Appl. Math. 1 (2002) 335-343, is online (URL in Korsky's reference list). It
     makes the same n = 6 claim (pp. 337-338) as Bae-Choi (2003), in identical words, and the proof of its Thm 3.6
     (p. 341) uses the admissible 7-set {308,417,455,469,474,476,477}: g_3(7) <= 477 was implicit in 2002 (no
@@ -510,7 +510,7 @@ a deep pass so that the repository is current, accurate and organised like compa
 - Re-checked at about 18:15-18:45 UTC: forum thread (latest post still carlomitchener's), proof claims, OEIS
   A399720 (revision 6, unchanged), arXiv: nothing new.
 - Pushed as 8829c7f/559ac14 (CI green: make check; quick --rust 8/8 on GitHub and locally). A fresh review of that
-  diff against the primary sources then found 14 more problems, all fixed:
+  diff against the primary sources (again by a separate AI instance) then found 14 more problems, all fixed:
   * Bae (2002) p. 341: "by routine calculations, or by using similar construction of Conway-Guy sequence" says how
     to *check* that the 7-set is 2-SSD, not how it was found (misquoted before).
   * Direction: Bae-Choi (2003) was received on 3 Mar 2001 (footer of its first page), Bae (2002) on 26 Feb 2002,
@@ -541,3 +541,12 @@ The owner merged the release preparation (PR #1) and published release v1.0.0 on
 it after a delay on their side. Version DOI 10.5281/zenodo.22925446; concept DOI (all versions) 10.5281/zenodo.22925445. Added to README
 (badge, suggested citation), CITATION.cff (doi, identifiers), CHANGELOG and the drafts. Pushed directly to main at
 the owner's request.
+
+## 2026-09-23 ~23:38 — how this was produced
+The owner, who is not a mathematician and ran the project to explore what the model can do, asked for a full account
+of the process, and decided to ask researchers working on the problem (S. Korsky, M. Czech) to review the result
+privately rather than posting it or submitting it personally. Added docs/HOW_THIS_WAS_PRODUCED.md (timeline from the
+transcript, this log and the commits; every message from the owner with its time; who did what; the agent's mistakes;
+verification status; credit) and docs/ORIGINAL_PROMPT.md (the prompt, verbatim, 7,601 characters). README,
+CITATION.cff, DISCOVERY, LIMITATIONS and SUBMISSION_DRAFTS now state consistently that no human mathematician has
+reviewed the result yet.

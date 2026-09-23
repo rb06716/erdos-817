@@ -3,6 +3,12 @@
 Notable changes to the results, programs and documentation. The detailed history, including every correction, is in
 [docs/research_log.md](docs/research_log.md).
 
+## Unreleased
+
+* `docs/HOW_THIS_WAS_PRODUCED.md`: how the work was produced by an AI agent from one prompt (timeline, every human
+  intervention, mistakes and corrections, verification status, credit); `docs/ORIGINAL_PROMPT.md`: the prompt,
+  verbatim. README section and CITATION.cff abstract updated to match.
+
 ## v1.0.0 — 2026-09-23
 
 First public version. Archived on Zenodo: https://doi.org/10.5281/zenodo.22925446 (all versions:

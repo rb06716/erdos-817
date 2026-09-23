@@ -211,7 +211,8 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 
 ## Remaining uncertainty
 
-See LIMITATIONS.md. The non-existence part is a computer-assisted exhaustive search without a compact proof
+See LIMITATIONS.md. No human mathematician has reviewed the result yet (it was produced by an AI agent; see
+HOW_THIS_WAS_PRODUCED.md). The non-existence part is a computer-assisted exhaustive search without a compact proof
 object. It is supported by two independently written programs that agree on the full count vector for every
 N ≤ 478 (entries up to 7.9·10⁹), plus agreement with definition-level brute force on smaller instances.
 

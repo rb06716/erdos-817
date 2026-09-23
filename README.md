@@ -15,6 +15,16 @@ This repository contains exhaustive searches, verification tools and data for sm
 repository owner on separate hardware. They have not been peer-reviewed. Changes are listed in
 [CHANGELOG.md](CHANGELOG.md).
 
+## How this was produced
+
+This repository was produced by an AI agent, Claude (Anthropic), working autonomously in Claude Code from a single
+open-ended prompt ([docs/ORIGINAL_PROMPT.md](docs/ORIGINAL_PROMPT.md)). The prompt named no field or problem; the
+agent chose this one itself. The owner, Ryan Brown, is not a mathematician and wanted to explore what the model could
+do. The main result was found and cross-checked within about four hours of the prompt, before any further human
+input; the owner later re-ran the decisive verification and handled publication. **No human mathematician has
+reviewed the work yet**, and it builds directly on the work of the researchers credited below. The full account,
+with a timeline and every human intervention, is in [docs/HOW_THIS_WAS_PRODUCED.md](docs/HOW_THIS_WAS_PRODUCED.md).
+
 ## Main result
 
 > **g₃(7) = 474**, and `{302, 409, 447, 459, 465, 466, 474}` is the only 7-element set attaining it.
@@ -106,6 +116,8 @@ GitHub access. GitHub Actions runs `make check` on every push ([`checks.yml`](.g
 
 | document | content |
 | --- | --- |
+| [docs/HOW_THIS_WAS_PRODUCED.md](docs/HOW_THIS_WAS_PRODUCED.md) | how an AI agent produced this from one prompt: timeline, every human intervention, mistakes, credit |
+| [docs/ORIGINAL_PROMPT.md](docs/ORIGINAL_PROMPT.md) | the prompt that started it, verbatim |
 | [docs/DISCOVERY.md](docs/DISCOVERY.md) | the result stated as a theorem, evidence, novelty, verification record, secondary results |
 | [docs/METHODS.md](docs/METHODS.md) | proofs of the lemmas, the search and why it is exhaustive, constructions |
 | [docs/REPRODUCE.md](docs/REPRODUCE.md) | how to rebuild and re-run everything |
@@ -149,5 +161,7 @@ This work builds on:
 * firesh: the audit repository, whose program was used as a third-party check;
 * T. Bloom: the Erdős Problems site.
 
-The search design, programs, computations and write-up were produced by an AI agent (Claude, Anthropic), working
-with the repository owner, Ryan Brown, who re-ran the verification independently.
+The choice of problem, the search design, the programs, the computations and the write-up were produced
+autonomously by an AI agent (Claude, Anthropic, in Claude Code) from a single prompt by the repository owner,
+Ryan Brown, who re-ran the verification independently. See
+[docs/HOW_THIS_WAS_PRODUCED.md](docs/HOW_THIS_WAS_PRODUCED.md).

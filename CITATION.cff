@@ -29,8 +29,9 @@ abstract: >-
   computer-assisted: a certificate for the upper bound, and an exhaustive search for the lower bound, run by two
   independently written programs that agree on the full per-level counts for every N <= 478. Also included:
   certified upper bounds for g_3(8..14), the values g_4(1..7) and g_5(1..8), a correction to a claim about n = 6
-  made in 2002 and 2003, and verification tools. The package was produced with the assistance of an AI agent
-  (Claude, Anthropic).
+  made in 2002 and 2003, and verification tools. The package was produced autonomously by an AI agent (Claude,
+  Anthropic, in Claude Code) from a single open-ended prompt by the author, who is not a mathematician; see
+  docs/HOW_THIS_WAS_PRODUCED.md. It has not yet been reviewed by a human expert.
 references:
   - type: article
     authors:
