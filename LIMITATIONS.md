@@ -39,11 +39,11 @@
    and a band-restricted run over N = 474…520 in which both programs list the same 12,010 admissible 7-sets.
 
 6. **Novelty.** arXiv, the OEIS web site, erdosproblems.com and publisher sites could not be fetched from the
-   research environment. Novelty was assessed through the OEIS git export (dated 2026-09-22), the Erdős
-   problems git database, GitHub, and web-search summaries (PRIOR_ART.md). The most recent public
-   statements found (2026-09-14 and 2026-09-18) describe `g₃(7)` as open. A computation posted after
-   2026-09-22, or in a venue not indexed by these sources, would not have been detected. Bae–Choi (2003)
-   could not be read; the Conway–Guy-type family it studies was re-enumerated as a proxy.
+   research environment. Novelty was assessed through the OEIS git export (dated 2026-09-22; re-checked against
+   the 2026-09-23 export), the Erdős problems git database, GitHub, and web-search summaries (PRIOR_ART.md). The
+   most recent public statements found (2026-09-14 and 2026-09-18) describe `g₃(7)` as open. A computation posted
+   after the morning of 2026-09-23, or in a venue not indexed by these sources, would not have been detected.
+   Bae–Choi (2003) could not be read; the Conway–Guy-type family it studies was re-enumerated as a proxy.
 
 ## Secondary results
 

@@ -54,6 +54,14 @@ all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (p
   array-counting sequence (A250978). For the k = 4, 5 values: no entry contains `1,3,5,14,40` or
   `1,2,4,6,14,22,60` (`2,4,6,14,22` occurs only in unrelated A084685, A307676).
 
+* Re-check on 2026-09-23 (~09:30 UTC), just before the final commit: the newer OEIS export (time.txt
+  2026-09-23T03:00:19-04:00, 399,527 entries) was fetched and `scripts/oeis_novelty_check.py` re-run on it
+  (output: `results/prior_art/oeis_novelty_check_2026-09-23.txt`). A399720 is unchanged
+  (revision #6, Sep 14 2026, terms `1, 3, 8, 22, 60, 168`), all value strings above still have no entry, and none of
+  the 390 entries changed since the 2026-09-22 export mention these values or the Erdős–Sárközy problem. The audit
+  repository has no commits after dee165d. Web searches ("JSP-000674", "474" together with the problem's
+  keywords) turned up nothing new.
+
 * Hole-chain construction: in the spirit of the Conway–Guy construction (`{u_n − u_i}`) for distinct subset
   sums. The greedy algorithm studied by Dutta (arXiv:2601.07068) builds D_q-sets bottom-up (smallest
   admissible next element), which is a different rule. No source found describes the top-down "least hole"
@@ -61,7 +69,7 @@ all 399,468 entries searched locally), (ii) `github.com/teorth/erdosproblems` (p
 
 ## Novelty statement
 
-As of 2026-09-22 no source located by these searches reports the value of `g_3(7)`; the most recent
+As of 2026-09-23 no source located by these searches reports the value of `g_3(7)`; the most recent
 explicit statements (OEIS A399720, 2026-09-14; audit repository, 2026-09-18) describe it as open, with
 `419 ≤ g_3(7) ≤ 504`. Searches used: "g_3(7)", "Erdős–Sárközy subset sums three-term progression",
 "Erdős problem 817", "k-fold subset-sum-distinct", "2-fold subset-sum-distinct", "sums with coefficients

@@ -46,8 +46,8 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
 
 ## Why it appears novel
 
-* OEIS A399720 (created 2026-09-09, last edited 2026-09-14; checked in the official git export dated
-  2026-09-22) gives only `419 ≤ a(7) ≤ 504` and remarks that `a(7) = 466` "is not excluded".
+* OEIS A399720 (created 2026-09-09, last edited 2026-09-14; checked in the official git exports dated
+  2026-09-22 and 2026-09-23) gives only `419 ≤ a(7) ≤ 504` and remarks that `a(7) = 466` "is not excluded".
 * The verification repository `firesh/erdos817-subset-sum-progressions-audit` (2026-09-18) computed
   `g₃(5), g₃(6)` and reports its `n = 7` search as incomplete (only `N ≤ 313` excluded), listing `g₃(7)` as open.
 * Korsky (arXiv:2606.24139, June 2026) proves `g₃(7) ≥ b₇ = 419` and computes `g₃(n)` only for `n ≤ 4`.

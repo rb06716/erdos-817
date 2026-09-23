@@ -352,3 +352,14 @@ results/gk/g4_n7/, coverage checker results/gk/g4_n7/status.py). Witnesses found
 with max N; there is at most one such 6-set for N <= 79). => g_4(7) = 225.
 Independent re-verification with verify/gk_verify.c (full enumeration, N = 1..225) started on 4 cores
 (results/gk/g4_n7_verify/).
+
+## 2026-09-23 09:30 — final prior-art re-check; verification queue
+Fetched the newer OEIS export (time.txt 2026-09-23T03:00:19-04:00, 399,527 entries) and re-ran
+scripts/oeis_novelty_check.py (results/prior_art/oeis_novelty_check_2026-09-23.txt): A399720 unchanged (revision #6),
+no entry contains any of the new value strings; none of the 390 entries changed since the 2026-09-22 export mentions
+the values or the problem. Audit repository (firesh): no commits after dee165d. Web searches ("JSP-000674", "474"
+with the problem's keywords): nothing new. The novelty statement stands as of this morning.
+g_4(7) re-verification: the sequential N = 1..200 loop was stopped after N = 175 (its last job finished normally and
+wrote its line); N = 176..200 now run through results/gk/g4_n7_verify/queue.py, which starts one gk_verify per N
+(longest first) whenever fewer than 4 are running, so cores freed by the other three loops are used.
+Interim comparison (compare.py): 103 values of N compared, 0 mismatches, no admissible 7-set for any N <= 224 so far.
