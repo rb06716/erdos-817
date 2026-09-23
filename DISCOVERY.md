@@ -23,6 +23,12 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
    `u = (0, 8, 9, 15, 27, 65, 172, 474, 1368, 3974, 11578, 34088, 100422, 295924, 879824)`, where from
    `u_4 = 27` on every term is the least admissible "hole". All are certified by `verify/check_set.py`
    (e.g. n = 14: all 4,782,969 ternary sums distinct, and the 16,384 subset sums contain no 3-AP).
+
+   **Conjecture: g₃(8) = 1368.** Evidence (not a proof): (a) a beam search over hole chains up to width 20,000
+   finds nothing below 1368; (b) an exhaustive search over *all* admissible 8-sets whose elements lie in the
+   windows observed for every known optimum (per mille of the maximum: 600–700, 830–900, 920–970, then
+   940–1000) finds none with maximum 1300, 1301, 1320, 1340 or 1360–1367, and exactly one with maximum 1368:
+   the set above (`results/n8_upper/profile8_*.log`).
 2. **Structure ("hole chains").** Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
    one for n = 7) has the form `{u_n − u_i}` where each `u_{k+1}` is an admissible "hole" for
    `{u_1,…,u_k}` (i.e. `{u_{k+1} − u_i : i ≤ k}` is itself admissible). A beam search restricted to such chains

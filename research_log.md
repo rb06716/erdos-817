@@ -335,3 +335,10 @@ Element residues in the 12,010 band solutions: number of odd elements 2..6 occur
 - g_4(7): N = 80..200 exhausted (single implementation; programs agree on N = 100..125); probes with stop-at-first
   found witnesses at N = 240 {1,6,96,144,225,231,240} and N = 230 {2,29,151,196,225,228,230} (both checked directly:
   98 distinct subset sums, no 4-AP). => 201 <= g_4(7) <= 230. Exhaustive search continues in the background.
+
+## 2026-09-23 06:01 — n = 8 profile-window scan complete
+g3profile, windows 600:700 830:900 920:970 940:1000 x4 (all admissible 8-sets inside the windows, full enumeration):
+M = 1361..1367: none; M = 1368: exactly one, {894,1196,1303,1341,1353,1359,1360,1368} (the greedy hole-chain set).
+Earlier: M = 1300, 1301 (ascending partial), 1320, 1340, 1360 (coarse, stop-at-first): none.
+Stated in DISCOVERY.md as evidence for the conjecture g_3(8) = 1368 (not a proof: other M < 1368 and sets outside
+the windows were not searched; an exhaustive n = 8 search is ~10^14 nodes per M).
