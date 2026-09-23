@@ -66,6 +66,9 @@ explicit statements (OEIS A399720, 2026-09-14; audit repository, 2026-09-18) des
 "Erdős problem 817", "k-fold subset-sum-distinct", "2-fold subset-sum-distinct", "sums with coefficients
 0,1,2 distinct smallest largest element", and the value string `1,3,8,22,60,168` in the full OEIS export.
 
-For `k = 4` (secondary result): no OEIS entry for `g_4(n)` exists (full-text search of the export for
-entries mentioning both "subset sums" and "arithmetic progression" returns only A399720 and unrelated
-Stanley sequences).
+For `k = 4, 5` (secondary results): no OEIS entry for `g_4(n)` or `g_5(n)` exists (full-text search of the export
+for entries mentioning both "subset sums" and "arithmetic progression" returns only A399720 and unrelated
+Stanley sequences; value strings checked above). Korsky (arXiv:2606.24139) treats `k ≥ 4` (lower bound
+`g_k(n) ≫ ((k−1)/(k−2))^n n^{−log_2((k−1)/(k−2))}` and digit constructions); the paper could not be read in
+full, so small exact values of `g_4`, `g_5` reported there cannot be excluded. The novelty claim for `k ≥ 4` is
+therefore weaker than for `g_3(7)`.

@@ -29,7 +29,8 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
    (`scripts/beam.py`, seconds) reproduces **every** known exact value `8, 22, 60, 168, 474` together with
    the extremal sets, and gives the n = 8–14 bounds above. Chains are common but not universal (87–95 % of
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
-3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist):
+3. **The 4- and 5-term analogues** from the same Erdős problem (no OEIS entries exist; Korsky's paper, which
+   treats `k ≥ 4` asymptotically, could not be read in full, so small values there cannot be ruled out):
    `g₄(1..6) = 1, 3, 5, 14, 40, 79` (unique extremal set `{2, 29, 45, 74, 77, 79}` at n = 6; `g₄(7) ≥ 174`),
    `g₅(1..7) = 1, 2, 4, 6, 14, 22, 60`. Two independent programs (`src/gk_search.c`, `verify/gk_verify.c`)
    agree on all canonical counts; for n ≤ 5 (k = 4) and n ≤ 6 (k = 5) also a Python brute force.
@@ -42,7 +43,7 @@ Context: Erdős Problem #817; OEIS A399720 currently lists `a(1..6) = 1, 3, 8, 2
   `g₃(5), g₃(6)` and reports its `n = 7` search as incomplete (only `N ≤ 313` excluded), listing `g₃(7)` as open.
 * Korsky (arXiv:2606.24139, June 2026) proves `g₃(7) ≥ b₇ = 419` and computes `g₃(n)` only for `n ≤ 4`.
 * No web source, OEIS entry (full-text search of all 399,468 entries), or GitHub repository found reports
-  474, the extremal set, the chain sequence, or any `g₄`/`g₅` values. Details: PRIOR_ART.md.
+  474, the extremal set or the chain sequence (for `g₄`/`g₅` see the caveat above). Details: PRIOR_ART.md.
 
 ## Why it matters
 
@@ -72,13 +73,16 @@ Full table: `scripts/summary_table.py`.
    * `N = 419 … 473`: the C search (`src/g3fast2.c -DNOROOM`, `results/n7_scan/`) and the independent Rust
      search (`verify/g3verify_rs`, `results/n7_verify_rust_hi/`) agree on the full canonical count vector
      `(V₁(N), …, V₇(N))` for every `N`; `V₇(N) = 0` throughout;
-   * `N ≤ 418`: excluded by Korsky's theorem, and additionally by exhaustive search (`results/n7_c_lo/`).
+   * `N ≤ 418`: excluded by Korsky's theorem, and independently by both exhaustive searches
+     (`results/n7_c_lo/`, `results/n7_verify_rust_lo/`, identical count vectors), so the result does not
+     depend on that theorem.
 3. **Uniqueness.** At `N = 474` both programs enumerate all admissible 7-sets with maximum 474 and find
    exactly one.
 
 Canonical counts: `V_k(N)` = number of admissible `k`-subsets of `[1, N]` containing `N`. Examples:
 `V₆(473) = 6,608,257,434`, `V₇(473) = 0`; `V₆(474) = 6,271,320,297`, `V₇(474) = 1`. Over `N = 419…473`
-the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissible 5-sets; none extends.
+the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissible 5-sets (over all
+`N ≤ 473`: 274,105,685,447 and 95,595,217,293); none extends to an admissible 7-set.
 
 ## How it can be falsified
 
@@ -97,7 +101,7 @@ the search examined 207,290,610,257 admissible 6-sets and 49,173,696,632 admissi
 | C = Rust canonical counts and solution lists, n = 4…7 (N ≤ 40 / 90 / 175 / 150) | implementations agree where cheap |
 | Mutation testing (5 injected bugs, all detected at n = 6) | the cross-check is sensitive |
 | **C = Rust, n = 7, N = 419…478** (full count vectors and solution lists) | **main claim, two independent programs** |
-| C, n = 7, N = 1…418 | removes dependence on Korsky's bound |
+| **C = Rust, n = 7, N = 1…418** | removes dependence on Korsky's bound |
 | Conway–Guy-type ternary recurrences (all `u_{n+1} = 3u_n − u_{n−r}`) | no construction of this family beats 474 (none below 543) |
 
 ## Remaining uncertainty
@@ -110,9 +114,15 @@ for every N, plus agreement with definition-level brute force on smaller instanc
 
 | range of N | C (`g3fast2 -DNOROOM`) | Rust (`g3verify`) | comparison |
 | --- | --- | --- | --- |
-| 419 … 478 | complete (`results/n7_scan/`) | complete (`results/n7_verify_rust_hi/`) | identical count vectors and solution lists (`scripts/aggregate.py compare`) |
-| 1 … 418 | complete (`results/n7_c_lo/`), no admissible 7-set | see `results/n7_verify_rust_lo/` | see research_log.md (final entry) |
+| 419 … 478 | complete (`results/n7_scan/`) | complete (`results/n7_verify_rust_hi/`) | identical count vectors and solution lists (60 values, 0 mismatches) |
+| 1 … 418 | complete (`results/n7_c_lo/`) | complete (`results/n7_verify_rust_lo/`) | identical count vectors; no admissible 7-set |
 | band check 474 … 520 (elements ≥ 0.55 N) | `results/n7_band_crosscheck/c_band.log` | `rust_band.log` | identical solution lists |
+
+**Result of `scripts/finalize.sh`:** 478 values of N compared, 0 mismatches; the first N with an admissible
+7-set is 474. `results/n7_counts.csv` (SHA-256 `e54df8b158490ee84f3932d449caec038681f979db50d1c953af4ed5de0e6369`)
+holds the canonical counts for N = 1…478. Over N = 1…473 each program enumerated 274,105,685,447 admissible 6-sets
+and 95,595,217,293 admissible 5-sets, none of which extends to an admissible 7-set. Total cost: C 4.0 CPU-hours,
+Rust about 2.5× that (2.1 GHz Xeon cores).
 
 Solutions found by both programs for N = 474…478: N = 474: {302,409,447,459,465,466,474}; N = 475:
 {307,414,452,466,469,473,475}; N = 476: none; N = 477: {308,417,455,469,474,476,477},

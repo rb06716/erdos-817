@@ -270,3 +270,10 @@ whole range above Korsky's bound; N <= 418 covered by C (complete) and Rust (in 
 compare: 60 values of N (419..478), 0 mismatches. Solution lists identical: N=474 {302,409,447,459,465,466,474};
 N=475 {307,414,452,466,469,473,475}; N=477 {308,417,455,469,474,476,477}, {309,416,454,468,471,473,477};
 N=476, 478: none.
+
+## 2026-09-23 03:51 — Rust verification of N = 1..418 COMPLETE; finalize
+compare: 418 values of N (1..418), 0 mismatches. scripts/finalize.sh: canonical table results/n7_counts.csv
+(N = 1..478, SHA-256 e54df8b1...6369); C vs Rust 478/478 identical; first N with an admissible 7-set = 474;
+certificates PASS. Totals over N <= 473: 274,105,685,447 admissible 6-sets, 95,595,217,293 admissible 5-sets,
+0 admissible 7-sets. g_3(7) = 474 now rests on two independent exhaustive searches over all N, with no use of
+Korsky's bound. C CPU time (sum of per-N clock()): 2.82 h (N=419..478) + 1.18 h (N<=418).

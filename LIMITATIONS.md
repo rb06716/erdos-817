@@ -24,8 +24,8 @@
    would have to fail in the same way for the same `N`.
 
 4. **Literature bound `g₃(7) ≥ 419`** (Korsky, arXiv:2606.24139). The first pass used it to skip `N ≤ 418`.
-   That range was then searched exhaustively as well (see DISCOVERY.md "VERIFICATION STATUS" for which
-   implementations cover it), so the final claim does not depend on the theorem.
+   That range was then searched exhaustively by both implementations (identical count vectors for all
+   418 values), so the final claim does not depend on the theorem.
 
 5. **Mutation testing** showed that bugs confined to the last search level are invisible when no solutions
    exist, which is the case for n = 7 and every N < 474. The final level of both programs was therefore

@@ -20,7 +20,7 @@ progression. Previously known: `g₃(1..6) = 1, 3, 8, 22, 60, 168` and `419 ≤ 
   the least (or, at most once, a later) value keeping `{u_{k+1} − u_i}` admissible. For n = 7:
   `u = 0, 8, 9, 15, 27, 65, 172, 474`. A beam search over such chains rediscovers every known optimum in
   about a second. Continuing the n = 7 chain greedily gives the bounds above.
-* The 4- and 5-term analogues from the same Erdős problem (new sequences):
+* The 4- and 5-term analogues from the same Erdős problem (not in the OEIS; see PRIOR_ART.md for caveats):
   `g₄(1..6) = 1, 3, 5, 14, 40, 79` and `g₅(1..7) = 1, 2, 4, 6, 14, 22, 60`.
 * The value `a(7) = 466` suggested as possible in A399720 is excluded, and `{1} ∪ 3A` (giving 504) is not
   optimal at n = 7.
