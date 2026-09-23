@@ -88,7 +88,7 @@ static inline void window(const u64 *D, int start, int len, u64 *out) {
 
 /* bits D[start + 2t], t in [0, len) -> out[] (len <= 64*20) */
 static inline void window_even(const u64 *D, int start, int len, u64 *out) {
-    u64 tmp[44];
+    u64 tmp[52];                       /* len <= 64*24 = 1536 -> nw2 <= 48 (+1 guard word) */
     int nw2 = (2 * len + 63) >> 6;
     window(D, start, 2 * len, tmp);
     if (nw2 & 1) tmp[nw2] = 0;
@@ -220,6 +220,7 @@ int main(int argc, char **argv) {
     int minelem = argc > 7 ? atoi(argv[7]) : 1;
     if (minelem < 1) minelem = 1;
     if (n < 4 || n > MAXN) { fprintf(stderr, "n in [4,%d]\n", MAXN); return 2; }
+    if (Nhi > 1536) { fprintf(stderr, "Nhi must be <= 1536 (window buffers)\n"); return 2; }
     R = 2 * n * Nhi + 128;
     PADW = (2 * Nhi) / 64 + 4;
     TOTW = (2 * R + 1) / 64 + 2 + 2 * PADW;

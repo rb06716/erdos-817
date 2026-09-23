@@ -14,7 +14,8 @@
 //! Output line per N:  "N=<N> n=<n> V: V_1 V_2 ... V_n solutions=<V_n>"
 //! plus one "SOLUTION" line per admissible n-set with maximum N.
 //!
-//! usage: g3verify n Nlo Nhi [step] [offset]
+//! usage: g3verify n Nlo Nhi [step] [offset] [minelem_permille]
+//!        (minelem_permille > 0 restricts elements other than N to >= floor(N*pm/1000); cross-checks only)
 
 use std::env;
 use std::io::Write;
@@ -32,6 +33,7 @@ struct Search {
     elems: Vec<i64>,
     counts: Vec<u64>,
     sols: Vec<Vec<i64>>,
+    minelem: i64,   // all elements other than N must be >= minelem (1 = exhaustive)
 }
 
 impl Search {
@@ -118,7 +120,7 @@ impl Search {
     /// such that x and 2x avoid D_{n-1} = D_{n-2} + {0, +-a, +-2a}.
     fn last_level(&mut self, lvl: usize, a: i64) {
         let n = self.n;
-        let mut base: i64 = 1;
+        let mut base: i64 = self.minelem;
         while base <= a - 1 {
             let len = std::cmp::min(64, a - base);
             // forbidden[x - base] = 1 if x - j*a in D for some j
@@ -160,9 +162,9 @@ impl Search {
         if lvl == self.n {
             return;
         }
-        let lo_bit = (1 + self.off) as usize;
+        let lo_bit = (self.minelem + self.off) as usize;
         let hi_bit = (prev - 1 + self.off) as usize;
-        if prev - 1 < 1 {
+        if prev - 1 < self.minelem {
             return;
         }
         let lo_w = lo_bit >> 6;
@@ -216,6 +218,8 @@ fn main() {
     let nhi: i64 = args[3].parse().unwrap();
     let step: i64 = if args.len() > 4 { args[4].parse().unwrap() } else { 1 };
     let offset: i64 = if args.len() > 5 { args[5].parse().unwrap() } else { 0 };
+    // optional band restriction (upper-bound / last-level cross-checks only): per mille of N
+    let minelem_pm: i64 = if args.len() > 6 { args[6].parse().unwrap() } else { 0 };
     assert!(n >= 2 && n <= 12);
     let stdout = std::io::stdout();
     let mut out = stdout.lock();
@@ -249,6 +253,7 @@ fn main() {
             elems: vec![0; n + 1],
             counts: vec![0; n + 1],
             sols: Vec::new(),
+            minelem: std::cmp::max(1, big_n * minelem_pm / 1000),
         };
         // level 0: D_0 = {0}
         let q = st.off as usize;

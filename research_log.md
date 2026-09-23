@@ -121,3 +121,59 @@ Secondary: g_5(1..6) = 1, 2, 4, 6, 14, 22 (gk_search.c and Python brute force ag
   => g_3(8) <= 1380 (previous best: 3 * g_3(7) <= 3 * 474 = 1422).
 - Exhaustive n=7 scan: N=466 has NO admissible 7-set (V_7(466)=0), so a(7) != 466; the coincidence with the
   rooted-tree sequences A318821/A318863 noted in A399720 breaks at n = 7.
+
+## 2026-09-23 01:20–01:40 — Main exhaustive result and start of independent verification
+
+C (g3fast2 -DNOROOM), n = 7, results/n7_scan/noroom_off{0..3}.log:
+- N = 419..473: V_7(N) = 0 for every N (no admissible 7-set with maximum N).
+- N = 474: V_7 = 1, the unique set {302, 409, 447, 459, 465, 466, 474}.
+- N = 475: 1 set {307,414,452,466,469,473,475}; N = 476: 0; N = 477: 2 sets {308,417,455,469,474,476,477},
+  {309,416,454,468,471,473,477}; N = 478: 0.  (Processes stopped after N = 478.)
+- Per-N wall time 90–300 s on a shared core; total ~4.5 CPU-hours for N = 419..478.
+=> with Korsky's bound g_3(7) >= 419: g_3(7) = 474.
+
+Independent verification launched (01:26): Rust verifier, N = 419..478, 4 interleaved processes
+(results/n7_verify_rust_hi). First four values N = 419..422: full count vectors identical to C
+(e.g. V_6(419) = 1,993,148,211; V_6(422) = 1,804,473,543).
+C run for N = 1..418 started (results/n7_c_lo) to remove the dependence on Korsky's bound.
+
+Prior-art re-check after the result: web searches for "474" with the extremal set, for "g_3(7)", for
+2-fold subset-sum-distinct / D_q-set computations (Bae; Bae–Choi 2003; Dutta arXiv:2601.07068): nothing
+reports g_3(7) or this set; latest sources (OEIS 2026-09-14, audit repo 2026-09-18) still list it as open.
+
+## 2026-09-23 01:50 — Code review of g3fast2.c
+Line-by-line review of the window invariants (every position in [needlo[L], needhi[L]] of level L holds the true
+D_L bit; proof by induction on L recorded in METHODS.md section 4) and of the last-level read ranges
+(x - jy in [-N, 3N], 2x - jy in [2, 4N-4]). One latent issue found: the scratch buffer in window_even()
+(44 words) would overflow for candidate windows longer than 1408 bits. Never triggered by any run in this
+package (n=7 runs have N <= 520; n=8 runs use narrow windows), but fixed (52 words + explicit Nhi <= 1536
+guard). Rebuilt binaries give byte-identical outputs on regression ranges.
+
+## 2026-09-23 01:40 — Offset analysis of the extremal sets (scripts/offset_analysis.py)
+With A = {M} u {M - b : b in B}: all extremal sets satisfy condition (i) (no relation with |sum c| <= 2), and M
+is exactly the FIRST admissible value above max B:
+- n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values) -> M = 474.
+- n=6: B = {4,6,9,23,61} -> first allowed M = 168; B = {2,6,9,23,61} -> 168.
+- n=5: B = {1,3,8,22} -> 60.
+So g_3(n) = min over offset sets B (|B| = n-1, condition (i)) of the first hole of
+F(B) = {M : M in F_1(B) or 2M in F_2(B)} above max B.
+
+## 2026-09-23 01:45 — Scale of the n = 7 computation; scheduling note; k >= 4 double-check
+- Totals over N = 419..473 (C, canonical counts): admissible 5-sets 49,173,696,632; admissible 6-sets
+  207,290,610,257; admissible 7-sets 0. Table: results/n7_counts_c_419-478.csv.
+- Scheduling: the container has kernel autogroups enabled, so `nice` has no effect across separately
+  launched sessions; the "nice 19" g_4(7) search had been taking a full core. Paused it at N = 173
+  (results/gk/g4_n7_partial_N80-173.log: no admissible 7-set with max <= 173 for k = 4).
+- verify/gk_verify.c (decreasing order, sorted sum list, pairwise AP test) vs src/gk_search.c (increasing
+  order, bitset + shifted-AND AP test): identical canonical counts and solution lists for
+  k=3 n=5 N<=62; k=4 n=5 N<=45; k=4 n=6 N<=80; k=5 n=5 N<=20; k=5 n=6 N<=25.
+  => g_4(6) = 79 with UNIQUE extremal set {2,29,45,74,77,79}; g_5(6) = 22.
+- Rust verifier gained an optional band argument (separate binary bin/g3verify_band; default behaviour
+  unchanged) for cheap last-level cross-checks at N >= 474 where solutions exist.
+
+## 2026-09-23 01:55 — Falsification attempt via Conway–Guy-type constructions (scripts/conway_guy_ternary.py)
+Bae & Choi (2003) prove that "Conway–Guy-like" sequences are k-fold subset-sum-distinct (paper not reachable).
+Exhaustive over all recurrences u_{n+1} = 3u_n - u_{n-r_n} (r_n in 1..n, u_0=0, u_1=1) with sets
+S_n = {u_n - u_i : i < n}: the smallest admissible S_n has max 1, 3, 8, 23, 64, 189, 543, 1565 for n = 1..8.
+No such set beats g_3(n) for n <= 7 (consistent with the exhaustive search), and none beats the new n = 8
+construction (1380). So this construction family neither contradicts nor anticipates g_3(7) = 474.

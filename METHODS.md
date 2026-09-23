@@ -69,6 +69,15 @@ For each `N` the program enumerates **all** admissible `n`-sets with maximum exa
 * **Windowing.** `D_L` is only materialised on positions that can still be read: level `n−2` is read
   at positions in `[−N, 4N]`, and computing level `L+1` on `[lo, hi]` needs level `L` on
   `[lo − 2N, hi + 2N]`; the true support `[−2Σ, 2Σ]` is also used. Everything outside is kept zero.
+* **Window invariant (why windowing is exact).** Let `[λ_L, ρ_L]` be the needed range of level `L`
+  (`[−N, 4N]` for `L = n−2`, widened by `2N` on both sides per level upward). *Claim:* every stored bit of
+  level `L` at a position `p ∈ [λ_L, ρ_L]` equals the true `D_L(p)`. *Induction:* level 1 is computed from
+  level 0 = `{0}`, which is exact everywhere. For level `L+1` and `p ∈ [λ_{L+1}, ρ_{L+1}]`: if `|p|` exceeds
+  the true support bound `2Σ_{L+1}`, the word is either zeroed or computed from source bits that are all
+  zero, and indeed `D_{L+1}(p) = 0`; otherwise the bit is computed from source positions `p ± a, p ± 2a`,
+  which lie in `[λ_L, ρ_L]` because `a < N`, hence are exact. The last level reads only positions
+  `x − jy ∈ [−N, 3N]` and `2x − jy ∈ [2, 4N−4]` (for `y < x < N`, `|j| ≤ 2`) and candidate positions in
+  `[1, 2N]`, all inside `[λ_{n−2}, ρ_{n−2}] = [−N, 4N]`.
 * **Modes.** Default: "room" pruning (the next element must leave space for the remaining ones).
   `-DNOROOM`: no room pruning, so the per-depth node counts are the canonical numbers
   `V_k(N) = #{admissible k-subsets of [1..N] containing N}` (k = 1..n), which do not depend on the search
@@ -97,3 +106,22 @@ A third, definition-level check (`verify/bruteforce.py`) enumerates all subsets 
 An admissible set is certified by `verify/check_set.py`, which (a) enumerates all `3^n` sums and checks
 they are distinct, and (b) enumerates all `2^n` subset sums and checks directly that there is no 3-term AP.
 Both are exact integer computations.
+
+## 7. Upper-bound constructions (not used for any lower bound)
+
+* **Band / profile search** (`g3fast2 … minelem`, `src/g3profile.c`): the same exhaustive DFS restricted to
+  sets whose non-maximal elements lie in prescribed windows (per mille of the maximum). It is complete
+  *within the windows* only, so it can certify existence but never non-existence.
+* **Observed profile.** The extremal sets for n = 4…7, divided by their maximum:
+  `{14,19,21,22}/22 = .636 .864 .955 1`; `{38,52,57,59,60}/60 = .633 .867 .950 .983 1`;
+  `{107,145,159,162,164,168}/168 = .637 .863 .946 .964 .976 1`;
+  `{302,409,447,459,465,466,474}/474 = .637 .863 .943 .968 .981 .983 1`.
+  Windows `600:700 830:900 920:970` plus `940:1000` for the rest reproduce the n = 6, 7 extremal sets in
+  well under a second and give the n = 8 construction with maximum 1380.
+* **Offset form (explains the profile).** Write `A = {M} ∪ {M − b : b ∈ B}`. A relation
+  `Σ cᵢaᵢ = 0` becomes `M·s = Σ_{b∈B} c_b b` with `s = c_M + Σ c_b`. Hence `A` is admissible iff
+  (i) `B` has no relation `Σ c_b b = 0` with `c ∈ {−2..2}^B \ {0}` and `|Σ c_b| ≤ 2` (the `s = 0` case, the
+  coefficient of `M` absorbing the imbalance), and (ii) for `s = 1, 2, …`: `sM ∉ {Σ c_b b : s − 2 ≤ Σ c_b ≤ s + 2}`.
+  In particular, if `B` satisfies (i) then `A` is admissible for every `M > 2ΣB`. The extremal sets have
+  `B` of total size ≈ 0.6·M (e.g. n = 7: `B = {8, 9, 15, 27, 65, 172}`, `ΣB = 296`, `M = 474`), so only
+  `s = ±1` matters and `M` is the first "hole" of the set in (ii) above `max B`.
