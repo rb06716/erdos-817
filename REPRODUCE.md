@@ -16,6 +16,10 @@ per N in `--out`, default `results/verify_run/`. The same checks run in Google C
 `verify/colab_verify.ipynb`, where a CPU runtime is enough. To open it in Colab: File → Open notebook → GitHub.
 For a private repository, tick "Include private repos". Alternatively, upload the file unchanged.
 
+No GitHub access at all: upload `verify/colab_verify_standalone.ipynb` to Colab. It contains compressed copies
+of the programs and the published count table, and prints their SHA-256 for comparison with the repository.
+Rebuild it with `python3 scripts/make_standalone_notebook.py`.
+
 Colab without the notebook file: paste this into one cell of a new notebook and run it.
 ```python
 import getpass, os, subprocess

@@ -434,3 +434,13 @@ Goal (user): find pruning that makes g_3(8) reachable. Findings (details in rese
   elements); pair-graph look-ahead costs as much as the bit-parallel scans; "7-set first" has ~3e15 7-sets.
   => no algorithmic reduction by 100-1000x found; the realistic route is GPU parallelism (estimated 1-3 weeks of one
   A100, uncertain by 3-5x), beyond Colab Pro's monthly allowance.
+
+## 2026-09-23 ~15:40 — Colab notebook problems
+User's Colab reported a JSON parse error for colab_verify.ipynb at line 100 col 19 / position 4023; the committed
+file parses with Node's JSON.parse (LF and CRLF), and the position matches a CRLF copy altered after line 100, so the
+copy was changed in transit. Notebook rewritten as pure ASCII, nbformat 4.4 without cell ids, LF pinned via
+.gitattributes. The user then asked for a browser here to log into GitHub for a token: not possible (headless
+browser in the container, no shared display) and not advisable (creating credentials on the user's account).
+Instead: verify/colab_verify_standalone.ipynb (built by scripts/make_standalone_notebook.py from git HEAD) embeds
+gzip+base64 copies of the 14 needed files with SHA-256 checks, so no GitHub access or token is needed. Tested by
+unpacking into an empty directory: all checksums ok, quick verification 7/7 PASS in 5.3 min.

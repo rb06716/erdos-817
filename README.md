@@ -73,7 +73,7 @@ results/               raw logs of every run, count tables, certificates, checks
 
 ## Quick check
 
-One command (or open `verify/colab_verify.ipynb` in Google Colab):
+One command, or in Google Colab `verify/colab_verify.ipynb` (`verify/colab_verify_standalone.ipynb` needs no GitHub access):
 
 ```sh
 python3 verify/verify_result.py quick       # ~5-15 min, PASS/FAIL; "critical"/"full" re-run every N (hours)
