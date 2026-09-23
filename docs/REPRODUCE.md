@@ -52,9 +52,9 @@ make all          # builds bin/g3fast2, bin/g3fast2_noroom, bin/g3search, bin/gk
                   #        bin/g3profile, bin/g3verify
 ```
 `src/g3fast2.c` and `src/g3profile.c` use the BMI2 `PEXT` instruction when `-march=native` enables it.
-Otherwise, e.g. on ARM / Apple Silicon, they compile a portable replacement that gives identical results. On Apple clang use
-`make CFLAGS="-O3 -mcpu=native"`. On AMD Zen 1/2, where `PEXT` is microcoded and slow, build with
-`make CFLAGS="-O3 -march=native -DNO_PEXT"`; `verify_result.py` does this automatically.
+Otherwise, e.g. on ARM / Apple Silicon, they compile a portable replacement that gives identical results. On
+Apple clang use `make CFLAGS="-O3 -mcpu=native"`. On AMD Zen 1/2, where `PEXT` is microcoded and slow, build
+with `make CFLAGS="-O3 -march=native -DNO_PEXT"`; `verify_result.py` does this automatically.
 
 The portable path was checked against the PEXT build:
 * 10⁸ random words;
@@ -83,8 +83,8 @@ python3 verify/bruteforce.py 7 26 > /tmp/bf7.txt && ./bin/g3verify 7 1 26 > /tmp
 
 ## 3. The main computation (CPU-hours; embarrassingly parallel over N)
 
-Single values of `N` can be checked in isolation (≈ 2–4 minutes each for C, ≈ 1–3× that for Rust depending on
-the CPU, at N ≈ 450 on one 2.1 GHz core):
+Single values of `N` can be checked in isolation (≈ 2–4 minutes each for C and about 2–2.5× that for Rust, at
+N ≈ 450 on one 2.1 GHz Xeon core; the ratio varies with the CPU):
 
 ```sh
 ./bin/g3fast2_noroom 7 474 474     # finds exactly one set: SOLUTION N=474 {302,409,447,459,465,466,474}
@@ -123,8 +123,8 @@ for N in $(seq 474 520); do
 done
 diff <(grep SOLUTION /tmp/my_c_band.log | sort) <(grep SOLUTION /tmp/my_rust_band.log | sort) && echo identical   # 12,010 sets
 ```
-(The published run used `bin/g3verify_band`, a byte-identical copy of `bin/g3verify`; see
-`results/n7_band_crosscheck/`.)
+(The published run used `bin/g3verify_band`, a copy of `bin/g3verify` as built then; the Rust source has since
+changed only in its usage message. See `results/n7_band_crosscheck/`.)
 
 ### One-shot pipeline
 

@@ -61,20 +61,21 @@
     Appl. Math. 1(3) (2002) 335–343, https://www.ijpam.eu/contents/2002-1-3/8/8.pdf. It introduces k-SSD sets
     (Def. 2.1); its counterfeit-coin puzzle (§2) asks exactly for distinct sums `Σ εᵢaᵢ`, `εᵢ ∈ {0,1,2}`.
     * **n = 6 (pp. 337–338):** "Lots of calculations shows that {109, 147, 161, 166, 168, 169} is the unique
-      answer" for a 2-SSD 6-set of minimal height. Bae–Choi (2003) repeat this verbatim without citing it.
-      It is wrong (below).
-    * **n = 7 (p. 341, proof of Thm 3.6):** the 2-SSD 7-set {308, 417, 455, 469, 474, 476, 477}, obtained "by
-      routine calculations, or by using similar construction of Conway-Guy sequence". No minimality is
-      claimed, but it implies `g_3(7) ≤ 477 < 504`, which A399720 and the forum did not notice. It is one of
-      the two admissible 7-sets with maximum 477 found here, and the greedy first-hole chain set from `u_1 = 1`.
+      answer" for a 2-SSD 6-set of minimal height. Bae–Choi (2003) contain the same sentence verbatim (received
+      3 Mar 2001; Bae 2002 was received 26 Feb 2002; neither cites the other). It is wrong (below).
+    * **n = 7 (p. 341, proof of Thm 3.6):** the 7-set {308, 417, 455, 469, 474, 476, 477}, of which Bae writes
+      "By routine calculations, or by using similar construction of Conway-Guy sequence, one can show the set
+      of (5) is 2-SSD". No minimality is claimed, but it implies `g_3(7) ≤ 477 < 504`, which A399720 and the
+      forum did not notice. It is one of the two admissible 7-sets with maximum 477 found here, and the greedy
+      first-hole chain set from `u_1 = 1`.
     * No content for `k ≥ 4` in our sense (its k bounds the coefficients, not the progression length).
   * **Bae–Choi (2003), read in the 2nd pass:** J. Bae & S. Choi, *A generalization of a subset-sum-distinct
     sequence*, J. Korean Math. Soc. 40 (2003) 757–768, doi:10.4134/JKMS.2003.40.5.757.
     * **Definition:** their "k-SSD" (Def. 2.1) is equivalent to having no non-zero relation with coefficients
       in `{−k..k}` (their Lemma 3.2). So 2-SSD = admissible.
-    * **Their claim for n = 6 (§2, p. 759, repeating Bae 2002):** "Lots of calculations shows that {109, 147,
-      161, 166, 168, 169} is the unique answer" for a 2-SSD 6-set of minimal height. That would mean
-      `g_3(6) = 169`.
+    * **Their claim for n = 6 (§2, p. 759; the same sentence as in Bae 2002):** "Lots of calculations shows
+      that {109, 147, 161, 166, 168, 169} is the unique answer" for a 2-SSD 6-set of minimal height. That would
+      mean `g_3(6) = 169`.
     * **Why it is wrong:** our exhaustive search gives `g_3(6) = 168`, attained by two sets, in agreement with
       A399720, M. Czech and the audit repository. Their set is the unique admissible 6-set with maximum
       exactly 169 (`results/prior_art/bae_choi_n6_check.txt`).
@@ -144,8 +145,9 @@
   * **Bae (2002):** found and read (see "Related concepts"); it changes the credit for the n = 6 claim and adds
     the implicit bound `g_3(7) ≤ 477`.
   * **Forum thread #817:** still 8 posts; the latest is carlomitchener's (06:41 on 23 Sep). No post gives a lower
-    bound above 419, uniqueness, anything for n = 8 or anything for k ≥ 4. M. Czech's remarks (item 1 and
-    remark (b)) are now summarised in the table above.
+    bound above 419, uniqueness, an n = 8 bound better than `474·3ⁿ⁻⁷`, or small values for k ≥ 4 (Korsky's
+    post of 23 Jun has only asymptotic bounds for k ≥ 4). M. Czech's remarks (item 1 and remark (b)) are now
+    summarised in the table above.
   * **Proof claims:** still only Costa's (partial). **OEIS A399720:** revision #6 (14 Sep 2026), terms
     `1, 3, 8, 22, 60, 168`, no pending changes. **arXiv:** nothing relevant after Costa's preprint.
   * **Audit repository:** HEAD still dee165d; awards PR #1030 still open.

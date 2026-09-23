@@ -6,10 +6,11 @@ With `-DNOROOM` (C) and always (Rust), `V_k` = number of admissible k-subsets of
 The k = 4, 5 programs print `N=<N> k=<k> n=<n> V: V_1 … V_n` (`gk_search` adds ` time=<s>`) and
 `SOLUTION k=<k> N=<N> {…}`.
 
-The `*.sh` / `*.py` files inside `results/` are provenance records of how the logs were produced, run from their own
-directory; they append to the logs. The `*.bin` files and `bin/g3verify_band` they call were local builds of
-`src/g3fast2.c` and a byte-identical copy of `bin/g3verify`; they are not committed. To re-run, use
-`../../bin/g3fast2` and `../../bin/g3verify` instead.
+The `*.sh` / `*.py` files inside `results/` are provenance records, run from their own directory: most produced the
+logs next to them (appending with `>>`, overwriting, or printing to stdout); `gk/g4_n7/status.py` and
+`gk/g4_n7_verify/compare.py` only summarise logs. The `*.bin` files and `bin/g3verify_band` they call were local
+builds of `src/g3fast2.c` and a copy of `bin/g3verify` as built at the time (the Rust source has since changed only
+in its usage message); they are not committed. To re-run, use `../../bin/g3fast2` and `../../bin/g3verify`.
 
 | path | content |
 | --- | --- |

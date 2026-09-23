@@ -92,7 +92,7 @@ These are drafts for the repository owner. Nothing has been posted to OEIS, erdo
 > greedily gives g_3(8) <= 1368, g_3(9) <= 3974, g_3(10) <= 11578, g_3(11) <= 34088 and g_3(12) <= 100422.
 > Second, Bae (Int. J. Pure Appl. Math. 1 (2002)) and Bae and Choi (J. Korean Math. Soc. 40 (2003)) state that
 > {109,147,161,166,168,169} is the unique minimal 6-set of this kind. In fact g_3(6) = 168, as above. Bae (2002)
-> also gives the qualifying 7-set {308,417,455,469,474,476,477}, so 504 was already beaten there.
+> also gives the admissible 7-set {308,417,455,469,474,476,477}, so g_3(7) <= 477 < 504 already follows from it.
 >
 > Disclosure: the search, the programs and this text were produced with an AI agent (Claude). I re-ran the
 > verification myself on Google Colab (`verify/verify_result.py critical`). That covered the certificate check

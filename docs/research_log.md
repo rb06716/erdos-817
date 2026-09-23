@@ -156,7 +156,8 @@ guard). Rebuilt binaries give byte-identical outputs on regression ranges.
 ## 2026-09-23 ~01:40 — Offset analysis of the extremal sets (scripts/offset_analysis.py)
 With A = {M} u {M - b : b in B}: all extremal sets satisfy condition (i) (no relation with |sum c| <= 2), and M
 is exactly the FIRST admissible value above max B:
-- n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values) [corrected: 96 values; every M >= 593 = 2*sum(B) + 1 is also a hole] -> M = 474.
+- n=7: B = {8,9,15,27,65,172}; allowed M in (172, 592]: 474, 486, 492, 493, 498, ... (97 values)
+  [corrected: 96 values; every M >= 593 = 2*sum(B) + 1 is also a hole] -> M = 474.
 - n=6: B = {4,6,9,23,61} -> first allowed M = 168; B = {2,6,9,23,61} -> 168.
 - n=5: B = {1,3,8,22} -> 60.
 So g_3(n) = min over offset sets B (|B| = n-1, condition (i)) of the first hole of
@@ -392,12 +393,13 @@ reclassification, Costa's Lean update), discussion thread (Korsky, Bloom, M. Cze
 **carlomitchener 23 Sep 06:41 forum time: "g_3(7) <= 474" with our exact set**), forum rules (AI use must be
 disclosed; claims verified by a human who understands them).
 - Credit: the upper bound with the same set was posted publicly by carlomitchener; our search found it at 00:20 UTC
-  [corrected: about 00:25 UTC]
-  but the repository is private (checked via the GitHub API), so theirs is the first public report. Our new part:
+  [corrected: about 00:25 UTC], but the repository is private (checked via the GitHub API), so theirs is the first
+  public report. Our new part:
   lower bound + uniqueness => exact value. Documents corrected accordingly (README, DISCOVERY, PRIOR_ART,
   LIMITATIONS, SUBMISSION_DRAFTS). Forum timezone: Costa's claim (01:48:23 forum time) cites a Zenodo record
   created 23:50:56 UTC the previous day, so forum time is at most ~2 h ahead of UTC; the 06:41 post was therefore
-  at 04:44 UTC or later, after our 00:20 UTC find (the order does not change the public priority).
+  at 04:44 UTC or later, after our find at about 00:25 UTC (first logged as 00:20; the order does not change the public
+  priority).
 - Attribution errors fixed: the 3^n/n^{1/3} bound was posted by Costa (adapting B. Alexeev), not Korsky; the
   forum's g_3(5), g_3(6) post is M. Czech's of 9 Sep, not 17 Sep (both errors came from the audit report).
 - Korsky (arXiv source, read in full): small values only g_3(n), n <= 4; nothing for k >= 4 -> k >= 4 caveat
@@ -408,8 +410,8 @@ disclosed; claims verified by a human who understands them).
   results/prior_art/bae_choi_n6_check.txt). It is the greedy first-hole chain set (u = 0,1,3,8,22,60,169).
   Their Conway-Guy-type construction has maxima 1,3,9,25,73,213,621,1845 (n = 1..8). No n = 7 value.
 - Live OEIS searches (control query ok): no entries for our new values, Bae-Choi's set or maxima. arXiv API: nothing
-  after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online) [corrected: it is online and was
-  read in the pre-publication audit; see the last entry].
+  after Costa's preprint. Not obtainable: Erdős-Sárközy 1992 (publisher 403), Bae 2002 (IJPAM, not online)
+  [corrected: it is online and was read in the pre-publication audit; see the last entry].
 
 ## 2026-09-23 ~14:30 — publication path: one-command verification (+ Colab notebook)
 Plan agreed with the user: publish what we have after the required human verification, then research pruning
@@ -430,7 +432,7 @@ Goal (user): find pruning that makes g_3(8) reachable. Findings (details in rese
 - Calibration: Monte Carlo estimator mc_counts.c (validated: V_6(473) 6.57e9 vs exact 6.61e9, V_5(473), V_6(400)).
   For n = 8 the canonical tree per N is ~1e13 (N = 1169) to ~4.5e13 (N = 1367) nodes, mostly admissible 6- and
   7-sets; total over N = 1169..1367 ~4e15 nodes, ~10-20 CPU-years with g3fast2 (70-100 ns/node measured)
-  [corrected: 55-70 ns/node measured at N = 300-400, 70-100 ns assumed near N = 1300, i.e. ~9-13 CPU-years].
+  [corrected: 53-69 ns/node measured at N = 300-400, 70-100 ns assumed near N = 1300, i.e. ~9-13 CPU-years].
   (Corrects the 30-45 CPU-years quoted to the user earlier.)
 - g3tail3.c (last three elements from D_{n-3}, no D_{n-2}): output identical to g3fast2 -DNOROOM (n = 4, 5, 6 all
   N; n = 7 at 300, 419; n = 8 at 300, 400) but not faster (n = 8, N = 400: 120 s vs 106 s): per-node overhead
@@ -472,7 +474,7 @@ disclosure line now states exactly what the owner ran. Pre-publication check: al
 Remaining steps (owner): make the repository public or archive it on Zenodo, then post the forum comment and the
 OEIS extension (SUBMISSION_DRAFTS.md).
 
-## 2026-09-23 ~17:50–19:30 — pre-publication restructure, independent audits, corrections
+## 2026-09-23 ~17:50–19:58 — pre-publication restructure, independent audits, corrections
 The owner renamed the repository to rb06716/erdos-817 (the old URL redirects) before making it public, and asked for
 a deep pass so that the repository is current, accurate and organised like comparable research repositories.
 - Layout: long-form documents moved to docs/; README rewritten as a front page; added LICENSE (MIT), CITATION.cff
@@ -485,7 +487,7 @@ a deep pass so that the repository is current, accurate and organised like compa
 - Two independent read-only audits (content against data and literature; commands, paths and tooling). Findings
   were checked against the primary sources and fixed:
   * Prior art: J. Bae, Int. J. Pure Appl. Math. 1 (2002) 335-343, is online (URL in Korsky's reference list). It
-    already makes the n = 6 claim (pp. 337-338) that Bae-Choi (2003) repeat verbatim, and the proof of its Thm 3.6
+    makes the same n = 6 claim (pp. 337-338) as Bae-Choi (2003), in identical words, and the proof of its Thm 3.6
     (p. 341) uses the admissible 7-set {308,417,455,469,474,476,477}: g_3(7) <= 477 was implicit in 2002 (no
     minimality claimed; unnoticed by A399720 and the forum). Credit statements updated in README, DISCOVERY,
     PRIOR_ART, LIMITATIONS, SUBMISSION_DRAFTS and CITATION.cff. The exact value, the lower bound and uniqueness
@@ -507,3 +509,19 @@ a deep pass so that the repository is current, accurate and organised like compa
     scripts/make_certificates.py reproduces the existing certificate files byte for byte.
 - Re-checked at about 18:15-18:45 UTC: forum thread (latest post still carlomitchener's), proof claims, OEIS
   A399720 (revision 6, unchanged), arXiv: nothing new.
+- Pushed as 8829c7f/559ac14 (CI green: make check; quick --rust 8/8 on GitHub and locally). A fresh review of that
+  diff against the primary sources then found 14 more problems, all fixed:
+  * Bae (2002) p. 341: "by routine calculations, or by using similar construction of Conway-Guy sequence" says how
+    to *check* that the 7-set is 2-SSD, not how it was found (misquoted before).
+  * Direction: Bae-Choi (2003) was received on 3 Mar 2001 (footer of its first page), Bae (2002) on 26 Feb 2002,
+    and neither cites the other; so both are now said to state the n = 6 claim "in identical words", not that
+    Bae-Choi repeat Bae.
+  * The forum does contain bounds for n = 8 (474*3^(n-7), (168/729)*3^n) and Korsky's asymptotic k >= 4 bounds
+    (23 Jun); PRIOR_ART now says no post gives *small values* for k >= 4 or an n = 8 bound better than 474*3^(n-7).
+  * NOTES.md: GPU time 5-20 days (111-444 A100-hours), consistent with its own arithmetic; 53-69 ns/node; g3tail3
+    has the portable PEXT fallback (not x86-only).
+  * results/README and REPRODUCE: the provenance scripts do not all append; bin/g3verify_band is a copy of the Rust
+    verifier as built then (the source has since changed only in its usage message), no longer byte-identical.
+  * REPRODUCE Rust/C time ratio 2-2.5x (as in DISCOVERY); METHODS: the coarse n = 8 scan found 1420, 1400, 1380 and
+    none at 1360-1320; README credit line; forum draft wording ("admissible", "g_3(7) <= 477 < 504 already
+    follows"); line wraps; this entry's end time.

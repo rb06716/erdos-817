@@ -44,7 +44,7 @@ estimate of `g_k(n)`.
 | g₃(8) | = 1368? | conjecture (evidence only) | [DISCOVERY](docs/DISCOVERY.md), [feasibility study](research/pruning/NOTES.md) |
 | g₄(1), …, g₄(7) | 1, 3, 5, 14, 40, 79, 225 | first published here (small n elementary); two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
 | g₅(1), …, g₅(8) | 1, 2, 4, 6, 14, 22, 60, 92 | first published here (small n elementary); two independent programs | [DISCOVERY](docs/DISCOVERY.md) |
-| n = 6 claim of Bae (2002), repeated by Bae–Choi (2003) | they state 169, but g₃(6) = 168 | correction | [DISCOVERY](docs/DISCOVERY.md) |
+| n = 6 claim of Bae (2002) and Bae–Choi (2003) | they state 169, but g₃(6) = 168 | correction | [DISCOVERY](docs/DISCOVERY.md) |
 
 ## Verify it yourself
 
@@ -137,8 +137,8 @@ This work builds on:
 * S. Korsky: the reformulation and the lower bound `g₃(n) ≥ b_n`;
 * S. Costa: the answer to the "in particular" question;
 * M. Czech: OEIS A399720, `g₃(5)`, `g₃(6)`, and the offset form of the small extremal sets;
-* J. Bae and S. Choi: 2-fold subset-sum-distinct sets (the admissible sets); Bae (2002) also gives an admissible
-  7-set with maximum 477;
+* J. Bae (2002) and J. Bae and S. Choi (2003): 2-fold subset-sum-distinct sets (the admissible sets); Bae (2002)
+  also gives an admissible 7-set with maximum 477;
 * carlomitchener: the upper bound for n = 7;
 * firesh: the audit repository, whose program was used as a third-party check;
 * T. Bloom: the Erdős Problems site.

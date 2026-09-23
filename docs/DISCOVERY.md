@@ -75,11 +75,11 @@ below.
    windows (per mille of the maximum: 600–700, 830–900, 920–970, then 940–1000; they contain every extremal
    set for n = 6, 7 and one of the two for n = 4 and for n = 5) finds none with maximum 1300, 1301, 1320, 1340
    or 1360–1367, and exactly one with maximum 1368: the set above (`results/n8_upper/profile8_*.log`).
-2. **Structure ("hole chains").** This extends a forum remark of M. Czech (9 Sep 2026): for n ≤ 5 an optimal set
-   is `{G_n − G_k}` with `G = 0, 1, 3, 8, 22, 60`, like the Conway–Guy sets for distinct subset sums.
-   Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
-   one for n = 7) has the form `{u_n − u_i}` where each `u_{k+1}` is an admissible "hole" for
-   `{u_1,…,u_k}` (i.e. `{u_{k+1} − u_i : i ≤ k}` is itself admissible). A beam search restricted to such chains
+2. **Structure ("hole chains").** Every extremal set for `n = 4, 5, 6, 7` (two each for n = 4, 5, 6; the unique
+   one for n = 7) has the form `{u_n − u_i}` where each `u_{k+1}` is an admissible "hole" for `{u_1,…,u_k}`
+   (i.e. `{u_{k+1} − u_i : i ≤ k}` is itself admissible). This extends a forum remark of M. Czech (9 Sep 2026):
+   for n ≤ 5 an optimal set is `{G_n − G_k}` with `G = 0, 1, 3, 8, 22, 60`, like the Conway–Guy sets for
+   distinct subset sums. A beam search restricted to such chains
    (`scripts/beam.py`, seconds) reproduces **every** known exact value `8, 22, 60, 168, 474` together with
    the extremal sets, and gives the n = 8–14 bounds above. Chains are common but not universal (87–95 % of
    admissible sets near the optimum for n = 5, 6), so for `n ≥ 8` these are upper bounds, not claimed optima.
@@ -101,10 +101,10 @@ below.
      all canonical counts (for g₅(8): all N ≤ 92). A Python brute force also confirms n ≤ 5 (k = 4) and
      n ≤ 6 (k = 5).
 4. **A correction to an earlier claim (n = 6).** J. Bae (Int. J. Pure Appl. Math. 1 (2002) 335–343, pp. 337–338)
-   and, repeating it verbatim, Bae and Choi (J. Korean Math. Soc. 40 (2003) 757–768, §2, p. 759) study
-   "2-fold subset-sum-distinct" sets, which are exactly the admissible sets. They state that "lots of
-   calculations" show `{109, 147, 161, 166, 168, 169}` to be the unique such 6-set of minimal height, which
-   would mean `g₃(6) = 169`. **This is incorrect.**
+   and Bae and Choi (J. Korean Math. Soc. 40 (2003) 757–768, §2, p. 759) study "2-fold subset-sum-distinct"
+   sets, which are exactly the admissible sets. Both state, in identical words, that "lots of calculations"
+   show `{109, 147, 161, 166, 168, 169}` to be the unique such 6-set of minimal height, which would mean
+   `g₃(6) = 169`. **This is incorrect.**
    * **The true value:** `g₃(6) = 168`, attained by `{107,145,159,162,164,168}` and `{107,145,159,162,166,168}`.
      OEIS A399720 lists the second of these.
    * **Their set:** it is the unique admissible 6-set with maximum exactly 169. It is the greedy "first-hole"

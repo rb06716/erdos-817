@@ -120,9 +120,10 @@ Both are exact integer computations.
   `{107,145,159,162,164,168}/168 = .637 .863 .946 .964 .976 1`;
   `{302,409,447,459,465,466,474}/474 = .637 .863 .943 .968 .981 .983 1`.
   Windows `600:700 830:900 920:970` plus `940:1000` for the rest reproduce the n = 6, 7 extremal sets in
-  well under a second. For n = 8, a coarse stop-at-first scan (M = 1420, 1400, 1380, …) first found a set with
-  maximum 1380; a full enumeration inside the windows later found none for M = 1361…1367 and exactly one for
-  M = 1368, the hole-chain set of §8 (`results/n8_upper/profile8_*.log`).
+  well under a second. For n = 8, a coarse stop-at-first scan (M = 1420, 1400, …, 1320) found sets down to
+  maximum 1380 and none inside the windows at 1360, 1340 or 1320; a full enumeration inside the windows later
+  found none for M = 1361…1367 and exactly one for M = 1368, the hole-chain set of §8
+  (`results/n8_upper/profile8_*.log`).
 * **Offset form (explains the profile).** Write `A = {M} ∪ {M − b : b ∈ B}`. A relation
   `Σ cᵢaᵢ = 0` becomes `M·s = Σ_{b∈B} c_b b` with `s = c_M + Σ c_b`. Hence `A` is admissible iff
   (i) `B` has no relation `Σ c_b b = 0` with `c ∈ {−2..2}^B \ {0}` and `|Σ c_b| ≤ 2` (the `s = 0` case, the

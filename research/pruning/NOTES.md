@@ -3,8 +3,8 @@
 Status: exploratory (2026-09-23). Nothing here affects the published results; the programs in this directory are
 research prototypes, not built by `make`:
 ```sh
-cc -O3 -march=native -DNOROOM -o research/pruning/g3tail3 research/pruning/g3tail3.c   # usage as g3fast2; x86-64
-                                         # with BMI2 only; -DNOROOM is required (canonical counts)
+cc -O3 -march=native -DNOROOM -o research/pruning/g3tail3 research/pruning/g3tail3.c   # usage as g3fast2;
+                              # -DNOROOM is required (canonical counts); on Apple clang use -mcpu=native
 cc -O3 -o research/pruning/mc_counts research/pruning/mc_counts.c -lm                 # usage: mc_counts k N samples seed
 ```
 
@@ -35,7 +35,7 @@ Estimates (2·10⁶ samples each):
 **Totals and cost.**
 * **Per N:** about 1–4.5·10¹³ nodes at levels 6–7.
 * **Over all 199 values of N:** about **4·10¹⁵ nodes**.
-* **Measured speed:** `g3fast2`, n = 8, runs at about 55–70 ns per node at N = 300–400 (N = 300: 9–10 s for
+* **Measured speed:** `g3fast2`, n = 8, runs at about 53–69 ns per node at N = 300–400 (N = 300: 9–10 s for
   1.7·10⁸ nodes; N = 400: 103 s for 1.5·10⁹ nodes). Near N ≈ 1300 we assume 70–100 ns (not measured).
 * **CPU cost:** about **9–13 CPU-years** (4·10¹⁵ nodes × 70–100 ns), i.e. 2–3 years on 4 cores.
 
@@ -88,10 +88,10 @@ The search maps naturally onto a GPU:
 
 **Estimate.** About 4·10¹⁵ node visits × about 200 integer operations, on an A100 at about 10¹³ integer ops/s,
 gives about 1 day at full efficiency. With the 5–20 % efficiency typical of divergent tree search, that is
-**1–3 weeks on one A100**, uncertain by a factor of about 3–5.
+**about 5–20 days on one A100**, uncertain by a factor of about 3–5.
 
 **What that means in practice:**
-* about 110–450 A100-hours (1 day of full-efficiency work at 5–20 % efficiency);
+* about 110–450 A100-hours (≈ 22 h of full-efficiency work at 20 % to 5 % efficiency);
 * cloud cost roughly a few hundred to about two thousand dollars;
 * Colab Pro's roughly 7 A100-hours a month is not enough; Pro+ or a cluster allocation would be.
 
